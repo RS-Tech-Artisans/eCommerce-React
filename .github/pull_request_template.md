@@ -1,6 +1,6 @@
 ## Pull Request includes :
 
-##### chose before merging
+##### choose before merging
 
 - [ ] New features
 - [ ] Refactoring
