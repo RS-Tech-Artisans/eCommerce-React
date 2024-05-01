@@ -3,11 +3,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const isProduction = process.env.NODE_ENV == 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
 
+console.log('ssss');
 const config = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
@@ -22,6 +23,9 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
     }),
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
   ],

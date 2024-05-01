@@ -14,5 +14,5 @@
     "skipLibCheck": true,
     "rootDir": "./src",
     "resolveJsonModule": true
-  },
+  }
 }
