@@ -1,9 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+// for testing
+
+/* import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
 
 const rootContainer = document.createElement('div');
-rootContainer.id = 'rootContainer';
-document.body.appendChild(rootContainer);
+rootContainer.id = 'root';
 
-const root = ReactDOM.createRoot(rootContainer);
-root.render(<div>Hi</div>);
+const root = ReactDOM.createRoot(document.body.appendChild(rootContainer));
+
+root.render(<App />); */
