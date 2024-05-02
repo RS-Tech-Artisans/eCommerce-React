@@ -7,7 +7,6 @@ const App: React.FC = () => {
       <h1>eCommerce</h1>
       <h2>Project Test</h2>
     </div>
-    
   );
 };
 

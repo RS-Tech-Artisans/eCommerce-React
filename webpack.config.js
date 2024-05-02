@@ -4,17 +4,19 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
-const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
+const stylesHandler = isProduction
+  ? MiniCssExtractPlugin.loader
+  : 'style-loader';
 
 console.log('ssss');
 const config = {
   entry: './src/index.tsx',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.jsx']
+    extensions: ['.tsx', '.ts', '.js', '.jsx'],
   },
   devServer: {
     open: true,
@@ -22,7 +24,7 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html'
+      template: './public/index.html',
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
@@ -44,7 +46,7 @@ const config = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: 'ts-loader'
+        use: 'ts-loader',
       },
       {
         test: /\.css$/i,
@@ -55,7 +57,9 @@ const config = {
             options: {
               modules: {
                 auto: true,
-                localIdentName: isProduction ? '[hash:base64]' : '[name]-[local]-[hash:base64:8]',
+                localIdentName: isProduction
+                  ? '[hash:base64]'
+                  : '[name]-[local]-[hash:base64:8]',
               },
             },
           },
@@ -63,7 +67,7 @@ const config = {
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
-        type: 'asset/resource'
+        type: 'asset/resource',
       },
       {
         test: /\.html$/i,
@@ -71,13 +75,13 @@ const config = {
       },
       {
         test: /\.(woff|woff2|ttf|otf|eot)$/,
-        type: "asset/resource",
+        type: 'asset/resource',
         generator: {
-          filename: "fonts/[hash][ext][query]"
-        }
-      }
-    ]
-  }
+          filename: 'fonts/[hash][ext][query]',
+        },
+      },
+    ],
+  },
 };
 
 module.exports = () => {
