@@ -6,15 +6,21 @@
     "extends": [
       "airbnb-typescript/base",
       "eslint:recommended",
-      "plugin:@typescript-eslint/recommended"
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "project": "./tsconfig.json"
+      "project": "./tsconfig.json",
+      "ecmaVersion": 12,
+      "sourceType": "module"
     },
     "plugins": [
       "@typescript-eslint",
-      "import"
+      "import",
+      "react", 
+      "react-hooks"
     ],
     "rules": {
       "no-plusplus": "off",
