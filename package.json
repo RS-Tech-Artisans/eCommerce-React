@@ -10,9 +10,8 @@
     "build:prod": "webpack --mode=production --node-env=production",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "stylelint-check": "stylelint-config-prettier-check",
-    "format": "prettier . --write",
-    "check:format": "prettier . --check"
+    "format": "prettier ./src --write",
+    "check:format": "prettier ./src --check"
   },
   "author": "",
   "license": "ISC",
