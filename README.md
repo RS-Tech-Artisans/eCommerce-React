@@ -28,3 +28,7 @@ Builds the app for production to the build folder. It correctly bundles React in
 ### npm run check:format
 
 - checking files for formatting
+
+### npm run test
+
+- running test
