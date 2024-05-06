@@ -12,14 +12,18 @@
     "lint:fix": "eslint ./src --fix",
     "format": "prettier ./src --write",
     "check:format": "prettier ./src --check",
-    "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "stylelint": "stylelint \"**/*.css\"",
+    "stylelint:fix": "stylelint \"**/*.css\" --fix",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",
+    "react-bootstrap": "^2.10.2",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.0"
   },
@@ -61,6 +65,10 @@
     "mini-css-extract-plugin": "^2.9.0",
     "prettier": "3.2.5",
     "style-loader": "^4.0.0",
+    "stylelint": "^16.5.0",
+    "stylelint-config-clean-order": "^5.4.2",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-config-standard-scss": "^13.1.0",
     "ts-jest": "^29.1.2",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.5",
