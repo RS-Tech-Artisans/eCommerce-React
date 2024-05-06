@@ -1,34 +1,63 @@
 # eCommerce-React
 
-eCommerce web application using React, Redux
+eCommerce web application (Online Store) using React, Redux.
 
-##
+## Authors
+- [Pavel Gordienko](https://github.com/guz86)
+- [Vladyslava Nikitchenko](https://github.com/vlaru)
+- [Veronika Bohuckaya](https://github.com/ranika23)
 
-### npm start
+## Setup and Running
 
-Runs the app in the development mode. Open http://localhost:8080 to view it in the browser.
-The page will reload if you make edits. You will also see any lint errors in the console.
+- Use `node 21.x` or higher.
+- Clone this repo: `$ git clone https://github.com/RS-Tech-Artisans/eCommerce-React.git`.
+- Go to downloaded folder: `$ cd eCommerce-React`.
+- Install dependencies: `$ npm install`.
+- Start server: `$ npm start`.
+- Now you can see web application to the address: `http://localhost:8080`.
 
-### npm run build
+### Build
 
 Builds the app for production to the build folder. It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### npm run build:dev
+```bash
+npm run build
+```
 
-- in development mode
+In development mode
 
-### npm run build:prod
+```bash
+npm run build:dev
+```
 
-- in production mode
+In production mode
+```bash
+npm run build:prod
+```
 
-### npm run format
+For formatting all files with Prettier
+```bash
+npm run format
+```
 
-- for formatting all files with Prettier
+Checking files for formatting
+```bash
+npm run check:format
+```
 
-### npm run check:format
+Running test
+```bash
+npm run test
+```
 
-- checking files for formatting
+## Folder structure
 
-### npm run test
+- Common - common components, functions or resources that are used in different parts of your application.
 
-- running test
+- Components - components of application.
+
+- Utils - helper utilities, functions, and classes that can be used in different parts of your application.
+
+
+## Screenshots 
+ 
