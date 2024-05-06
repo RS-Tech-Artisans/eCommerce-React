@@ -3,6 +3,7 @@
 eCommerce web application (Online Store) using React, Redux.
 
 ## Authors
+
 - [Pavel Gordienko](https://github.com/guz86)
 - [Vladyslava Nikitchenko](https://github.com/vlaru)
 - [Veronika Bohuckaya](https://github.com/ranika23)
@@ -31,21 +32,37 @@ npm run build:dev
 ```
 
 In production mode
+
 ```bash
 npm run build:prod
 ```
 
 For formatting all files with Prettier
+
 ```bash
 npm run format
 ```
 
 Checking files for formatting
+
 ```bash
 npm run check:format
 ```
 
+For formatting _.css/_.scss files with Stylelint
+
+```bash
+npm run stylelint:fix
+```
+
+Checking _.css/_.scss files for formatting with Stylelint
+
+```bash
+npm run stylelint
+```
+
 Running test
+
 ```bash
 npm run test
 ```
@@ -58,6 +75,4 @@ npm run test
 
 - Utils - helper utilities, functions, and classes that can be used in different parts of your application.
 
-
-## Screenshots 
- 
+## Screenshots
