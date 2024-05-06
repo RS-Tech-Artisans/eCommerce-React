@@ -8,7 +8,6 @@ const stylesHandler = isProduction
   ? MiniCssExtractPlugin.loader
   : 'style-loader';
 
-console.log('ssss');
 const config = {
   entry: './src/index.tsx',
   output: {
