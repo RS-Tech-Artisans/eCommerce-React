@@ -5,6 +5,6 @@ import './styles.css';
 
 const root = document.createElement('div');
 root.id = 'root';
- document.body.appendChild(root);
+document.body.appendChild(root);
 
 ReactDOM.createRoot(root).render(<App />);
