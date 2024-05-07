@@ -1,13 +1,23 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./common/Navbar";
+import Login from "./pages/Login";
+import Registration from "./pages/Registration";
+import Main from "./pages/Main";
+import NotFound from "./pages/NotFound";
 import './styles.css';
-import { Button } from 'react-bootstrap';
 
 const App: React.FC = () => {
   return (
-    <div>
-      <h1>eCommerce</h1>
-      <h2>Project Test</h2>
-      <Button>click</Button>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<Main />} />
+          <Route path="login" element={<Login />} />
+          <Route path="Registration" element={<Registration />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
