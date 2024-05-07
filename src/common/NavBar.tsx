@@ -1,14 +1,14 @@
 import { Link, Outlet } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
-import './navbar.css';
+import './NavBar.css';
 
 function NavBar() {
   return (
     <div>
-      <Navbar className="navbar">
+      <Navbar expand="lg" className="bg-dark justify-content-end">
         <Link to="/"> Main </Link>
         <Link to="/login"> Login </Link>
-        <Link to="/Registration"> Registration </Link>
+        <Link to="/register"> Registration </Link>
       </Navbar>
     </div>
   );
