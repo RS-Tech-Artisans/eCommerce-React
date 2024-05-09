@@ -2,10 +2,16 @@ import { useState, useEffect } from 'react';
 import BlurHandler from './BlurHundler';
 import EmailHundler from './EmailHundler';
 import PasswordHundler from './PasswordHundler';
+import TogglePassInput from './TogglePassInput';
 import { MdEmail } from 'react-icons/md';
-import { FaLock } from 'react-icons/fa';
+import { FaLock, FaUnlock } from 'react-icons/fa';
 
 export default function Login() {
+  const iconPassive = <FaLock />;
+  const iconActive = <FaUnlock />;
+
+  const [type, setType] = useState('password');
+
   const [email, setEmail] = useState(``);
   const [password, setPassword] = useState('');
   const [emailErr, setEmailErr] = useState('Please fill out this field');
@@ -15,6 +21,14 @@ export default function Login() {
 
   const [formValid, setFormValid] = useState(false);
 
+  const [passInputClasses, setPassInputClasses] = useState(
+    'login-form_pass-passive'
+  );
+  const [toggleIcon, setToggleIcon] = useState(iconPassive);
+  const [toggleIconClasses, setToggleIconClasses] = useState(
+    'login-form_toggle-icon-passive'
+  );
+
   useEffect(() => {
     if (emailErr || passwordErr) {
       setFormValid(false);
@@ -23,9 +37,9 @@ export default function Login() {
 
   return (
     <>
-      <form action="">
+      <form className="login-form" action="">
         <h1>Login</h1>
-        <div className="input-box">
+        <div className="login-form_input-box">
           <input
             onInput={(e) => EmailHundler(e, email, setEmail, setEmailErr)}
             onBlur={(e) => BlurHandler(e, setEmailFill, setPasswordFill)}
@@ -39,17 +53,34 @@ export default function Login() {
         {emailFill && emailErr && (
           <div style={{ color: 'red' }}>{emailErr}</div>
         )}
-        <div className="input-box">
+        <div className="login-form_input-box">
           <input
+            className={passInputClasses}
             onInput={(e) =>
               PasswordHundler(e, password, setPassword, setPasswordErr)
             }
             onBlur={(e) => BlurHandler(e, setEmailFill, setPasswordFill)}
-            type="password"
+            type={type}
             name="password"
             placeholder="Password"
           />
-          <FaLock />
+          <span
+            onClick={(e) =>
+              TogglePassInput(
+                e,
+                type,
+                setType,
+                setToggleIcon,
+                iconActive,
+                setPassInputClasses,
+                setToggleIconClasses,
+                iconPassive
+              )
+            }
+            className={`toggle ${toggleIconClasses}`}
+          >
+            {toggleIcon}
+          </span>
         </div>
         {passwordFill && passwordErr && (
           <div style={{ color: 'red' }}>{passwordErr}</div>
