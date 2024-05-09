@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BlurHandler from './BlurHundler';
 import EmailHundler from './EmailHundler';
 import PasswordHundler from './PasswordHundler';
@@ -12,6 +12,14 @@ export default function Login() {
   const [passwordErr, setPasswordErr] = useState('Please fill out this field');
   const [emailFill, setEmailFill] = useState(false);
   const [passwordFill, setPasswordFill] = useState(false);
+
+  const [formValid, setFormValid] = useState(false);
+
+  useEffect(() => {
+    if (emailErr || passwordErr) {
+      setFormValid(false);
+    } else setFormValid(true);
+  }, [emailErr, passwordErr]);
 
   return (
     <>
@@ -47,7 +55,9 @@ export default function Login() {
           <div style={{ color: 'red' }}>{passwordErr}</div>
         )}
         <div>
-          <button type="submit">Login</button>
+          <button disabled={!formValid} type="submit">
+            Login
+          </button>
           <div>
             <p>
               Don&apos;t have an account? <a href="#">Register</a>
