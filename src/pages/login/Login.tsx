@@ -5,6 +5,7 @@ import PasswordHundler from './PasswordHundler';
 import TogglePassInput from './TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock } from 'react-icons/fa';
+import './Login.css';
 
 export default function Login() {
   const iconPassive = <FaLock />;
