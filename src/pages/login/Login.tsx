@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import BlurHandler from './BlurHundler';
 import EmailValidation from './EmailValidation';
 import PasswordValidation from './PasswordValidation';
@@ -6,6 +6,7 @@ import TogglePassInput from './TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock } from 'react-icons/fa';
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const iconPassive = <FaLock />;
@@ -36,9 +37,18 @@ export default function Login() {
     } else setFormValid(true);
   }, [emailErr, passwordErr]);
 
+  const navigate = useNavigate();
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>): void {
+    e.preventDefault();
+    if(formValid){
+      navigate("/");
+    }
+  }
+
   return (
     <>
-      <form className="login-form" action="">
+      <form className="login-form" action="" onSubmit={handleSubmit}>
         <h1>Login</h1>
         <div className="login-form_input-box">
           <input
