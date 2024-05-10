@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import BlurHandler from './BlurHundler';
-import EmailValidation from './EmailValidation';
-import PasswordValidation from './PasswordValidation';
-import TogglePassInput from './TogglePassInput';
+import BlurHandler from '../../utils/validation/BlurHundler';
+import EmailValidation from '../../utils/validation/EmailValidation';
+import PasswordValidation from '../../utils/validation/PasswordValidation';
+import TogglePassInput from '../../utils/validation/TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock } from 'react-icons/fa';
 import './Login.css';
