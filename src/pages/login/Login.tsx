@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import BlurHandler from './BlurHundler';
-import EmailHundler from './EmailHundler';
-import PasswordHundler from './PasswordHundler';
+import EmailValidation from './EmailValidation';
+import PasswordValidation from './PasswordValidation';
 import TogglePassInput from './TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock } from 'react-icons/fa';
@@ -13,7 +13,7 @@ export default function Login() {
 
   const [type, setType] = useState('password');
 
-  const [email, setEmail] = useState(``);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailErr, setEmailErr] = useState('Please fill out this field');
   const [passwordErr, setPasswordErr] = useState('Please fill out this field');
@@ -42,7 +42,7 @@ export default function Login() {
         <h1>Login</h1>
         <div className="login-form_input-box">
           <input
-            onInput={(e) => EmailHundler(e, email, setEmail, setEmailErr)}
+            onInput={(e) => EmailValidation(e, email, setEmail, setEmailErr)}
             onBlur={(e) => BlurHandler(e, setEmailFill, setPasswordFill)}
             name="email"
             type="text"
@@ -58,7 +58,7 @@ export default function Login() {
           <input
             className={passInputClasses}
             onInput={(e) =>
-              PasswordHundler(e, password, setPassword, setPasswordErr)
+              PasswordValidation(e, password, setPassword, setPasswordErr)
             }
             onBlur={(e) => BlurHandler(e, setEmailFill, setPasswordFill)}
             type={type}

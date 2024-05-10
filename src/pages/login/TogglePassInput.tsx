@@ -1,4 +1,4 @@
-export default function TogglePassInput(
+type ToggleProps = (
   e: React.MouseEvent,
   type: string,
   setType: React.Dispatch<React.SetStateAction<string>>,
@@ -7,7 +7,18 @@ export default function TogglePassInput(
   setPassInputClasses: React.Dispatch<React.SetStateAction<string>>,
   setToggleIconClasses: React.Dispatch<React.SetStateAction<string>>,
   iconPassive: JSX.Element
-) {
+) => void;
+
+const TogglePassInput: ToggleProps = (
+  e,
+  type,
+  setType,
+  setToggleIcon,
+  iconActive,
+  setPassInputClasses,
+  setToggleIconClasses,
+  iconPassive
+) => {
   if (type === 'password') {
     setType('text');
     setToggleIcon(iconActive);
@@ -19,4 +30,6 @@ export default function TogglePassInput(
     setPassInputClasses('login-form_pass-passive');
     setToggleIconClasses('login-form_toggle-icon-passive');
   }
-}
+};
+
+export default TogglePassInput;

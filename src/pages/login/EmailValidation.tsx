@@ -1,9 +1,16 @@
-export default function EmailHundler(
+type EmailHandlerProps = (
   e: React.FormEvent<HTMLInputElement>,
   email: string,
   setEmail: React.Dispatch<React.SetStateAction<string>>,
   setEmailErr: React.Dispatch<React.SetStateAction<string>>
-) {
+) => void;
+
+const EmailValidation: EmailHandlerProps = (
+  e,
+  email,
+  setEmail,
+  setEmailErr
+) => {
   if (e.target instanceof HTMLInputElement) {
     setEmail(email);
 
@@ -31,4 +38,6 @@ export default function EmailHundler(
       setEmailErr('');
     }
   }
-}
+};
+
+export default EmailValidation;

@@ -1,9 +1,16 @@
-export default function PasswordHundler(
+type PasswordValidationProps = (
   e: React.FormEvent<HTMLInputElement>,
   password: string,
   setPassword: React.Dispatch<React.SetStateAction<string>>,
   setPasswordErr: React.Dispatch<React.SetStateAction<string>>
-) {
+) => void;
+
+const PasswordValidation: PasswordValidationProps = (
+  e,
+  password,
+  setPassword,
+  setPasswordErr
+) => {
   if (e.target instanceof HTMLInputElement) {
     setPassword(password);
 
@@ -44,4 +51,6 @@ export default function PasswordHundler(
       setPasswordErr('Password must be at leasno more 16 characters long');
     }
   }
-}
+};
+
+export default PasswordValidation;
