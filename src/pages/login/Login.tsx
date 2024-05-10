@@ -6,6 +6,7 @@ import TogglePassInput from './TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock } from 'react-icons/fa';
 import './Login.css';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   const iconPassive = <FaLock />;
@@ -92,7 +93,7 @@ export default function Login() {
           </button>
           <div>
             <p>
-              Don&apos;t have an account? <a href="#">Register</a>
+              Don&apos;t have an account? <Link to="/register">Register</Link>
             </p>
           </div>
         </div>
