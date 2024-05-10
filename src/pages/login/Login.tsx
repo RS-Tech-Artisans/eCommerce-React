@@ -41,8 +41,8 @@ export default function Login() {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    if(formValid){
-      navigate("/");
+    if (formValid) {
+      navigate('/');
     }
   }
 
