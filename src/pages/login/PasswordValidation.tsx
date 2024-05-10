@@ -47,9 +47,6 @@ const PasswordValidation: PasswordValidationProps = (
     } else {
       setPasswordErr('');
     }
-    if (e.target.value.length > 16) {
-      setPasswordErr('Password must be at leasno more 16 characters long');
-    }
   }
 };
 
