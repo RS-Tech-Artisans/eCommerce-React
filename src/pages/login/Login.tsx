@@ -5,9 +5,11 @@ import PasswordValidation from './PasswordValidation';
 import TogglePassInput from './TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock } from 'react-icons/fa';
+import { useLogin } from '../../utils/Login';
 import './Login.css';
 
 export default function Login() {
+  const { loginResult, error, handleLogin } = useLogin();
   const iconPassive = <FaLock />;
   const iconActive = <FaUnlock />;
 
@@ -87,13 +89,20 @@ export default function Login() {
           <div style={{ color: 'red' }}>{passwordErr}</div>
         )}
         <div>
-          <button disabled={!formValid} type="submit">
+          <button
+            disabled={!formValid}
+            type="button"
+            onClick={() => handleLogin(email, password)}
+          >
             Login
           </button>
           <div>
             <p>
               Don&apos;t have an account? <a href="#">Register</a>
             </p>
+
+            {loginResult && <p>Login successful!</p>}
+            {error && <p>Error: {error.message}</p>}
           </div>
         </div>
       </form>

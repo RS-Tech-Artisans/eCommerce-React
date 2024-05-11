@@ -12,7 +12,7 @@ const PasswordValidation: PasswordValidationProps = (
   setPasswordErr
 ) => {
   if (e.target instanceof HTMLInputElement) {
-    setPassword(password);
+    setPassword(e.target.value);
 
     const uppercaseLetter = /(?=.*[A-Z])/;
     const lowercaseLetter = /(?=.*[a-z])/;
