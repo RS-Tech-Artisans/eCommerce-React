@@ -8,18 +8,20 @@ export const useLogin = () => {
     useState<ClientResponse<CustomerSignInResult> | null>(null);
   const [error] = useState<Error | null>(null);
 
-  const handleLogin = async () => {
+  const handleLogin = async (email: string, password: string) => {
+    console.log('email ', email);
+    console.log('password ', password);
     try {
       const result: ClientResponse<CustomerSignInResult> = await apiRoot
         .me()
         .login()
         .post({
-          body: { email: 'jen@example.com', password: ';.cZ:GY[&Qzb/h}d' },
+          body: { email: email, password: password },
         })
         .execute();
       setLoginResult(result);
     } catch {
-      console.log('Auth error');
+      console.log('Auth error ', error);
     }
   };
 
