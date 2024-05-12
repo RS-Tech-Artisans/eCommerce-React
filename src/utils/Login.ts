@@ -15,19 +15,20 @@ export const useLogin = () => {
   const handleLogin = async (email: string, password: string) => {
     console.log('email ', email);
     console.log('password ', password);
+
     try {
       const result: ClientResponse<CustomerSignInResult> = await apiRoot
         .me()
         .login()
         .post({
-          body: { email: email, password: password },
+          body: { email, password },
         })
         .execute();
       setLoginResult(result);
       setError(null);
     } catch (caughtError) {
       console.log(caughtError);
-        setError(caughtError as MyApiError);
+      setError(caughtError as MyApiError);
     }
   };
 

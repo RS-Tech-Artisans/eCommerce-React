@@ -101,8 +101,12 @@ export default function Login() {
               Don&apos;t have an account? <a href="#">Register</a>
             </p>
 
-            {loginResult && <p>Login successful!</p>}
-            {error && <p>Error: {error.message}</p>}
+            <div style={{ color: 'green' }}>
+              {loginResult && <p>Login successful!</p>}
+            </div>
+            <div style={{ color: 'red' }}>
+              {error && <p>Error: {error.message}</p>}
+            </div>
           </div>
         </div>
       </form>
