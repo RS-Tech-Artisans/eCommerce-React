@@ -20,7 +20,7 @@ export const useLogin = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+    const loggedInStatus = sessionStorage.getItem('isLoggedIn') === 'true';
     setIsLoggedIn(loggedInStatus);
   }, []);
 
@@ -64,7 +64,7 @@ export const useLogin = () => {
       setLoginResult(result);
       setError(null);
       setIsLoggedIn(true);
-      localStorage.setItem('isLoggedIn', 'true');
+      sessionStorage.setItem('isLoggedIn', 'true');
       navigate('/main');
     } catch (caughtError) {
       console.log(caughtError);
@@ -76,6 +76,6 @@ export const useLogin = () => {
     loginResult,
     error,
     handleLogin,
-    isLoggedIn
+    isLoggedIn,
   };
 };
