@@ -1,0 +1,13 @@
+.registration-form {
+  position: absolute;
+  left: calc(50vw - 130px);
+  top: calc(50vh - 246px);
+}
+
+.registration-form_input-box {
+  margin-top: 30px;
+}
+
+.registration-form button {
+  margin-top: 20px;
+}
