@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ClientResponse } from '@commercetools/platform-sdk';
 import { CustomerSignInResult } from '@commercetools/platform-sdk';
 import {
@@ -16,7 +16,13 @@ export const useLogin = () => {
   const [loginResult, setLoginResult] =
     useState<ClientResponse<CustomerSignInResult> | null>(null);
   const [error, setError] = useState<MyApiError | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedInStatus);
+  }, []);
 
   const handleLogin = async (email: string, password: string) => {
     console.log('email ', email);
@@ -57,6 +63,8 @@ export const useLogin = () => {
         .execute();
       setLoginResult(result);
       setError(null);
+      setIsLoggedIn(true);
+      localStorage.setItem('isLoggedIn', 'true');
       navigate('/main');
     } catch (caughtError) {
       console.log(caughtError);
@@ -68,5 +76,6 @@ export const useLogin = () => {
     loginResult,
     error,
     handleLogin,
+    isLoggedIn
   };
 };
