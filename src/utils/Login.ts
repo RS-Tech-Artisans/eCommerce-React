@@ -57,7 +57,7 @@ export const useLogin = () => {
         .execute();
       setLoginResult(result);
       setError(null);
-      navigate('/');
+      navigate('/main');
     } catch (caughtError) {
       console.log(caughtError);
       setError(caughtError as MyApiError);
