@@ -7,6 +7,7 @@ import NameValidation from '../utils/validation/NameValidation';
 import BirthdateValidation from '../utils/validation/BirthdateValidation';
 import StreetValidation from '../utils/validation/StreetValidation';
 import CityValidation from '../utils/validation/CityValidation';
+import CountryValidation from '../utils/validation/CountryValidation';
 import TogglePassInput from '../utils/validation/TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock, FaUserCircle } from 'react-icons/fa';
@@ -24,7 +25,8 @@ export default function Registration() {
     [lastNameUser, setLastNameUser] = useState(''),
     [birthdate, setBirthdate] = useState(''),
     [street, setStreet] = useState(''),
-    [city, setCity] = useState('');
+    [city, setCity] = useState(''),
+    [country, setCountry] = useState('');
 
   const [emailErr, setEmailErr] = useState('Please fill out this field'),
     [passwordErr, setPasswordErr] = useState('Please fill out this field'),
@@ -34,7 +36,8 @@ export default function Registration() {
     ),
     [birthdateErr, setBirthdateErr] = useState('Please fill out this field'),
     [streetErr, setStreetErr] = useState('Must contain at least one character'),
-    [cityErr, setCityErr] = useState('Please fill out this field');
+    [cityErr, setCityErr] = useState('Please fill out this field'),
+    [countryErr, setCountryErr] = useState('Please select from the list');
 
   const [emailFill, setEmailFill] = useState(false),
     [passwordFill, setPasswordFill] = useState(false),
@@ -42,7 +45,8 @@ export default function Registration() {
     [lastNameUserFill, setLastNameUserFill] = useState(false),
     [birthdateFill, setBirthdateFill] = useState(false),
     [streetFill, setStreetFill] = useState(false),
-    [cityFill, setCityFill] = useState(false);
+    [cityFill, setCityFill] = useState(false),
+    [countryFill, setCountryFill] = useState(false);
 
   const [formValid, setFormValid] = useState(false);
 
@@ -61,7 +65,8 @@ export default function Registration() {
       lastNameUserErr ||
       birthdateErr ||
       streetErr ||
-      cityErr
+      cityErr ||
+      countryErr
     ) {
       setFormValid(false);
     } else setFormValid(true);
@@ -73,6 +78,7 @@ export default function Registration() {
     birthdateErr,
     streetErr,
     cityErr,
+    countryErr,
   ]);
 
   return (
@@ -137,7 +143,8 @@ export default function Registration() {
                 setLastNameUserFill,
                 setBirthdateFill,
                 setStreetFill,
-                setCityFill
+                setCityFill,
+                setCountryFill
               )
             }
             name="name-user"
@@ -167,7 +174,8 @@ export default function Registration() {
                 setLastNameUserFill,
                 setBirthdateFill,
                 setStreetFill,
-                setCityFill
+                setCityFill,
+                setCountryFill
               )
             }
             name="last-name-user"
@@ -194,7 +202,8 @@ export default function Registration() {
                   setLastNameUserFill,
                   setBirthdateFill,
                   setStreetFill,
-                  setCityFill
+                  setCityFill,
+                  setCountryFill
                 )
               }
               name="birthdate"
@@ -221,7 +230,8 @@ export default function Registration() {
                   setLastNameUserFill,
                   setBirthdateFill,
                   setStreetFill,
-                  setCityFill
+                  setCityFill,
+                  setCountryFill
                 )
               }
               name="street"
@@ -244,7 +254,8 @@ export default function Registration() {
                   setLastNameUserFill,
                   setBirthdateFill,
                   setStreetFill,
-                  setCityFill
+                  setCityFill,
+                  setCountryFill
                 )
               }
               name="city"
@@ -259,8 +270,31 @@ export default function Registration() {
           </div>
           <div>
             <label htmlFor="country">Country: </label>
-            <input type="text" id="country" required />
+            <select
+              onClick={(e) =>
+                CountryValidation(e, country, setCountry, setCountryErr)
+              }
+              onBlur={(e) =>
+                BlurHandlerRegistr(
+                  e,
+                  setNameUserFill,
+                  setLastNameUserFill,
+                  setBirthdateFill,
+                  setStreetFill,
+                  setCityFill,
+                  setCountryFill
+                )
+              }
+              name="country"
+              id="country"
+            >
+              <option value=""></option>
+              <option value="USA">USA</option>
+            </select>
           </div>
+          {countryFill && countryErr && (
+            <div style={{ color: 'red' }}>{countryErr}</div>
+          )}
         </div>
         <div>
           <button disabled={!formValid} type="submit">
