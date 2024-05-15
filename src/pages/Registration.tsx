@@ -8,6 +8,7 @@ import BirthdateValidation from '../utils/validation/BirthdateValidation';
 import StreetValidation from '../utils/validation/StreetValidation';
 import CityValidation from '../utils/validation/CityValidation';
 import CountryValidation from '../utils/validation/CountryValidation';
+import PostalCodeValidation from '../utils/validation/PostalCodeValidation';
 import TogglePassInput from '../utils/validation/TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock, FaUserCircle } from 'react-icons/fa';
@@ -26,7 +27,8 @@ export default function Registration() {
     [birthdate, setBirthdate] = useState(''),
     [street, setStreet] = useState(''),
     [city, setCity] = useState(''),
-    [country, setCountry] = useState('');
+    [country, setCountry] = useState(''),
+    [postalCode, setPostalCode] = useState('');
 
   const [emailErr, setEmailErr] = useState('Please fill out this field'),
     [passwordErr, setPasswordErr] = useState('Please fill out this field'),
@@ -37,7 +39,8 @@ export default function Registration() {
     [birthdateErr, setBirthdateErr] = useState('Please fill out this field'),
     [streetErr, setStreetErr] = useState('Must contain at least one character'),
     [cityErr, setCityErr] = useState('Please fill out this field'),
-    [countryErr, setCountryErr] = useState('Please select from the list');
+    [countryErr, setCountryErr] = useState('Please select from the list'),
+    [postalCodeErr, setPostalCodeErr] = useState('Please fill out this field');
 
   const [emailFill, setEmailFill] = useState(false),
     [passwordFill, setPasswordFill] = useState(false),
@@ -46,7 +49,8 @@ export default function Registration() {
     [birthdateFill, setBirthdateFill] = useState(false),
     [streetFill, setStreetFill] = useState(false),
     [cityFill, setCityFill] = useState(false),
-    [countryFill, setCountryFill] = useState(false);
+    [countryFill, setCountryFill] = useState(false),
+    [postalCodeFill, setPostalCodeFill] = useState(false);
 
   const [formValid, setFormValid] = useState(false);
 
@@ -66,7 +70,8 @@ export default function Registration() {
       birthdateErr ||
       streetErr ||
       cityErr ||
-      countryErr
+      countryErr ||
+      postalCodeErr
     ) {
       setFormValid(false);
     } else setFormValid(true);
@@ -79,6 +84,7 @@ export default function Registration() {
     streetErr,
     cityErr,
     countryErr,
+    postalCodeErr,
   ]);
 
   return (
@@ -144,7 +150,8 @@ export default function Registration() {
                 setBirthdateFill,
                 setStreetFill,
                 setCityFill,
-                setCountryFill
+                setCountryFill,
+                setPostalCodeFill
               )
             }
             name="name-user"
@@ -175,7 +182,8 @@ export default function Registration() {
                 setBirthdateFill,
                 setStreetFill,
                 setCityFill,
-                setCountryFill
+                setCountryFill,
+                setPostalCodeFill
               )
             }
             name="last-name-user"
@@ -203,7 +211,8 @@ export default function Registration() {
                   setBirthdateFill,
                   setStreetFill,
                   setCityFill,
-                  setCountryFill
+                  setCountryFill,
+                  setPostalCodeFill
                 )
               }
               name="birthdate"
@@ -231,7 +240,8 @@ export default function Registration() {
                   setBirthdateFill,
                   setStreetFill,
                   setCityFill,
-                  setCountryFill
+                  setCountryFill,
+                  setPostalCodeFill
                 )
               }
               name="street"
@@ -255,7 +265,8 @@ export default function Registration() {
                   setBirthdateFill,
                   setStreetFill,
                   setCityFill,
-                  setCountryFill
+                  setCountryFill,
+                  setPostalCodeFill
                 )
               }
               name="city"
@@ -266,8 +277,37 @@ export default function Registration() {
           {cityFill && cityErr && <div style={{ color: 'red' }}>{cityErr}</div>}
           <div>
             <label htmlFor="postal-code">Postal code: </label>
-            <input type="text" id="postal-code" required />
+            <input
+              onInput={(e) =>
+                PostalCodeValidation(
+                  e,
+                  postalCode,
+                  setPostalCode,
+                  setPostalCodeErr
+                )
+              }
+              onBlur={(e) =>
+                BlurHandlerRegistr(
+                  e,
+                  setNameUserFill,
+                  setLastNameUserFill,
+                  setBirthdateFill,
+                  setStreetFill,
+                  setCityFill,
+                  setCountryFill,
+                  setPostalCodeFill
+                )
+              }
+              type="text"
+              name="postal-code"
+              id="postal-code"
+              autoComplete="off"
+              required
+            />
           </div>
+          {postalCodeFill && postalCodeErr && (
+            <div style={{ color: 'red' }}>{postalCodeErr}</div>
+          )}
           <div>
             <label htmlFor="country">Country: </label>
             <select
@@ -282,7 +322,8 @@ export default function Registration() {
                   setBirthdateFill,
                   setStreetFill,
                   setCityFill,
-                  setCountryFill
+                  setCountryFill,
+                  setPostalCodeFill
                 )
               }
               name="country"
