@@ -3,7 +3,8 @@ type BlurHandlerRegistrProps = (
   setNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
   setLastNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
   setBirthdateFill: React.Dispatch<React.SetStateAction<boolean>>,
-  setStreetFilll: React.Dispatch<React.SetStateAction<boolean>>
+  setStreetFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setCityFill: React.Dispatch<React.SetStateAction<boolean>>
 ) => void;
 
 const BlurHandlerRegistr: BlurHandlerRegistrProps = (
@@ -11,7 +12,8 @@ const BlurHandlerRegistr: BlurHandlerRegistrProps = (
   setNameUserFill,
   setLastNameUserFill,
   setBirthdateFill,
-  setStreetFill
+  setStreetFill,
+  setCityFill
 ) => {
   if (e.target instanceof HTMLInputElement) {
     const elem: HTMLInputElement | null = e.target;
@@ -28,6 +30,9 @@ const BlurHandlerRegistr: BlurHandlerRegistrProps = (
         break;
       case 'street':
         setStreetFill(true);
+        break;
+      case 'city':
+        setCityFill(true);
         break;
     }
   }

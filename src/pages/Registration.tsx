@@ -6,6 +6,7 @@ import PasswordValidation from '../utils/validation/PasswordValidation';
 import NameValidation from '../utils/validation/NameValidation';
 import BirthdateValidation from '../utils/validation/BirthdateValidation';
 import StreetValidation from '../utils/validation/StreetValidation';
+import CityValidation from '../utils/validation/CityValidation';
 import TogglePassInput from '../utils/validation/TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock, FaUserCircle } from 'react-icons/fa';
@@ -22,7 +23,8 @@ export default function Registration() {
     [nameUser, setNameUser] = useState(''),
     [lastNameUser, setLastNameUser] = useState(''),
     [birthdate, setBirthdate] = useState(''),
-    [street, setStreet] = useState('');
+    [street, setStreet] = useState(''),
+    [city, setCity] = useState('');
 
   const [emailErr, setEmailErr] = useState('Please fill out this field'),
     [passwordErr, setPasswordErr] = useState('Please fill out this field'),
@@ -31,14 +33,16 @@ export default function Registration() {
       'Please fill out this field'
     ),
     [birthdateErr, setBirthdateErr] = useState('Please fill out this field'),
-    [streetErr, setStreetErr] = useState('Must contain at least one character');
+    [streetErr, setStreetErr] = useState('Must contain at least one character'),
+    [cityErr, setCityErr] = useState('Please fill out this field');
 
   const [emailFill, setEmailFill] = useState(false),
     [passwordFill, setPasswordFill] = useState(false),
     [nameUserFill, setNameUserFill] = useState(false),
     [lastNameUserFill, setLastNameUserFill] = useState(false),
     [birthdateFill, setBirthdateFill] = useState(false),
-    [streetFill, setStreetFill] = useState(false);
+    [streetFill, setStreetFill] = useState(false),
+    [cityFill, setCityFill] = useState(false);
 
   const [formValid, setFormValid] = useState(false);
 
@@ -56,7 +60,8 @@ export default function Registration() {
       nameUserErr ||
       lastNameUserErr ||
       birthdateErr ||
-      streetErr
+      streetErr ||
+      cityErr
     ) {
       setFormValid(false);
     } else setFormValid(true);
@@ -67,6 +72,7 @@ export default function Registration() {
     lastNameUserErr,
     birthdateErr,
     streetErr,
+    cityErr,
   ]);
 
   return (
@@ -130,7 +136,8 @@ export default function Registration() {
                 setNameUserFill,
                 setLastNameUserFill,
                 setBirthdateFill,
-                setStreetFill
+                setStreetFill,
+                setCityFill
               )
             }
             name="name-user"
@@ -159,7 +166,8 @@ export default function Registration() {
                 setNameUserFill,
                 setLastNameUserFill,
                 setBirthdateFill,
-                setStreetFill
+                setStreetFill,
+                setCityFill
               )
             }
             name="last-name-user"
@@ -185,7 +193,8 @@ export default function Registration() {
                   setNameUserFill,
                   setLastNameUserFill,
                   setBirthdateFill,
-                  setStreetFill
+                  setStreetFill,
+                  setCityFill
                 )
               }
               name="birthdate"
@@ -211,7 +220,8 @@ export default function Registration() {
                   setNameUserFill,
                   setLastNameUserFill,
                   setBirthdateFill,
-                  setStreetFill
+                  setStreetFill,
+                  setCityFill
                 )
               }
               name="street"
@@ -223,8 +233,24 @@ export default function Registration() {
           )}
           <div>
             <label htmlFor="city">City: </label>
-            <input type="text" id="city" required />
+            <input
+              id="city"
+              onInput={(e) => CityValidation(e, city, setCity, setCityErr)}
+              onBlur={(e) =>
+                BlurHandlerRegistr(
+                  e,
+                  setNameUserFill,
+                  setLastNameUserFill,
+                  setBirthdateFill,
+                  setStreetFill,
+                  setCityFill
+                )
+              }
+              name="city"
+              type="text"
+            />
           </div>
+          {cityFill && cityErr && <div style={{ color: 'red' }}>{cityErr}</div>}
           <div>
             <label htmlFor="postal-code">Postal code: </label>
             <input type="text" id="postal-code" required />
