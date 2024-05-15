@@ -1,13 +1,15 @@
 type BlurHandlerRegistrProps = (
   e: React.FocusEvent,
   setNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
-  setLastNameUserFill: React.Dispatch<React.SetStateAction<boolean>>
+  setLastNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setBirthdateFill: React.Dispatch<React.SetStateAction<boolean>>
 ) => void;
 
 const BlurHandlerRegistr: BlurHandlerRegistrProps = (
   e,
   setNameUserFill,
-  setLastNameUserFill
+  setLastNameUserFill,
+  setBirthdateFill
 ) => {
   if (e.target instanceof HTMLInputElement) {
     const elem: HTMLInputElement | null = e.target;
@@ -18,6 +20,9 @@ const BlurHandlerRegistr: BlurHandlerRegistrProps = (
         break;
       case 'last-name-user':
         setLastNameUserFill(true);
+        break;
+      case 'birthdate':
+        setBirthdateFill(true);
         break;
     }
   }

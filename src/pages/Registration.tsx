@@ -4,6 +4,7 @@ import BlurHandlerRegistr from '../utils/validation/BlurHandlerRegistr';
 import EmailValidation from '../utils/validation/EmailValidation';
 import PasswordValidation from '../utils/validation/PasswordValidation';
 import NameValidation from '../utils/validation/NameValidation';
+import BirthdateValidation from '../utils/validation/BirthdateValidation';
 import TogglePassInput from '../utils/validation/TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock, FaUserCircle } from 'react-icons/fa';
@@ -18,19 +19,22 @@ export default function Registration() {
   const [email, setEmail] = useState(''),
     [password, setPassword] = useState(''),
     [nameUser, setNameUser] = useState(''),
-    [lastNameUser, setLastNameUser] = useState('');
+    [lastNameUser, setLastNameUser] = useState(''),
+    [birthdate, setBirthdate] = useState('');
 
   const [emailErr, setEmailErr] = useState('Please fill out this field'),
     [passwordErr, setPasswordErr] = useState('Please fill out this field'),
     [nameUserErr, setNameUserErr] = useState('Please fill out this field'),
     [lastNameUserErr, setLastNameUserErr] = useState(
       'Please fill out this field'
-    );
+    ),
+    [birthdateErr, setBirthdateErr] = useState('Please fill out this field');
 
   const [emailFill, setEmailFill] = useState(false),
     [passwordFill, setPasswordFill] = useState(false),
     [nameUserFill, setNameUserFill] = useState(false),
-    [lastNameUserFill, setLastNameUserFill] = useState(false);
+    [lastNameUserFill, setLastNameUserFill] = useState(false),
+    [birthdateFill, setBirthdateFill] = useState(false);
 
   const [formValid, setFormValid] = useState(false);
 
@@ -42,10 +46,16 @@ export default function Registration() {
   );
 
   useEffect(() => {
-    if (emailErr || passwordErr || nameUserErr || lastNameUserErr) {
+    if (
+      emailErr ||
+      passwordErr ||
+      nameUserErr ||
+      lastNameUserErr ||
+      birthdateErr
+    ) {
       setFormValid(false);
     } else setFormValid(true);
-  }, [emailErr, passwordErr, nameUserErr, lastNameUserErr]);
+  }, [emailErr, passwordErr, nameUserErr, lastNameUserErr, birthdateErr]);
 
   return (
     <>
@@ -103,7 +113,12 @@ export default function Registration() {
               NameValidation(e, nameUser, setNameUser, setNameUserErr)
             }
             onBlur={(e) =>
-              BlurHandlerRegistr(e, setNameUserFill, setLastNameUserFill)
+              BlurHandlerRegistr(
+                e,
+                setNameUserFill,
+                setLastNameUserFill,
+                setBirthdateFill
+              )
             }
             name="name-user"
             type="text"
@@ -126,7 +141,12 @@ export default function Registration() {
               )
             }
             onBlur={(e) =>
-              BlurHandlerRegistr(e, setNameUserFill, setLastNameUserFill)
+              BlurHandlerRegistr(
+                e,
+                setNameUserFill,
+                setLastNameUserFill,
+                setBirthdateFill
+              )
             }
             name="last-name-user"
             type="text"
@@ -141,9 +161,26 @@ export default function Registration() {
         <div className="registration-form_input-box">
           <label htmlFor="date">Birthdate: </label>
           <div>
-            <input type="date" id="date" name="birthdate" />
+            <input
+              onInput={(e) =>
+                BirthdateValidation(e, birthdate, setBirthdate, setBirthdateErr)
+              }
+              onBlur={(e) =>
+                BlurHandlerRegistr(
+                  e,
+                  setNameUserFill,
+                  setLastNameUserFill,
+                  setBirthdateFill
+                )
+              }
+              name="birthdate"
+              type="date"
+            />
           </div>
         </div>
+        {birthdateFill && birthdateErr && (
+          <div style={{ color: 'red' }}>{birthdateErr}</div>
+        )}
         <div className="registration-form_input-box">
           <p>Address fields:</p>
           <div>
