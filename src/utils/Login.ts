@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ClientResponse } from '@commercetools/platform-sdk';
 import { CustomerSignInResult } from '@commercetools/platform-sdk';
 import {
@@ -6,6 +6,7 @@ import {
   PasswordAuthMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { useNavigate } from 'react-router-dom';
 
 interface MyApiError {
   message: string;
@@ -15,6 +16,13 @@ export const useLogin = () => {
   const [loginResult, setLoginResult] =
     useState<ClientResponse<CustomerSignInResult> | null>(null);
   const [error, setError] = useState<MyApiError | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loggedInStatus = sessionStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedInStatus);
+  }, []);
 
   const handleLogin = async (email: string, password: string) => {
     console.log('email ', email);
@@ -55,6 +63,9 @@ export const useLogin = () => {
         .execute();
       setLoginResult(result);
       setError(null);
+      setIsLoggedIn(true);
+      sessionStorage.setItem('isLoggedIn', 'true');
+      navigate('/main');
     } catch (caughtError) {
       console.log(caughtError);
       setError(caughtError as MyApiError);
@@ -65,5 +76,6 @@ export const useLogin = () => {
     loginResult,
     error,
     handleLogin,
+    isLoggedIn,
   };
 };

@@ -12,6 +12,7 @@ const App: React.FC = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Main />} />
+          <Route path="main" element={<Main />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Registration />} />
           <Route path="*" element={<NotFound />} />

@@ -7,10 +7,11 @@ import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock } from 'react-icons/fa';
 import { useLogin } from '../utils/Login';
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const { loginResult, error, handleLogin } = useLogin();
+  const { loginResult, error, handleLogin, isLoggedIn } = useLogin();
+  const navigate = useNavigate();
   const iconPassive = <FaLock />;
   const iconActive = <FaUnlock />;
 
@@ -38,6 +39,12 @@ export default function Login() {
       setFormValid(false);
     } else setFormValid(true);
   }, [emailErr, passwordErr]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/main');
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <>

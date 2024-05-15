@@ -6,7 +6,7 @@ function NavBar() {
   return (
     <div>
       <Navbar expand="lg" className="bg-dark justify-content-end">
-        <Link to="/"> Main </Link>
+        <Link to="/main"> Main </Link>
         <Link to="/login"> Login </Link>
         <Link to="/register"> Registration </Link>
       </Navbar>
