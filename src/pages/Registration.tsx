@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BlurHandler from '../utils/validation/BlurHundler';
 import EmailValidation from '../utils/validation/EmailValidation';
 import PasswordValidation from '../utils/validation/PasswordValidation';
@@ -13,6 +13,14 @@ export default function Registration() {
   const [passwordErr, setPasswordErr] = useState('Please fill out this field');
   const [emailFill, setEmailFill] = useState(false);
   const [passwordFill, setPasswordFill] = useState(false);
+
+  const [formValid, setFormValid] = useState(false);
+
+  useEffect(() => {
+    if (emailErr || passwordErr) {
+      setFormValid(false);
+    } else setFormValid(true);
+  }, [emailErr, passwordErr]);
 
   return (
     <>
@@ -81,7 +89,9 @@ export default function Registration() {
           </div>
         </div>
         <div>
-          <button type="submit">Login</button>
+          <button disabled={!formValid} type="submit">
+            Registration
+          </button>
         </div>
       </form>
     </>
