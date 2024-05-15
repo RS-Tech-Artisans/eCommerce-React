@@ -4,7 +4,6 @@ import './NavBar.css';
 import LogoutButton from '../components/LogoutButton';
 
 function NavBar() {
-
   return (
     <div>
       <Navbar expand="lg" className="bg-dark justify-content-end">

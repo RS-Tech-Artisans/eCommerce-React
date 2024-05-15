@@ -65,7 +65,9 @@ export const useLogin = () => {
       setError(null);
       setIsLoggedIn(true);
       sessionStorage.setItem('isLoggedIn', 'true');
-      setTimeout(()=>{window.location.reload();},300 )
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
       navigate('/main');
     } catch (caughtError) {
       console.log(caughtError);
