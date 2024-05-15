@@ -22,13 +22,13 @@ const TogglePassInput: ToggleProps = (
   if (type === 'password') {
     setType('text');
     setToggleIcon(iconActive);
-    setPassInputClasses('login-form_pass-input-active');
-    setToggleIconClasses('login-form_toggle-icon-active');
+    setPassInputClasses('pass-input-active');
+    setToggleIconClasses('pass-toggle-icon-active');
   } else {
     setType('password');
     setToggleIcon(iconPassive);
-    setPassInputClasses('login-form_pass-passive');
-    setToggleIconClasses('login-form_toggle-icon-passive');
+    setPassInputClasses('pass-input-passive');
+    setToggleIconClasses('pass-toggle-icon-passive');
   }
 };
 

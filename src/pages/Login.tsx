@@ -25,12 +25,11 @@ export default function Login() {
 
   const [formValid, setFormValid] = useState(false);
 
-  const [passInputClasses, setPassInputClasses] = useState(
-    'login-form_pass-passive'
-  );
+  const [passInputClasses, setPassInputClasses] =
+    useState('pass-input-passive');
   const [toggleIcon, setToggleIcon] = useState(iconPassive);
   const [toggleIconClasses, setToggleIconClasses] = useState(
-    'login-form_toggle-icon-passive'
+    'pass-toggle-icon-passive'
   );
 
   useEffect(() => {

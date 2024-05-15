@@ -8,6 +8,11 @@
   margin-top: 30px;
 }
 
+.pass-toggle-icon-passive,
+.pass-toggle-icon-active {
+  cursor: pointer;
+}
+
 .registration-form button {
   margin-top: 20px;
 }

@@ -8,8 +8,8 @@
   margin-top: 30px;
 }
 
-.login-form_toggle-icon-passive,
-.login-form_toggle-icon-active {
+.pass-toggle-icon-passive,
+.pass-toggle-icon-active {
   cursor: pointer;
 }
 

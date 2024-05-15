@@ -2,11 +2,17 @@ import { useState, useEffect } from 'react';
 import BlurHandler from '../utils/validation/BlurHundler';
 import EmailValidation from '../utils/validation/EmailValidation';
 import PasswordValidation from '../utils/validation/PasswordValidation';
+import TogglePassInput from '../utils/validation/TogglePassInput';
 import { MdEmail } from 'react-icons/md';
-import { FaLock, FaUserCircle } from 'react-icons/fa';
+import { FaLock, FaUnlock, FaUserCircle } from 'react-icons/fa';
 import './Registration.css';
 
 export default function Registration() {
+  const iconPassive = <FaLock />;
+  const iconActive = <FaUnlock />;
+
+  const [type, setType] = useState('password');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailErr, setEmailErr] = useState('Please fill out this field');
@@ -15,6 +21,13 @@ export default function Registration() {
   const [passwordFill, setPasswordFill] = useState(false);
 
   const [formValid, setFormValid] = useState(false);
+
+  const [passInputClasses, setPassInputClasses] =
+    useState('pass-input-passive');
+  const [toggleIcon, setToggleIcon] = useState(iconPassive);
+  const [toggleIconClasses, setToggleIconClasses] = useState(
+    'pass-toggle-icon-passive'
+  );
 
   useEffect(() => {
     if (emailErr || passwordErr) {
@@ -42,15 +55,32 @@ export default function Registration() {
         )}
         <div className="registration-form_input-box">
           <input
+            className={passInputClasses}
             onInput={(e) =>
               PasswordValidation(e, password, setPassword, setPasswordErr)
             }
             onBlur={(e) => BlurHandler(e, setEmailFill, setPasswordFill)}
-            type="password"
+            type={type}
             name="password"
             placeholder="Password"
           />
-          <FaLock />
+          <span
+            onClick={(e) =>
+              TogglePassInput(
+                e,
+                type,
+                setType,
+                setToggleIcon,
+                iconActive,
+                setPassInputClasses,
+                setToggleIconClasses,
+                iconPassive
+              )
+            }
+            className={`toggle ${toggleIconClasses}`}
+          >
+            {toggleIcon}
+          </span>
         </div>
         {passwordFill && passwordErr && (
           <div style={{ color: 'red' }}>{passwordErr}</div>
