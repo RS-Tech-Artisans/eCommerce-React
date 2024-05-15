@@ -226,6 +226,7 @@ export default function Registration() {
               }
               name="street"
               type="text"
+              autoComplete="off"
             />
           </div>
           {streetFill && streetErr && (
@@ -248,6 +249,7 @@ export default function Registration() {
               }
               name="city"
               type="text"
+              autoComplete="off"
             />
           </div>
           {cityFill && cityErr && <div style={{ color: 'red' }}>{cityErr}</div>}

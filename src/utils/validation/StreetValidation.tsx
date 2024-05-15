@@ -13,7 +13,8 @@ const StreetValidation: StreetValidationProps = (
 ) => {
   if (e.target instanceof HTMLInputElement) {
     setStreet(e.target.value);
-    const properlyFormat = /[\w\W]{1,}/;
+    const properlyFormat =
+      /^(([A-Z]{1}([-0-9a-zA-Z]*[!,?# $%-^&*@.]{1}[-0-9a-zA-Z]{1,}){1,})|([A-Z]{1}[a-z]*))$/;
 
     if (!properlyFormat.test(String(e.target.value))) {
       setStreetErr('Must contain at least one character');
