@@ -14,17 +14,17 @@ const BirthdateValidation: BirthdateValidationProps = (
   if (e.target instanceof HTMLInputElement) {
     setBirthdate(e.target.value);
 
-    let currentDate = new Date();
-    let currentMonth =
+    const currentDate = new Date();
+    const currentMonth =
       currentDate.getMonth() + 1 >= 10
         ? currentDate.getMonth() + 1
         : `0${currentDate.getMonth() + 1}`;
-    let currentDay =
+    const currentDay =
       currentDate.getDate() >= 10
         ? currentDate.getDate()
         : `0${currentDate.getDate()}`;
-    let minimumAge = `${currentDate.getFullYear() - 14}-${currentMonth}-${currentDay}`;
-    let maximumAge = `${currentDate.getFullYear() + 100}-${currentMonth}-${currentDay}`;
+    const minimumAge = `${currentDate.getFullYear() - 14}-${currentMonth}-${currentDay}`;
+    const maximumAge = `${currentDate.getFullYear() + 100}-${currentMonth}-${currentDay}`;
 
     if (!(minimumAge <= e.target.value)) {
       setBirthdateErr('The minimum age is 14 years');

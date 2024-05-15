@@ -5,6 +5,7 @@ import EmailValidation from '../utils/validation/EmailValidation';
 import PasswordValidation from '../utils/validation/PasswordValidation';
 import NameValidation from '../utils/validation/NameValidation';
 import BirthdateValidation from '../utils/validation/BirthdateValidation';
+import StreetValidation from '../utils/validation/StreetValidation';
 import TogglePassInput from '../utils/validation/TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock, FaUserCircle } from 'react-icons/fa';
@@ -20,7 +21,8 @@ export default function Registration() {
     [password, setPassword] = useState(''),
     [nameUser, setNameUser] = useState(''),
     [lastNameUser, setLastNameUser] = useState(''),
-    [birthdate, setBirthdate] = useState('');
+    [birthdate, setBirthdate] = useState(''),
+    [street, setStreet] = useState('');
 
   const [emailErr, setEmailErr] = useState('Please fill out this field'),
     [passwordErr, setPasswordErr] = useState('Please fill out this field'),
@@ -28,13 +30,15 @@ export default function Registration() {
     [lastNameUserErr, setLastNameUserErr] = useState(
       'Please fill out this field'
     ),
-    [birthdateErr, setBirthdateErr] = useState('Please fill out this field');
+    [birthdateErr, setBirthdateErr] = useState('Please fill out this field'),
+    [streetErr, setStreetErr] = useState('Must contain at least one character');
 
   const [emailFill, setEmailFill] = useState(false),
     [passwordFill, setPasswordFill] = useState(false),
     [nameUserFill, setNameUserFill] = useState(false),
     [lastNameUserFill, setLastNameUserFill] = useState(false),
-    [birthdateFill, setBirthdateFill] = useState(false);
+    [birthdateFill, setBirthdateFill] = useState(false),
+    [streetFill, setStreetFill] = useState(false);
 
   const [formValid, setFormValid] = useState(false);
 
@@ -51,11 +55,19 @@ export default function Registration() {
       passwordErr ||
       nameUserErr ||
       lastNameUserErr ||
-      birthdateErr
+      birthdateErr ||
+      streetErr
     ) {
       setFormValid(false);
     } else setFormValid(true);
-  }, [emailErr, passwordErr, nameUserErr, lastNameUserErr, birthdateErr]);
+  }, [
+    emailErr,
+    passwordErr,
+    nameUserErr,
+    lastNameUserErr,
+    birthdateErr,
+    streetErr,
+  ]);
 
   return (
     <>
@@ -117,7 +129,8 @@ export default function Registration() {
                 e,
                 setNameUserFill,
                 setLastNameUserFill,
-                setBirthdateFill
+                setBirthdateFill,
+                setStreetFill
               )
             }
             name="name-user"
@@ -145,7 +158,8 @@ export default function Registration() {
                 e,
                 setNameUserFill,
                 setLastNameUserFill,
-                setBirthdateFill
+                setBirthdateFill,
+                setStreetFill
               )
             }
             name="last-name-user"
@@ -170,7 +184,8 @@ export default function Registration() {
                   e,
                   setNameUserFill,
                   setLastNameUserFill,
-                  setBirthdateFill
+                  setBirthdateFill,
+                  setStreetFill
                 )
               }
               name="birthdate"
@@ -185,8 +200,27 @@ export default function Registration() {
           <p>Address fields:</p>
           <div>
             <label htmlFor="street">Street: </label>
-            <input type="text" id="street" required />
+            <input
+              id="street"
+              onInput={(e) =>
+                StreetValidation(e, street, setStreet, setStreetErr)
+              }
+              onBlur={(e) =>
+                BlurHandlerRegistr(
+                  e,
+                  setNameUserFill,
+                  setLastNameUserFill,
+                  setBirthdateFill,
+                  setStreetFill
+                )
+              }
+              name="street"
+              type="text"
+            />
           </div>
+          {streetFill && streetErr && (
+            <div style={{ color: 'red' }}>{streetErr}</div>
+          )}
           <div>
             <label htmlFor="city">City: </label>
             <input type="text" id="city" required />
