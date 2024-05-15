@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import BlurHandler from '../utils/validation/BlurHundler';
+import BlurHandlerRegistr from '../utils/validation/BlurHandlerRegistr';
 import EmailValidation from '../utils/validation/EmailValidation';
 import PasswordValidation from '../utils/validation/PasswordValidation';
+import NameValidation from '../utils/validation/NameValidation';
 import TogglePassInput from '../utils/validation/TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock, FaUserCircle } from 'react-icons/fa';
@@ -15,10 +17,13 @@ export default function Registration() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [nameUser, setNameUser] = useState('');
   const [emailErr, setEmailErr] = useState('Please fill out this field');
   const [passwordErr, setPasswordErr] = useState('Please fill out this field');
+  const [nameUserErr, setNameUserErr] = useState('Please fill out this field');
   const [emailFill, setEmailFill] = useState(false);
   const [passwordFill, setPasswordFill] = useState(false);
+  const [nameUserFill, setNameUserFill] = useState(false);
 
   const [formValid, setFormValid] = useState(false);
 
@@ -30,10 +35,10 @@ export default function Registration() {
   );
 
   useEffect(() => {
-    if (emailErr || passwordErr) {
+    if (emailErr || passwordErr || nameUserErr) {
       setFormValid(false);
     } else setFormValid(true);
-  }, [emailErr, passwordErr]);
+  }, [emailErr, passwordErr, nameUserErr]);
 
   return (
     <>
@@ -86,9 +91,21 @@ export default function Registration() {
           <div style={{ color: 'red' }}>{passwordErr}</div>
         )}
         <div className="registration-form_input-box">
-          <input type="text" placeholder="First Name" required />
+          <input
+            onInput={(e) =>
+              NameValidation(e, nameUser, setNameUser, setNameUserErr)
+            }
+            onBlur={(e) => BlurHandlerRegistr(e, setNameUserFill)}
+            name="name-user"
+            type="text"
+            placeholder="First Name"
+            autoComplete="off"
+          />
           <FaUserCircle />
         </div>
+        {nameUserFill && nameUserErr && (
+          <div style={{ color: 'red' }}>{nameUserErr}</div>
+        )}
         <div className="registration-form_input-box">
           <input type="text" placeholder="Last Name" required />
           <FaUserCircle />
