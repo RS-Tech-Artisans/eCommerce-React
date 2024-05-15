@@ -13,26 +13,24 @@ const PasswordValidation: PasswordValidationProps = (
 ) => {
   if (e.target instanceof HTMLInputElement) {
     setPassword(e.target.value);
-
+    const properlyFormat =
+      /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[-0-9a-zA-Z!,?#$%^&@*]{8,}$/;
     const uppercaseLetter = /(?=.*[A-Z])/;
     const lowercaseLetter = /(?=.*[a-z])/;
     const digit = /(?=.*\d)/;
-    const specialChar = /(?=.*[!@#$%^&*])/;
     const whitespace = /\s+/;
 
-    if (e.target.value.length < 8) {
-      setPasswordErr('Password must be at least 8 characters long');
-      if (!specialChar.test(String(e.target.value).toLowerCase())) {
-        setPasswordErr(
-          'Password must contain at least one special character (e.g., !@#$%^&*)'
-        );
+    if (!properlyFormat.test(String(e.target.value))) {
+      setPasswordErr('Incorrect password format');
+      if (e.target.value.length < 8) {
+        setPasswordErr('Password must be at least 8 characters long');
       }
       if (!uppercaseLetter.test(String(e.target.value))) {
         setPasswordErr(
           'Password must contain at least one uppercase letter (A-Z)'
         );
       }
-      if (!lowercaseLetter.test(String(e.target.value).toLowerCase())) {
+      if (!lowercaseLetter.test(String(e.target.value))) {
         setPasswordErr(
           'Password must contain at least one lowercase letter (a-z)'
         );
