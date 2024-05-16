@@ -14,6 +14,16 @@ import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock, FaUserCircle } from 'react-icons/fa';
 import './Registration.css';
 
+type RestBlurHandlerRegistrProps = [
+  setNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setLastNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setBirthdateFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setStreetFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setCityFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setCountryFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setPostalCodeFill: React.Dispatch<React.SetStateAction<boolean>>,
+];
+
 export default function Registration() {
   const iconPassive = <FaLock />;
   const iconActive = <FaUnlock />;
@@ -60,6 +70,16 @@ export default function Registration() {
   const [toggleIconClasses, setToggleIconClasses] = useState(
     'pass-toggle-icon-passive'
   );
+
+  const restBlurHandlerRegistr: RestBlurHandlerRegistrProps = [
+    setNameUserFill,
+    setLastNameUserFill,
+    setBirthdateFill,
+    setStreetFill,
+    setCityFill,
+    setCountryFill,
+    setPostalCodeFill,
+  ];
 
   useEffect(() => {
     if (
@@ -142,18 +162,7 @@ export default function Registration() {
             onInput={(e) =>
               NameValidation(e, nameUser, setNameUser, setNameUserErr)
             }
-            onBlur={(e) =>
-              BlurHandlerRegistr(
-                e,
-                setNameUserFill,
-                setLastNameUserFill,
-                setBirthdateFill,
-                setStreetFill,
-                setCityFill,
-                setCountryFill,
-                setPostalCodeFill
-              )
-            }
+            onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
             name="name-user"
             type="text"
             placeholder="First Name"
@@ -174,18 +183,7 @@ export default function Registration() {
                 setLastNameUserErr
               )
             }
-            onBlur={(e) =>
-              BlurHandlerRegistr(
-                e,
-                setNameUserFill,
-                setLastNameUserFill,
-                setBirthdateFill,
-                setStreetFill,
-                setCityFill,
-                setCountryFill,
-                setPostalCodeFill
-              )
-            }
+            onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
             name="last-name-user"
             type="text"
             placeholder="Last Name"
@@ -204,18 +202,7 @@ export default function Registration() {
               onInput={(e) =>
                 BirthdateValidation(e, birthdate, setBirthdate, setBirthdateErr)
               }
-              onBlur={(e) =>
-                BlurHandlerRegistr(
-                  e,
-                  setNameUserFill,
-                  setLastNameUserFill,
-                  setBirthdateFill,
-                  setStreetFill,
-                  setCityFill,
-                  setCountryFill,
-                  setPostalCodeFill
-                )
-              }
+              onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
               name="birthdate"
               type="date"
             />
@@ -233,18 +220,7 @@ export default function Registration() {
               onInput={(e) =>
                 StreetValidation(e, street, setStreet, setStreetErr)
               }
-              onBlur={(e) =>
-                BlurHandlerRegistr(
-                  e,
-                  setNameUserFill,
-                  setLastNameUserFill,
-                  setBirthdateFill,
-                  setStreetFill,
-                  setCityFill,
-                  setCountryFill,
-                  setPostalCodeFill
-                )
-              }
+              onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
               name="street"
               type="text"
               autoComplete="off"
@@ -258,18 +234,7 @@ export default function Registration() {
             <input
               id="city"
               onInput={(e) => CityValidation(e, city, setCity, setCityErr)}
-              onBlur={(e) =>
-                BlurHandlerRegistr(
-                  e,
-                  setNameUserFill,
-                  setLastNameUserFill,
-                  setBirthdateFill,
-                  setStreetFill,
-                  setCityFill,
-                  setCountryFill,
-                  setPostalCodeFill
-                )
-              }
+              onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
               name="city"
               type="text"
               autoComplete="off"
@@ -287,18 +252,7 @@ export default function Registration() {
                   setPostalCodeErr
                 )
               }
-              onBlur={(e) =>
-                BlurHandlerRegistr(
-                  e,
-                  setNameUserFill,
-                  setLastNameUserFill,
-                  setBirthdateFill,
-                  setStreetFill,
-                  setCityFill,
-                  setCountryFill,
-                  setPostalCodeFill
-                )
-              }
+              onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
               type="text"
               name="postal-code"
               id="postal-code"
@@ -315,18 +269,7 @@ export default function Registration() {
               onClick={(e) =>
                 CountryValidation(e, country, setCountry, setCountryErr)
               }
-              onBlur={(e) =>
-                BlurHandlerRegistr(
-                  e,
-                  setNameUserFill,
-                  setLastNameUserFill,
-                  setBirthdateFill,
-                  setStreetFill,
-                  setCityFill,
-                  setCountryFill,
-                  setPostalCodeFill
-                )
-              }
+              onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
               name="country"
               id="country"
             >

@@ -26,7 +26,7 @@ const BirthdateValidation: BirthdateValidationProps = (
     const minimumAge = `${currentDate.getFullYear() - 14}-${currentMonth}-${currentDay}`;
     const maximumAge = `${currentDate.getFullYear() + 100}-${currentMonth}-${currentDay}`;
 
-    if (!(minimumAge <= e.target.value)) {
+    if (!(minimumAge >= e.target.value)) {
       setBirthdateErr('The minimum age is 14 years');
       if (!e.target.value)
         setBirthdateErr('Please fill in this field correctly');
