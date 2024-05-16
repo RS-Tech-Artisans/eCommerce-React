@@ -13,8 +13,7 @@ const PasswordValidation: PasswordValidationProps = (
 ) => {
   if (e.target instanceof HTMLInputElement) {
     setPassword(e.target.value);
-    const properlyFormat =
-      /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[-0-9a-zA-Z!,?#$%^&@*]{8,}$/;
+    const properlyFormat = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[\S]{8,}$/;
     const uppercaseLetter = /(?=.*[A-Z])/;
     const lowercaseLetter = /(?=.*[a-z])/;
     const digit = /(?=.*\d)/;

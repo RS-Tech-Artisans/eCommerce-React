@@ -9,7 +9,7 @@ const CityValidation: CityValidationProps = (e, name, setCity, setCityErr) => {
   if (e.target instanceof HTMLInputElement) {
     setCity(e.target.value);
     const properlyFormat =
-      /^(([A-Z]{1}([-a-zA-Z]{1,}[ .]{1}[-a-zA-Z]{1,}){1,})|([A-Z]{1}[-a-zA-Z .]{1,}[a-zA-Z]{1,})|([A-Z]{1}[a-z]*))$/;
+      /^((([-a-zA-Z]{1,}[ .]{1}[-a-zA-Z]{1,}){1,})|([A-Za-z]{1}[-a-zA-Z .]{1,}[a-zA-Z]{1,})|([a-z]{1,}))$/;
 
     if (!properlyFormat.test(String(e.target.value))) {
       setCityErr(

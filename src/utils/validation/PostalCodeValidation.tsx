@@ -13,10 +13,10 @@ const PostalCodeValidation: PostalCodeValidationProps = (
 ) => {
   if (e.target instanceof HTMLInputElement) {
     setPostalCode(e.target.value);
-    const properlyFormat = /^[0-9]{5}(-[0-9]{4})?$/;
+    const properlyFormat = /^[0-9]{5}((-[0-9]{4})|(-[A-Z]{4}))?$/;
 
     if (!properlyFormat.test(String(e.target.value))) {
-      sePostalCodeErr('Incorrect Postal code format');
+      sePostalCodeErr('Please use the format XXXXX or XXXXX-YYYY');
       if (!e.target.value) sePostalCodeErr('Please fill out this field');
     } else {
       sePostalCodeErr('');

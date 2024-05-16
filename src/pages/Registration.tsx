@@ -200,6 +200,7 @@ export default function Registration() {
           <label htmlFor="date">Birthdate: </label>
           <div>
             <input
+              id="date"
               onInput={(e) =>
                 BirthdateValidation(e, birthdate, setBirthdate, setBirthdateErr)
               }
