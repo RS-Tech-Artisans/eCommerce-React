@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import BlurHandler from '../utils/validation/BlurHundler';
 import BlurHandlerRegistr from '../utils/validation/BlurHandlerRegistr';
-import EmailValidation from '../utils/validation/EmailValidation';
+import EmailValidationRegistr from '../utils/validation/EmailValidationRegistr';
 import PasswordValidation from '../utils/validation/PasswordValidation';
 import NameValidation from '../utils/validation/NameValidation';
 import BirthdateValidation from '../utils/validation/BirthdateValidation';
@@ -113,8 +113,21 @@ export default function Registration() {
         <h1>Registration</h1>
         <div className="registration-form_input-box">
           <input
-            onInput={(e) => EmailValidation(e, email, setEmail, setEmailErr)}
-            onBlur={(e) => BlurHandler(e, setEmailFill, setPasswordFill)}
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                EmailValidationRegistr(
+                  e.target.value,
+                  email,
+                  setEmail,
+                  setEmailErr
+                );
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                BlurHandler(e.target.name, setEmailFill, setPasswordFill);
+              }
+            }}
             name="email"
             type="text"
             placeholder="E-mail"
@@ -128,18 +141,28 @@ export default function Registration() {
         <div className="registration-form_input-box">
           <input
             className={passInputClasses}
-            onInput={(e) =>
-              PasswordValidation(e, password, setPassword, setPasswordErr)
-            }
-            onBlur={(e) => BlurHandler(e, setEmailFill, setPasswordFill)}
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                PasswordValidation(
+                  e.target.value,
+                  password,
+                  setPassword,
+                  setPasswordErr
+                );
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                BlurHandler(e.target.name, setEmailFill, setPasswordFill);
+              }
+            }}
             type={type}
             name="password"
             placeholder="Password"
           />
           <span
-            onClick={(e) =>
+            onClick={() =>
               TogglePassInput(
-                e,
                 type,
                 setType,
                 setToggleIcon,
@@ -159,10 +182,21 @@ export default function Registration() {
         )}
         <div className="registration-form_input-box">
           <input
-            onInput={(e) =>
-              NameValidation(e, nameUser, setNameUser, setNameUserErr)
-            }
-            onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                NameValidation(
+                  e.target.value,
+                  nameUser,
+                  setNameUser,
+                  setNameUserErr
+                );
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+              }
+            }}
             name="name-user"
             type="text"
             placeholder="First Name"
@@ -175,15 +209,21 @@ export default function Registration() {
         )}
         <div className="registration-form_input-box">
           <input
-            onInput={(e) =>
-              NameValidation(
-                e,
-                lastNameUser,
-                setLastNameUser,
-                setLastNameUserErr
-              )
-            }
-            onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                NameValidation(
+                  e.target.value,
+                  lastNameUser,
+                  setLastNameUser,
+                  setLastNameUserErr
+                );
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+              }
+            }}
             name="last-name-user"
             type="text"
             placeholder="Last Name"
@@ -199,10 +239,21 @@ export default function Registration() {
           <div>
             <input
               id="date"
-              onInput={(e) =>
-                BirthdateValidation(e, birthdate, setBirthdate, setBirthdateErr)
-              }
-              onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BirthdateValidation(
+                    e.target.value,
+                    birthdate,
+                    setBirthdate,
+                    setBirthdateErr
+                  );
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
               name="birthdate"
               type="date"
             />
@@ -217,10 +268,21 @@ export default function Registration() {
             <label htmlFor="street">Street: </label>
             <input
               id="street"
-              onInput={(e) =>
-                StreetValidation(e, street, setStreet, setStreetErr)
-              }
-              onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  StreetValidation(
+                    e.target.value,
+                    street,
+                    setStreet,
+                    setStreetErr
+                  );
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
               name="street"
               type="text"
               autoComplete="off"
@@ -233,8 +295,16 @@ export default function Registration() {
             <label htmlFor="city">City: </label>
             <input
               id="city"
-              onInput={(e) => CityValidation(e, city, setCity, setCityErr)}
-              onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  CityValidation(e.target.value, city, setCity, setCityErr);
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
               name="city"
               type="text"
               autoComplete="off"
@@ -244,16 +314,21 @@ export default function Registration() {
           <div>
             <label htmlFor="postal-code">Postal code: </label>
             <input
-              onInput={(e) =>
-                PostalCodeValidation(
-                  e,
-                  postalCode,
-                  setPostalCode,
-                  setPostalCodeErr
-                )
-              }
-              onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
-              type="text"
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  PostalCodeValidation(
+                    e.target.value,
+                    postalCode,
+                    setPostalCode,
+                    setPostalCodeErr
+                  );
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
               name="postal-code"
               id="postal-code"
               autoComplete="off"
@@ -266,10 +341,21 @@ export default function Registration() {
           <div>
             <label htmlFor="country">Country: </label>
             <select
-              onClick={(e) =>
-                CountryValidation(e, country, setCountry, setCountryErr)
-              }
-              onBlur={(e) => BlurHandlerRegistr(e, ...restBlurHandlerRegistr)}
+              onClick={(e) => {
+                if (e.target instanceof HTMLSelectElement) {
+                  CountryValidation(
+                    e.target.value,
+                    country,
+                    setCountry,
+                    setCountryErr
+                  );
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLSelectElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
               name="country"
               id="country"
             >

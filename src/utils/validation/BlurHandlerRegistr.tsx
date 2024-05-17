@@ -1,5 +1,5 @@
 type BlurHandlerRegistrProps = (
-  e: React.FocusEvent,
+  name: string,
   setNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
   setLastNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
   setBirthdateFill: React.Dispatch<React.SetStateAction<boolean>>,
@@ -10,7 +10,7 @@ type BlurHandlerRegistrProps = (
 ) => void;
 
 const BlurHandlerRegistr: BlurHandlerRegistrProps = (
-  e,
+  name,
   setNameUserFill,
   setLastNameUserFill,
   setBirthdateFill,
@@ -19,36 +19,38 @@ const BlurHandlerRegistr: BlurHandlerRegistrProps = (
   setCountryFill,
   setPostalCodeFill
 ) => {
-  if (
-    e.target instanceof HTMLInputElement ||
-    e.target instanceof HTMLSelectElement
-  ) {
-    const elem: HTMLInputElement | HTMLSelectElement | null = e.target;
-
-    switch (elem?.name) {
-      case 'name-user':
-        setNameUserFill(true);
-        break;
-      case 'last-name-user':
-        setLastNameUserFill(true);
-        break;
-      case 'birthdate':
-        setBirthdateFill(true);
-        break;
-      case 'street':
-        setStreetFill(true);
-        break;
-      case 'city':
-        setCityFill(true);
-        break;
-      case 'country':
-        setCountryFill(true);
-        break;
-      case 'postal-code':
-        setPostalCodeFill(true);
-        break;
-    }
+  let flag = false;
+  switch (name) {
+    case 'name-user':
+      flag = true;
+      setNameUserFill(true);
+      break;
+    case 'last-name-user':
+      flag = true;
+      setLastNameUserFill(true);
+      break;
+    case 'birthdate':
+      flag = true;
+      setBirthdateFill(true);
+      break;
+    case 'street':
+      flag = true;
+      setStreetFill(true);
+      break;
+    case 'city':
+      flag = true;
+      setCityFill(true);
+      break;
+    case 'country':
+      flag = true;
+      setCountryFill(true);
+      break;
+    case 'postal-code':
+      flag = true;
+      setPostalCodeFill(true);
+      break;
   }
+  return flag;
 };
 
 export default BlurHandlerRegistr;

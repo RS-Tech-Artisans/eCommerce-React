@@ -45,7 +45,11 @@ export default function Login() {
         <div className="login-form_input-box">
           <input
             onInput={(e) => EmailValidation(e, email, setEmail, setEmailErr)}
-            onBlur={(e) => BlurHandler(e, setEmailFill, setPasswordFill)}
+            onBlur={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                BlurHandler(e.target.name, setEmailFill, setPasswordFill);
+              }
+            }}
             name="email"
             type="text"
             placeholder="E-mail"
@@ -59,18 +63,28 @@ export default function Login() {
         <div className="login-form_input-box">
           <input
             className={passInputClasses}
-            onInput={(e) =>
-              PasswordValidation(e, password, setPassword, setPasswordErr)
-            }
-            onBlur={(e) => BlurHandler(e, setEmailFill, setPasswordFill)}
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                PasswordValidation(
+                  e.target.value,
+                  password,
+                  setPassword,
+                  setPasswordErr
+                );
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                BlurHandler(e.target.name, setEmailFill, setPasswordFill);
+              }
+            }}
             type={type}
             name="password"
             placeholder="Password"
           />
           <span
-            onClick={(e) =>
+            onClick={() =>
               TogglePassInput(
-                e,
                 type,
                 setType,
                 setToggleIcon,

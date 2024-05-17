@@ -1,27 +1,28 @@
 type StreetValidationProps = (
-  e: React.FormEvent<HTMLInputElement>,
+  value: string,
   street: string,
   setStreet: React.Dispatch<React.SetStateAction<string>>,
   setStreetErr: React.Dispatch<React.SetStateAction<string>>
 ) => void;
 
 const StreetValidation: StreetValidationProps = (
-  e,
+  value,
   street,
   setStreet,
   setStreetErr
 ) => {
-  if (e.target instanceof HTMLInputElement) {
-    setStreet(e.target.value);
-    const properlyFormat =
-      /^(([A-Za-z]{1}([-0-9a-zA-Z]*[!,?# $%-^&*@.]{1}[-0-9a-zA-Z]{1,}){1,})|([A-Za-z]{1}[a-z0-9]*))$/;
+  let flag = false;
+  setStreet(value);
+  const properlyFormat =
+    /^(([A-Za-z0-9]{1,}([!,?# $%-^&*@.]{1}[0-9a-zA-Z]{1,}){1,})|([A-Za-z0-9]{1,}))$/;
 
-    if (!properlyFormat.test(String(e.target.value))) {
-      setStreetErr('Must contain at least one character');
-    } else {
-      setStreetErr('');
-    }
+  if (!properlyFormat.test(String(value))) {
+    setStreetErr('Must contain at least one character');
+  } else {
+    setStreetErr('');
+    flag = true;
   }
+  return flag;
 };
 
 export default StreetValidation;
