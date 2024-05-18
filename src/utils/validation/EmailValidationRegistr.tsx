@@ -15,7 +15,7 @@ const EmailValidationRegistr: EmailHandlerProps = (
   setEmail(value);
 
   const properlyFormat =
-    /^(([0-9A-Za-z]{1}([0-9A-Za-z]*[.-0-9A-z]{1}[0-9A-Za-z]{1,})){1,}|([0-9A-Za-z]{1,}))@([0-9A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,}$/;
+    /^([0-9A-Za-z]{1}(([0-9A-Za-z]*[.-0-9A-z]{1}[0-9A-Za-z]{1,})){1,}|([0-9A-Za-z]{1,}))@([0-9A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,}$/;
   const whitespace = /\s+/;
   const domainName =
     /^((([0-9A-Za-z]{1}[-0-9A-z]{1,}[0-9A-Za-z]{1})|([0-9A-Za-z]{1,}))@)$/;
