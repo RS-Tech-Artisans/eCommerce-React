@@ -44,7 +44,11 @@ export default function Login() {
         <h1>Login</h1>
         <div className="login-form_input-box">
           <input
-            onInput={(e) => EmailValidation(e, email, setEmail, setEmailErr)}
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                EmailValidation(e.target.value, email, setEmail, setEmailErr);
+              }
+            }}
             onBlur={(e) => {
               if (e.target instanceof HTMLInputElement) {
                 BlurHandler(e.target.name, setEmailFill, setPasswordFill);

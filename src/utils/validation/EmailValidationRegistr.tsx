@@ -38,7 +38,6 @@ const EmailValidationRegistr: EmailHandlerProps = (
     setEmailErr('');
     flag = true;
   }
-
   return flag;
 };
 

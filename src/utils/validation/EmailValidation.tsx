@@ -1,5 +1,5 @@
 type EmailHandlerProps = (
-  e: React.FormEvent<HTMLInputElement>,
+  value: string,
   email: string,
   setEmail: React.Dispatch<React.SetStateAction<string>>,
   setEmailErr: React.Dispatch<React.SetStateAction<string>>
@@ -8,39 +8,40 @@ type EmailHandlerProps = (
 import findCustomer from '../FindCustomer';
 
 const EmailValidation: EmailHandlerProps = async (
-  e,
+  value,
   email,
   setEmail,
   setEmailErr
 ) => {
-  if (e.target instanceof HTMLInputElement) {
-    setEmail(e.target.value);
-    const properlyFormat =
-      /^(([0-9A-Za-z]{1}([0-9A-Za-z]*[.-0-9A-z]{1}[0-9A-Za-z]{1,})){1,}|([0-9A-Za-z]{1,}))@([0-9A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,}$/;
-    const whitespace = /\s+/;
-    const domainName =
-      /^((([0-9A-Za-z]{1}[-0-9A-z]{1,}[0-9A-Za-z]{1})|([0-9A-Za-z]{1,}))@)$/;
-    const charAt =
-      /^((([0-9A-Za-z]{1}[-0-9A-z]{1,}[0-9A-Za-z]{1})|([0-9A-Za-z]{1,})))$/;
+  let flag = false;
+  setEmail(value);
+  const properlyFormat =
+    /^(([0-9A-Za-z]{1}([0-9A-Za-z]*[.-0-9A-z]{1}[0-9A-Za-z]{1,})){1,}|([0-9A-Za-z]{1,}))@([0-9A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,}$/;
+  const whitespace = /\s+/;
+  const domainName =
+    /^((([0-9A-Za-z]{1}[-0-9A-z]{1,}[0-9A-Za-z]{1})|([0-9A-Za-z]{1,}))@)$/;
+  const charAt =
+    /^((([0-9A-Za-z]{1}[-0-9A-z]{1,}[0-9A-Za-z]{1})|([0-9A-Za-z]{1,})))$/;
 
-    if (!properlyFormat.test(String(e.target.value).toLowerCase())) {
+    if (!properlyFormat.test(String(value))) {
       setEmailErr('Incorrect email format');
-      if (charAt.test(String(e.target.value).toLowerCase())) {
+      if (charAt.test(String(value))) {
         setEmailErr('Please enter “@” between local part and domain name');
       }
-      if (domainName.test(String(e.target.value).toLowerCase())) {
+      if (domainName.test(String(value))) {
         setEmailErr('Please enter domain name after “@”');
       }
-      if (whitespace.test(String(e.target.value).toLowerCase())) {
+      if (whitespace.test(String(value))) {
         setEmailErr('Please delete whitespace');
       }
-      if (!e.target.value) setEmailErr('Please fill out this field');
-    } else {
-      setEmailErr('');
-      const findResult = await findCustomer(e.target.value);
-      setEmailErr(findResult);
-    }
+      if (!value) setEmailErr('Please fill out this field');
+  } else {
+    setEmailErr('');
+    flag = true;
+    const findResult = await findCustomer(value);
+    setEmailErr(findResult);
   }
+  return flag;
 };
 
 export default EmailValidation;
