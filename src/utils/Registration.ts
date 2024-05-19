@@ -11,8 +11,7 @@ interface MyApiError {
 }
 
 export const useRegistration = () => {
-  const [loginResult] =
-    useState<ClientResponse<CustomerDraft> | null>(null);
+  const [loginResult] = useState<ClientResponse<CustomerDraft> | null>(null);
   const [error, setError] = useState<MyApiError | null>(null);
 
   const handleRegistration = async (email: string, password: string) => {
