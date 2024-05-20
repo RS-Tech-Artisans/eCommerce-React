@@ -41,11 +41,8 @@ export default function Registration() {
     [country, setCountry] = useState(''),
     [postalCode, setPostalCode] = useState('');
 
-
   const [defaultAdress, setDefaultAdress] = useState('');
-  const handleCheckboxChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDefaultAdress(event.target.checked ? 'true' : 'false');
   };
 
@@ -116,7 +113,7 @@ export default function Registration() {
     cityErr,
     countryErr,
     postalCodeErr,
-    defaultAdress
+    defaultAdress,
   ]);
 
   return (
@@ -387,7 +384,7 @@ export default function Registration() {
         <div>
           <label htmlFor="default-address">Default address</label>
           <input
-            id='default-address'
+            id="default-address"
             type="checkbox"
             name="default-address"
             autoComplete="off"
