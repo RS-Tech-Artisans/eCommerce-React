@@ -1,22 +1,22 @@
 type BlurHandlerProps = (
-  e: React.FocusEvent,
+  name: string,
   setEmailFill: React.Dispatch<React.SetStateAction<boolean>>,
   setPasswordFill: React.Dispatch<React.SetStateAction<boolean>>
 ) => void;
 
-const BlurHandler: BlurHandlerProps = (e, setEmailFill, setPasswordFill) => {
-  if (e.target instanceof HTMLInputElement) {
-    const elem: HTMLInputElement | null = e.target;
-
-    switch (elem?.name) {
-      case 'email':
-        setEmailFill(true);
-        break;
-      case 'password':
-        setPasswordFill(true);
-        break;
-    }
+const BlurHandler: BlurHandlerProps = (name, setEmailFill, setPasswordFill) => {
+  let flag = false;
+  switch (name) {
+    case 'email':
+      flag = true;
+      setEmailFill(true);
+      break;
+    case 'password':
+      flag = true;
+      setPasswordFill(true);
+      break;
   }
+  return flag;
 };
 
 export default BlurHandler;

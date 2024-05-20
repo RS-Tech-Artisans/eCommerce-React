@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ClientResponse } from '@commercetools/platform-sdk';
 import { CustomerSignInResult } from '@commercetools/platform-sdk';
 import {
@@ -6,6 +6,8 @@ import {
   PasswordAuthMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { useNavigate } from 'react-router-dom';
+import { clearTokenCache, myTokenCache } from './tokenStore';
 
 interface MyApiError {
   message: string;
@@ -15,10 +17,14 @@ export const useLogin = () => {
   const [loginResult, setLoginResult] =
     useState<ClientResponse<CustomerSignInResult> | null>(null);
   const [error, setError] = useState<MyApiError | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleLogin = async (email: string, password: string) => {
     console.log('email ', email);
     console.log('password ', password);
+
+    clearTokenCache();
 
     const PasswordOptions: PasswordAuthMiddlewareOptions = {
       host: 'https://auth.us-central1.gcp.commercetools.com',
@@ -31,6 +37,7 @@ export const useLogin = () => {
           password: password,
         },
       },
+      tokenCache: myTokenCache,
       scopes: ['manage_project:my-company'],
       fetch,
     };
@@ -55,15 +62,36 @@ export const useLogin = () => {
         .execute();
       setLoginResult(result);
       setError(null);
+      setIsLoggedIn(true);
+      localStorage.setItem('isLoggedIn', 'true');
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
+      navigate('/main');
     } catch (caughtError) {
       console.log(caughtError);
       setError(caughtError as MyApiError);
     }
   };
 
+  const handleLogout = () => {
+    setLoginResult(null);
+    setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
+    clearTokenCache();
+    navigate('/login');
+  };
+
+  useEffect(() => {
+    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedInStatus);
+  }, []);
+
   return {
     loginResult,
     error,
+    isLoggedIn,
     handleLogin,
+    handleLogout,
   };
 };

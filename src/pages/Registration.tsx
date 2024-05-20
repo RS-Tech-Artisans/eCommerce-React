@@ -1,42 +1,378 @@
-import { useState } from 'react';
-import { useRegistration } from '../utils/Registration';
+import { useState, useEffect } from 'react';
+import BlurHandler from '../utils/validation/BlurHundler';
+import BlurHandlerRegistr from '../utils/validation/BlurHandlerRegistr';
+import EmailValidationRegistr from '../utils/validation/EmailValidationRegistr';
+import PasswordValidation from '../utils/validation/PasswordValidation';
+import NameValidation from '../utils/validation/NameValidation';
+import BirthdateValidation from '../utils/validation/BirthdateValidation';
+import StreetValidation from '../utils/validation/StreetValidation';
+import CityValidation from '../utils/validation/CityValidation';
+import CountryValidation from '../utils/validation/CountryValidation';
+import PostalCodeValidation from '../utils/validation/PostalCodeValidation';
+import TogglePassInput from '../utils/validation/TogglePassInput';
+import { MdEmail } from 'react-icons/md';
+import { FaLock, FaUnlock, FaUserCircle } from 'react-icons/fa';
+import './Registration.css';
+
+type RestBlurHandlerRegistrProps = [
+  setNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setLastNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setBirthdateFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setStreetFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setCityFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setCountryFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setPostalCodeFill: React.Dispatch<React.SetStateAction<boolean>>,
+];
 
 export default function Registration() {
-  const { loginResult, error, handleRegistration } = useRegistration();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const iconPassive = <FaLock />;
+  const iconActive = <FaUnlock />;
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    await handleRegistration(email, password);
-  };
+  const [type, setType] = useState('password');
+
+  const [email, setEmail] = useState(''),
+    [password, setPassword] = useState(''),
+    [nameUser, setNameUser] = useState(''),
+    [lastNameUser, setLastNameUser] = useState(''),
+    [birthdate, setBirthdate] = useState(''),
+    [street, setStreet] = useState(''),
+    [city, setCity] = useState(''),
+    [country, setCountry] = useState(''),
+    [postalCode, setPostalCode] = useState('');
+
+  const [emailErr, setEmailErr] = useState('Please fill out this field'),
+    [passwordErr, setPasswordErr] = useState('Please fill out this field'),
+    [nameUserErr, setNameUserErr] = useState('Please fill out this field'),
+    [lastNameUserErr, setLastNameUserErr] = useState(
+      'Please fill out this field'
+    ),
+    [birthdateErr, setBirthdateErr] = useState('Please fill out this field'),
+    [streetErr, setStreetErr] = useState('Please fill out this field'),
+    [cityErr, setCityErr] = useState('Please fill out this field'),
+    [countryErr, setCountryErr] = useState('Please select from the list'),
+    [postalCodeErr, setPostalCodeErr] = useState('Please fill out this field');
+
+  const [emailFill, setEmailFill] = useState(false),
+    [passwordFill, setPasswordFill] = useState(false),
+    [nameUserFill, setNameUserFill] = useState(false),
+    [lastNameUserFill, setLastNameUserFill] = useState(false),
+    [birthdateFill, setBirthdateFill] = useState(false),
+    [streetFill, setStreetFill] = useState(false),
+    [cityFill, setCityFill] = useState(false),
+    [countryFill, setCountryFill] = useState(false),
+    [postalCodeFill, setPostalCodeFill] = useState(false);
+
+  const [formValid, setFormValid] = useState(false);
+
+  const [passInputClasses, setPassInputClasses] =
+    useState('pass-input-passive');
+  const [toggleIcon, setToggleIcon] = useState(iconPassive);
+  const [toggleIconClasses, setToggleIconClasses] = useState(
+    'pass-toggle-icon-passive'
+  );
+
+  const restBlurHandlerRegistr: RestBlurHandlerRegistrProps = [
+    setNameUserFill,
+    setLastNameUserFill,
+    setBirthdateFill,
+    setStreetFill,
+    setCityFill,
+    setCountryFill,
+    setPostalCodeFill,
+  ];
+
+  useEffect(() => {
+    if (
+      emailErr ||
+      passwordErr ||
+      nameUserErr ||
+      lastNameUserErr ||
+      birthdateErr ||
+      streetErr ||
+      cityErr ||
+      countryErr ||
+      postalCodeErr
+    ) {
+      setFormValid(false);
+    } else setFormValid(true);
+  }, [
+    emailErr,
+    passwordErr,
+    nameUserErr,
+    lastNameUserErr,
+    birthdateErr,
+    streetErr,
+    cityErr,
+    countryErr,
+    postalCodeErr,
+  ]);
 
   return (
-    <div>
-      <h1>Registration page</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email:
+    <>
+      <form className="registration-form" action="">
+        <h1>Registration</h1>
+        <div className="registration-form_input-box">
           <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                EmailValidationRegistr(
+                  e.target.value,
+                  email,
+                  setEmail,
+                  setEmailErr
+                );
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                BlurHandler(e.target.name, setEmailFill, setPasswordFill);
+              }
+            }}
+            name="email"
+            type="text"
+            placeholder="E-mail"
+            autoComplete="off"
           />
-        </label>
-        <br />
-        <label>
-          Password:
+          <MdEmail />
+        </div>
+        {emailFill && emailErr && (
+          <div style={{ color: 'red' }}>{emailErr}</div>
+        )}
+        <div className="registration-form_input-box">
           <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            className={passInputClasses}
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                PasswordValidation(
+                  e.target.value,
+                  password,
+                  setPassword,
+                  setPasswordErr
+                );
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                BlurHandler(e.target.name, setEmailFill, setPasswordFill);
+              }
+            }}
+            type={type}
+            name="password"
+            placeholder="Password"
           />
-        </label>
-        <br />
-        <button type="submit">Register</button>
+          <span
+            onClick={() =>
+              TogglePassInput(
+                type,
+                setType,
+                setToggleIcon,
+                iconActive,
+                setPassInputClasses,
+                setToggleIconClasses,
+                iconPassive
+              )
+            }
+            className={`toggle ${toggleIconClasses}`}
+          >
+            {toggleIcon}
+          </span>
+        </div>
+        {passwordFill && passwordErr && (
+          <div style={{ color: 'red' }}>{passwordErr}</div>
+        )}
+        <div className="registration-form_input-box">
+          <input
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                NameValidation(
+                  e.target.value,
+                  nameUser,
+                  setNameUser,
+                  setNameUserErr
+                );
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+              }
+            }}
+            name="name-user"
+            type="text"
+            placeholder="First Name"
+            autoComplete="off"
+          />
+          <FaUserCircle />
+        </div>
+        {nameUserFill && nameUserErr && (
+          <div style={{ color: 'red' }}>{nameUserErr}</div>
+        )}
+        <div className="registration-form_input-box">
+          <input
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                NameValidation(
+                  e.target.value,
+                  lastNameUser,
+                  setLastNameUser,
+                  setLastNameUserErr
+                );
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+              }
+            }}
+            name="last-name-user"
+            type="text"
+            placeholder="Last Name"
+            autoComplete="off"
+          />
+          <FaUserCircle />
+        </div>
+        {lastNameUserFill && lastNameUserErr && (
+          <div style={{ color: 'red' }}>{lastNameUserErr}</div>
+        )}
+        <div className="registration-form_input-box">
+          <label htmlFor="date">Birthdate: </label>
+          <div>
+            <input
+              id="date"
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BirthdateValidation(
+                    e.target.value,
+                    birthdate,
+                    setBirthdate,
+                    setBirthdateErr
+                  );
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
+              name="birthdate"
+              type="date"
+            />
+          </div>
+        </div>
+        {birthdateFill && birthdateErr && (
+          <div style={{ color: 'red' }}>{birthdateErr}</div>
+        )}
+        <div className="registration-form_input-box">
+          <p>Address fields:</p>
+          <div>
+            <label htmlFor="street">Street: </label>
+            <input
+              id="street"
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  StreetValidation(
+                    e.target.value,
+                    street,
+                    setStreet,
+                    setStreetErr
+                  );
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
+              name="street"
+              type="text"
+              autoComplete="off"
+            />
+          </div>
+          {streetFill && streetErr && (
+            <div style={{ color: 'red' }}>{streetErr}</div>
+          )}
+          <div>
+            <label htmlFor="city">City: </label>
+            <input
+              id="city"
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  CityValidation(e.target.value, city, setCity, setCityErr);
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
+              name="city"
+              type="text"
+              autoComplete="off"
+            />
+          </div>
+          {cityFill && cityErr && <div style={{ color: 'red' }}>{cityErr}</div>}
+          <div>
+            <label htmlFor="postal-code">Postal code: </label>
+            <input
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  PostalCodeValidation(
+                    e.target.value,
+                    postalCode,
+                    setPostalCode,
+                    setPostalCodeErr
+                  );
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
+              name="postal-code"
+              id="postal-code"
+              autoComplete="off"
+              required
+            />
+          </div>
+          {postalCodeFill && postalCodeErr && (
+            <div style={{ color: 'red' }}>{postalCodeErr}</div>
+          )}
+          <div>
+            <label htmlFor="country">Country: </label>
+            <select
+              onClick={(e) => {
+                if (e.target instanceof HTMLSelectElement) {
+                  CountryValidation(
+                    e.target.value,
+                    country,
+                    setCountry,
+                    setCountryErr
+                  );
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLSelectElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
+              name="country"
+              id="country"
+            >
+              <option value=""></option>
+              <option value="USA">USA</option>
+            </select>
+          </div>
+          {countryFill && countryErr && (
+            <div style={{ color: 'red' }}>{countryErr}</div>
+          )}
+        </div>
+        <div>
+          <button disabled={!formValid} type="submit">
+            Registration
+          </button>
+        </div>
       </form>
-      {loginResult && <p>Registration successful!</p>}
-      {error && <p>Error: {error.message}</p>}
-    </div>
+    </>
   );
 }
