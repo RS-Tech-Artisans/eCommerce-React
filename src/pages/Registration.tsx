@@ -15,6 +15,7 @@ import { FaLock, FaUnlock, FaUserCircle } from 'react-icons/fa';
 import './Registration.css';
 import './Pages.css';
 import { useRegistration } from '../utils/Registration';
+import { useLogin } from '../utils/Login';
 
 type RestBlurHandlerRegistrProps = [
   React.Dispatch<React.SetStateAction<boolean>>,
@@ -68,6 +69,7 @@ export default function Registration() {
     [postalCodeFill, setPostalCodeFill] = useState(false);
 
   const [formValid, setFormValid] = useState(false);
+  const { handleLogin } = useLogin();
 
   const [passInputClasses, setPassInputClasses] =
     useState('pass-input-passive');
@@ -513,7 +515,7 @@ export default function Registration() {
         </div>
         <div>
           <button
-            onClick={() =>
+            onClick={() => {
               handleRegistration(
                 email,
                 password,
@@ -524,8 +526,9 @@ export default function Registration() {
                 city,
                 postalCode,
                 'US'
-              )
-            }
+              );
+              handleLogin(email, password);
+            }}
             disabled={!formValid}
             type="submit"
           >
