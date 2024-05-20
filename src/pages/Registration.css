@@ -84,3 +84,16 @@ select {
   justify-content: start;
   padding: 5px 0;
 }
+
+.registration-form_checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.registration-form_checkbox input {
+  width: 30%;
+  height: 30%;
+}

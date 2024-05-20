@@ -43,6 +43,7 @@ export default function Registration() {
     [postalCode, setPostalCode] = useState('');
 
   const [defaultAdress, setDefaultAdress] = useState<boolean>(false);
+  const [billingAdress, setBillingAdress] = useState<boolean>(false);
 
   const [emailErr, setEmailErr] = useState('Please fill out this field'),
     [passwordErr, setPasswordErr] = useState('Please fill out this field'),
@@ -379,17 +380,136 @@ export default function Registration() {
             <div style={{ color: 'red' }}>{countryErr}</div>
           )}
         </div>
-        <div>
-          <label htmlFor="default-address">Default address</label>
-          <input
-            id="default-address"
-            type="checkbox"
-            name="default-address"
-            checked={defaultAdress}
-            onChange={(): void => {
-              setDefaultAdress(!defaultAdress);
-            }}
-          />
+        <div style={{ display: 'flex' }}>
+          <div className="registration-form_checkbox">
+            <label htmlFor="default-address">Default address</label>
+            <input
+              id="default-address"
+              type="checkbox"
+              name="default-address"
+              checked={defaultAdress}
+              onChange={(): void => {
+                setDefaultAdress(!defaultAdress);
+              }}
+            />
+          </div>
+          <div className="registration-form_checkbox">
+            <label htmlFor="billing-address">Billing address</label>
+            <input
+              id="billing-address"
+              type="checkbox"
+              name="billing-address"
+              checked={billingAdress}
+              onChange={(): void => {
+                setBillingAdress(!billingAdress);
+              }}
+            />
+          </div>
+        </div>
+        <div className="registration-form_input-box">
+          <p>Billing Address fields:</p>
+          <div>
+            <label htmlFor="street">Street: </label>
+            <input
+              id="street"
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  StreetValidation(
+                    e.target.value,
+                    street,
+                    setStreet,
+                    setStreetErr
+                  );
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
+              name="street"
+              type="text"
+              autoComplete="off"
+            />
+          </div>
+          {streetFill && streetErr && (
+            <div style={{ color: 'red' }}>{streetErr}</div>
+          )}
+          <div>
+            <label htmlFor="city">City: </label>
+            <input
+              id="city"
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  CityValidation(e.target.value, city, setCity, setCityErr);
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
+              name="city"
+              type="text"
+              autoComplete="off"
+            />
+          </div>
+          {cityFill && cityErr && <div style={{ color: 'red' }}>{cityErr}</div>}
+          <div>
+            <label htmlFor="postal-code">Postal code: </label>
+            <input
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  PostalCodeValidation(
+                    e.target.value,
+                    postalCode,
+                    setPostalCode,
+                    setPostalCodeErr
+                  );
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
+              name="postal-code"
+              id="postal-code"
+              autoComplete="off"
+              required
+            />
+          </div>
+          {postalCodeFill && postalCodeErr && (
+            <div style={{ color: 'red' }}>{postalCodeErr}</div>
+          )}
+          <div>
+            <label htmlFor="country">Country: </label>
+            <select
+              onClick={(e) => {
+                if (e.target instanceof HTMLSelectElement) {
+                  CountryValidation(
+                    e.target.value,
+                    country,
+                    setCountry,
+                    setCountryErr
+                  );
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLSelectElement) {
+                  BlurHandlerRegistr(e.target.name, ...restBlurHandlerRegistr);
+                }
+              }}
+              name="country"
+              id="country"
+            >
+              <option value=""></option>
+              <option value="USA">USA</option>
+            </select>
+          </div>
+          {countryFill && countryErr && (
+            <div style={{ color: 'red' }}>{countryErr}</div>
+          )}
         </div>
         <div>
           <button
