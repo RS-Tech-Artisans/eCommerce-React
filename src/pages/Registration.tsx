@@ -13,15 +13,16 @@ import TogglePassInput from '../utils/validation/TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock, FaUserCircle } from 'react-icons/fa';
 import './Registration.css';
+import { useRegistration } from '../utils/Registration';
 
 type RestBlurHandlerRegistrProps = [
-  setNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
-  setLastNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
-  setBirthdateFill: React.Dispatch<React.SetStateAction<boolean>>,
-  setStreetFill: React.Dispatch<React.SetStateAction<boolean>>,
-  setCityFill: React.Dispatch<React.SetStateAction<boolean>>,
-  setCountryFill: React.Dispatch<React.SetStateAction<boolean>>,
-  setPostalCodeFill: React.Dispatch<React.SetStateAction<boolean>>,
+  React.Dispatch<React.SetStateAction<boolean>>,
+  React.Dispatch<React.SetStateAction<boolean>>,
+  React.Dispatch<React.SetStateAction<boolean>>,
+  React.Dispatch<React.SetStateAction<boolean>>,
+  React.Dispatch<React.SetStateAction<boolean>>,
+  React.Dispatch<React.SetStateAction<boolean>>,
+  React.Dispatch<React.SetStateAction<boolean>>,
 ];
 
 export default function Registration() {
@@ -81,6 +82,8 @@ export default function Registration() {
     setPostalCodeFill,
   ];
 
+  const { error, registrationResult, handleRegistration } = useRegistration();
+
   useEffect(() => {
     if (
       emailErr ||
@@ -109,7 +112,12 @@ export default function Registration() {
 
   return (
     <>
-      <form className="registration-form" action="">
+      <form
+        className="registration-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <h1>Registration</h1>
         <div className="registration-form_input-box">
           <input
@@ -368,9 +376,32 @@ export default function Registration() {
           )}
         </div>
         <div>
-          <button disabled={!formValid} type="submit">
+          <button
+            onClick={() =>
+              handleRegistration(
+                email,
+                password,
+                nameUser,
+                lastNameUser,
+                birthdate,
+                street,
+                city,
+                postalCode,
+                'US'
+              )
+            }
+            disabled={!formValid}
+            type="submit"
+          >
             Registration
           </button>
+        </div>
+
+        <div style={{ color: 'green' }}>
+          {registrationResult && !error && <p>Registration successful!</p>}
+        </div>
+        <div style={{ color: 'red' }}>
+          {error && <p>Error: {error.message}</p>}
         </div>
       </form>
     </>
