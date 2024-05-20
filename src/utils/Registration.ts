@@ -44,6 +44,7 @@ export const useRegistration = () => {
                 postalCode,
               },
             ],
+            defaultShippingAddress: 0 || undefined,
           },
         })
         .execute();

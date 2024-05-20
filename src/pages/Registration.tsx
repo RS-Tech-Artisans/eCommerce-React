@@ -41,10 +41,7 @@ export default function Registration() {
     [country, setCountry] = useState(''),
     [postalCode, setPostalCode] = useState('');
 
-  const [defaultAdress, setDefaultAdress] = useState('');
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDefaultAdress(event.target.checked ? 'true' : 'false');
-  };
+  const [defaultAdress, setDefaultAdress] = useState<boolean>(false);
 
   const [emailErr, setEmailErr] = useState('Please fill out this field'),
     [passwordErr, setPasswordErr] = useState('Please fill out this field'),
@@ -387,8 +384,10 @@ export default function Registration() {
             id="default-address"
             type="checkbox"
             name="default-address"
-            autoComplete="off"
-            onChange={handleCheckboxChange}
+            checked={defaultAdress}
+            onChange={(): void => {
+              setDefaultAdress(!defaultAdress);
+            }}
           />
         </div>
         <div>
