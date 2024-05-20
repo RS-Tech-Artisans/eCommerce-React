@@ -13,6 +13,7 @@ const NameValidation: NameValidationProps = (
 ) => {
   let flag = false;
   setName(value);
+  // The regular expression assumes at least one character and no special characters or numbers
   const properlyFormat =
     /^((([a-zA-Z]{1,}[ .-]{1}[a-zA-Z]{1,}){1,})|([a-zA-Z]{1,}))$/;
 
@@ -20,7 +21,6 @@ const NameValidation: NameValidationProps = (
     setNameErr(
       'Field must contain at least one character and no special characters or numbers'
     );
-    if (!value) setNameErr('Please fill out this field');
   } else {
     setNameErr('');
     flag = true;

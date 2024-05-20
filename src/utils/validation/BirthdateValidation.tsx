@@ -24,13 +24,15 @@ const BirthdateValidation: BirthdateValidationProps = (
     currentDate.getDate() >= 10
       ? currentDate.getDate()
       : `0${currentDate.getDate()}`;
-  const minimumAge = `${currentDate.getFullYear() - 14}-${currentMonth}-${currentDay}`;
-  const maximumAge = `${currentDate.getFullYear() - 100}-${currentMonth}-${currentDay}`;
+  const MINIMUM_AGE_REQUIRED = 14;
+  const MAXIMUM_ALLOWED_AGE = 100;
+  const minimumAge = `${currentDate.getFullYear() - MINIMUM_AGE_REQUIRED}-${currentMonth}-${currentDay}`;
+  const maximumAge = `${currentDate.getFullYear() - MAXIMUM_ALLOWED_AGE}-${currentMonth}-${currentDay}`;
 
   if (value.length !== 10)
     setBirthdateErr('Please fill in this field correctly');
   else if (!(new Date(minimumAge) >= new Date(value))) {
-    setBirthdateErr('The minimum age is 14 years');
+    setBirthdateErr(`The minimum age is ${MINIMUM_AGE_REQUIRED} years`);
   } else if (new Date(maximumAge) >= new Date(value)) {
     setBirthdateErr('The maximum possible age is exceeded');
   } else {

@@ -47,7 +47,7 @@ export default function Registration() {
       'Please fill out this field'
     ),
     [birthdateErr, setBirthdateErr] = useState('Please fill out this field'),
-    [streetErr, setStreetErr] = useState('Must contain at least one character'),
+    [streetErr, setStreetErr] = useState('Please fill out this field'),
     [cityErr, setCityErr] = useState('Please fill out this field'),
     [countryErr, setCountryErr] = useState('Please select from the list'),
     [postalCodeErr, setPostalCodeErr] = useState('Please fill out this field');

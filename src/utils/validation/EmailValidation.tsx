@@ -15,11 +15,15 @@ const EmailValidation: EmailHandlerProps = async (
 ) => {
   let flag = false;
   setEmail(value);
+  // The regular expression assumes the syntax of the correct email address format
   const properlyFormat =
     /^([0-9A-Za-z]{1}(([0-9A-Za-z]*[.-0-9A-z]{1}[0-9A-Za-z]{1,})){1,}|([0-9A-Za-z]{1,}))@([0-9A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,}$/;
+  // The regular expression assumes no whitespace
   const whitespace = /\s+/;
+  // The regular expression assumes that the “@” character is entered between the local part and the domain name
   const domainName =
     /^((([0-9A-Za-z]{1}[-0-9A-z]{1,}[0-9A-Za-z]{1})|([0-9A-Za-z]{1,}))@)$/;
+  // The regular expression assumes that enter domain name after “@”
   const charAt =
     /^((([0-9A-Za-z]{1}[-0-9A-z]{1,}[0-9A-Za-z]{1})|([0-9A-Za-z]{1,})))$/;
 

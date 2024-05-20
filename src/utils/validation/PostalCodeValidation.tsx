@@ -13,6 +13,7 @@ const PostalCodeValidation: PostalCodeValidationProps = (
 ) => {
   let flag = false;
   setPostalCode(value);
+  // The regular expression assumes the format XXXXX(only digits) or XXXXX-YYYY, where XXXXX - only digits and YYYY - only digits or only uppercase letters (A-Z)
   const properlyFormat = /^[0-9]{5}((-[0-9]{4})|(-[A-Z]{4}))?$/;
 
   if (!properlyFormat.test(String(value))) {

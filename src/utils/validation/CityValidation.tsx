@@ -13,6 +13,7 @@ const CityValidation: CityValidationProps = (
 ) => {
   let flag = false;
   setCity(value);
+  // The regular expression assumes at least one character and no special characters or numbers
   const properlyFormat =
     /^((([a-zA-Z]{1,}[ .-]{1}[a-zA-Z]{1,}){1,})|([a-zA-Z]{1,}))$/;
 
@@ -20,7 +21,6 @@ const CityValidation: CityValidationProps = (
     setCityErr(
       'Field must contain at least one character and no special characters or numbers'
     );
-    if (!value) setCityErr('Please fill out this field');
   } else {
     setCityErr('');
     flag = true;

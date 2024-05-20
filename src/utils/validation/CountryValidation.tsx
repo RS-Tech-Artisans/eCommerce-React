@@ -13,7 +13,7 @@ const CountryValidation: CountryValidationProps = (
 ) => {
   let flag = false;
   setCountry(value);
-  if (!value.length) setCountryErr('Please select from the list');
+  if (!value) setCountryErr('Please select from the list');
   else {
     flag = true;
     setCountryErr('');
