@@ -42,6 +42,8 @@ export default function Registration() {
     [country, setCountry] = useState(''),
     [postalCode, setPostalCode] = useState('');
 
+  const [defaultAdress, setDefaultAdress] = useState<boolean>(false);
+
   const [emailErr, setEmailErr] = useState('Please fill out this field'),
     [passwordErr, setPasswordErr] = useState('Please fill out this field'),
     [nameUserErr, setNameUserErr] = useState('Please fill out this field'),
@@ -109,6 +111,7 @@ export default function Registration() {
     cityErr,
     countryErr,
     postalCodeErr,
+    defaultAdress,
   ]);
 
   return (
@@ -375,6 +378,18 @@ export default function Registration() {
           {countryFill && countryErr && (
             <div style={{ color: 'red' }}>{countryErr}</div>
           )}
+        </div>
+        <div>
+          <label htmlFor="default-address">Default address</label>
+          <input
+            id="default-address"
+            type="checkbox"
+            name="default-address"
+            checked={defaultAdress}
+            onChange={(): void => {
+              setDefaultAdress(!defaultAdress);
+            }}
+          />
         </div>
         <div>
           <button
