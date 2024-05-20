@@ -1,6 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import './NavBar.css';
+import LogoutButton from '../components/LogoutButton';
 
 function NavBar() {
   return (
@@ -9,6 +10,7 @@ function NavBar() {
         <Link to="/main"> Main </Link>
         <Link to="/login"> Login </Link>
         <Link to="/register"> Registration </Link>
+        <LogoutButton />
       </Navbar>
     </div>
   );

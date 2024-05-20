@@ -7,6 +7,7 @@ import {
 } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { useNavigate } from 'react-router-dom';
+import { clearTokenCache, myTokenCache } from './tokenStore';
 
 interface MyApiError {
   message: string;
@@ -19,14 +20,11 @@ export const useLogin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loggedInStatus = sessionStorage.getItem('isLoggedIn') === 'true';
-    setIsLoggedIn(loggedInStatus);
-  }, []);
-
   const handleLogin = async (email: string, password: string) => {
     console.log('email ', email);
     console.log('password ', password);
+
+    clearTokenCache();
 
     const PasswordOptions: PasswordAuthMiddlewareOptions = {
       host: 'https://auth.us-central1.gcp.commercetools.com',
@@ -39,6 +37,7 @@ export const useLogin = () => {
           password: password,
         },
       },
+      tokenCache: myTokenCache,
       scopes: ['manage_project:my-company'],
       fetch,
     };
@@ -64,7 +63,10 @@ export const useLogin = () => {
       setLoginResult(result);
       setError(null);
       setIsLoggedIn(true);
-      sessionStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('isLoggedIn', 'true');
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
       navigate('/main');
     } catch (caughtError) {
       console.log(caughtError);
@@ -72,10 +74,24 @@ export const useLogin = () => {
     }
   };
 
+  const handleLogout = () => {
+    setLoginResult(null);
+    setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
+    clearTokenCache();
+    navigate('/login');
+  };
+
+  useEffect(() => {
+    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedInStatus);
+  }, []);
+
   return {
     loginResult,
     error,
-    handleLogin,
     isLoggedIn,
+    handleLogin,
+    handleLogout,
   };
 };
