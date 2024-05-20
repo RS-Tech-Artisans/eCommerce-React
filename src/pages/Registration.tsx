@@ -380,7 +380,7 @@ export default function Registration() {
             <div style={{ color: 'red' }}>{countryErr}</div>
           )}
         </div>
-        <div style={{display: 'flex'}}>
+        <div style={{ display: 'flex' }}>
           <div className="registration-form_checkbox">
             <label htmlFor="default-address">Default address</label>
             <input
