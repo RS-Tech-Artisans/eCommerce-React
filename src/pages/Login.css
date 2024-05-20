@@ -1,11 +1,47 @@
 .login-form {
-  position: absolute;
-  left: calc(50vw - 130px);
-  top: calc(50vh - 135px);
+  width: 420px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  color: #fff;
+  margin: 100px auto 0;
 }
 
-.login-form_input-box {
-  margin-top: 30px;
+.login-form h1 {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-form div {
+  width: 100%;
+  border-radius: 10px;
+  padding: 5px 40px;
+  margin: 5px 0;
+}
+
+.login-form_input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  outline: none;
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+  padding: 20px 45px 20px 20px;
+}
+
+.login-form_input-box input::placeholder {
+  color: #fff;
+}
+
+.login-form_input-box svg {
+  position: absolute;
+  right: 60px;
+  margin-top: 23px;
 }
 
 .pass-toggle-icon-passive,
@@ -14,5 +50,36 @@
 }
 
 .login-form button {
-  margin-top: 20px;
+  width: 100%;
+  height: 45px;
+  background: #fff;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10 px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  font-weight: 700;
+  margin: 30px 0 10px;
+}
+
+.login-form button:hover {
+  background: #dbf9ff;
+}
+
+.login-form div div p {
+  font-size: 14.5px;
+  text-align: center;
+  margin-top: 20px 0 15px;
+}
+
+.login-form div div p a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-form div div p a:hover {
+  text-decoration: underline;
 }

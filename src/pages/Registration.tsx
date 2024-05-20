@@ -13,6 +13,7 @@ import TogglePassInput from '../utils/validation/TogglePassInput';
 import { MdEmail } from 'react-icons/md';
 import { FaLock, FaUnlock, FaUserCircle } from 'react-icons/fa';
 import './Registration.css';
+import './Pages.css';
 
 type RestBlurHandlerRegistrProps = [
   setNameUserFill: React.Dispatch<React.SetStateAction<boolean>>,
