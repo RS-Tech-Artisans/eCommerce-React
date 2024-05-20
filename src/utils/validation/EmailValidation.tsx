@@ -5,7 +5,7 @@ type EmailHandlerProps = (
   setEmailErr: React.Dispatch<React.SetStateAction<string>>
 ) => void;
 
-import findCustomer from '../FindCustomer';
+import { findUser } from '../FindCustomer';
 
 const EmailValidation: EmailHandlerProps = async (
   value,
@@ -42,7 +42,7 @@ const EmailValidation: EmailHandlerProps = async (
   } else {
     setEmailErr('');
     flag = true;
-    const findResult = await findCustomer(value);
+    const findResult = await findUser(value);
     setEmailErr(findResult);
   }
   return flag;
