@@ -26,12 +26,11 @@ export default function Login() {
 
   const [formValid, setFormValid] = useState(false);
 
-  const [passInputClasses, setPassInputClasses] = useState(
-    'login-form_pass-passive'
-  );
+  const [passInputClasses, setPassInputClasses] =
+    useState('pass-input-passive');
   const [toggleIcon, setToggleIcon] = useState(iconPassive);
   const [toggleIconClasses, setToggleIconClasses] = useState(
-    'login-form_toggle-icon-passive'
+    'pass-toggle-icon-passive'
   );
 
   useEffect(() => {
@@ -52,8 +51,16 @@ export default function Login() {
         <h1>Login</h1>
         <div className="login-form_input-box">
           <input
-            onInput={(e) => EmailValidation(e, email, setEmail, setEmailErr)}
-            onBlur={(e) => BlurHandler(e, setEmailFill, setPasswordFill)}
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                EmailValidation(e.target.value, email, setEmail, setEmailErr);
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                BlurHandler(e.target.name, setEmailFill, setPasswordFill);
+              }
+            }}
             name="email"
             type="text"
             placeholder="E-mail"
@@ -67,18 +74,28 @@ export default function Login() {
         <div className="login-form_input-box">
           <input
             className={passInputClasses}
-            onInput={(e) =>
-              PasswordValidation(e, password, setPassword, setPasswordErr)
-            }
-            onBlur={(e) => BlurHandler(e, setEmailFill, setPasswordFill)}
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                PasswordValidation(
+                  e.target.value,
+                  password,
+                  setPassword,
+                  setPasswordErr
+                );
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                BlurHandler(e.target.name, setEmailFill, setPasswordFill);
+              }
+            }}
             type={type}
             name="password"
             placeholder="Password"
           />
           <span
-            onClick={(e) =>
+            onClick={() =>
               TogglePassInput(
-                e,
                 type,
                 setType,
                 setToggleIcon,

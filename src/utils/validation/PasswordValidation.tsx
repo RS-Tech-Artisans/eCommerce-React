@@ -1,53 +1,57 @@
 type PasswordValidationProps = (
-  e: React.FormEvent<HTMLInputElement>,
+  value: string,
   password: string,
   setPassword: React.Dispatch<React.SetStateAction<string>>,
   setPasswordErr: React.Dispatch<React.SetStateAction<string>>
 ) => void;
 
 const PasswordValidation: PasswordValidationProps = (
-  e,
+  value,
   password,
   setPassword,
   setPasswordErr
 ) => {
-  if (e.target instanceof HTMLInputElement) {
-    setPassword(e.target.value);
+  let flag = false;
+  setPassword(value);
+  // The regular expression assumes that the password must be at least 8 characters long, contain at least one uppercase letter (A-Z), one lowercase letter, and one number (0-9);
+  const properlyFormat = /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[\S]{8,}/;
+  // The regular expression assumes that the password must contain at least one uppercase letter (A-Z)
+  const uppercaseLetter = /(?=.*[A-Z])/;
+  // The regular expression assumes that the password must contain at least one lowercase letter (a-z)
+  const lowercaseLetter = /(?=.*[a-z])/;
+  // The regular expression assumes that the password must contain at least one digit (0-9)
+  const digit = /(?=.*\d)/;
+  // The regular expression assumes no whitespace
+  const whitespace = /\s+/;
 
-    const uppercaseLetter = /(?=.*[A-Z])/;
-    const lowercaseLetter = /(?=.*[a-z])/;
-    const digit = /(?=.*\d)/;
-    const specialChar = /(?=.*[!@#$%^&*])/;
-    const whitespace = /\s+/;
-
-    if (e.target.value.length < 8) {
+  if (!properlyFormat.test(String(value))) {
+    setPasswordErr('Incorrect password format');
+    if (value.length < 8) {
       setPasswordErr('Password must be at least 8 characters long');
-      if (!specialChar.test(String(e.target.value).toLowerCase())) {
-        setPasswordErr(
-          'Password must contain at least one special character (e.g., !@#$%^&*)'
-        );
-      }
-      if (!uppercaseLetter.test(String(e.target.value))) {
-        setPasswordErr(
-          'Password must contain at least one uppercase letter (A-Z)'
-        );
-      }
-      if (!lowercaseLetter.test(String(e.target.value).toLowerCase())) {
-        setPasswordErr(
-          'Password must contain at least one lowercase letter (a-z)'
-        );
-      }
-      if (!digit.test(String(e.target.value).toLowerCase())) {
-        setPasswordErr('Password must contain at least one digit (0-9)');
-      }
-      if (whitespace.test(String(e.target.value).toLowerCase())) {
-        setPasswordErr('Please delete whitespace');
-      }
-      if (!e.target.value) setPasswordErr('Please fill out this field');
-    } else {
-      setPasswordErr('');
     }
+    if (!uppercaseLetter.test(String(value))) {
+      setPasswordErr(
+        'Password must contain at least one uppercase letter (A-Z)'
+      );
+    }
+    if (!lowercaseLetter.test(String(value))) {
+      setPasswordErr(
+        'Password must contain at least one lowercase letter (a-z)'
+      );
+    }
+    if (!digit.test(String(value).toLowerCase())) {
+      setPasswordErr('Password must contain at least one digit (0-9)');
+    }
+    if (!value) setPasswordErr('Please fill out this field');
+  } else {
+    setPasswordErr('');
+    flag = true;
   }
+  if (whitespace.test(String(value).toLowerCase())) {
+    setPasswordErr('Please delete whitespace');
+  }
+
+  return flag;
 };
 
 export default PasswordValidation;

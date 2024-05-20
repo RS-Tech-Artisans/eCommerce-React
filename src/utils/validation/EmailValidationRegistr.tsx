@@ -5,9 +5,7 @@ type EmailHandlerProps = (
   setEmailErr: React.Dispatch<React.SetStateAction<string>>
 ) => void;
 
-import findCustomer from '../FindCustomer';
-
-const EmailValidation: EmailHandlerProps = async (
+const EmailValidationRegistr: EmailHandlerProps = (
   value,
   email,
   setEmail,
@@ -15,6 +13,7 @@ const EmailValidation: EmailHandlerProps = async (
 ) => {
   let flag = false;
   setEmail(value);
+
   // The regular expression assumes the syntax of the correct email address format
   const properlyFormat =
     /^([0-9A-Za-z]{1}(([0-9A-Za-z]*[.-0-9A-z]{1}[0-9A-Za-z]{1,})){1,}|([0-9A-Za-z]{1,}))@([0-9A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,}$/;
@@ -42,10 +41,8 @@ const EmailValidation: EmailHandlerProps = async (
   } else {
     setEmailErr('');
     flag = true;
-    const findResult = await findCustomer(value);
-    setEmailErr(findResult);
   }
   return flag;
 };
 
-export default EmailValidation;
+export default EmailValidationRegistr;
