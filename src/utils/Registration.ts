@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   ClientResponse,
-  CustomerDraft,
+  //CustomerDraft,
   CustomerSignInResult,
 } from '@commercetools/platform-sdk';
 import { apiRoot } from './getProjectInfo';
@@ -11,36 +11,42 @@ interface MyApiError {
 }
 
 export const useRegistration = () => {
-  const [loginResult] = useState<ClientResponse<CustomerDraft> | null>(null);
+  const [registrationResult, setRegistrationResult] = useState<ClientResponse<CustomerSignInResult> | null>(null);
   const [error, setError] = useState<MyApiError | null>(null);
-
-  const handleRegistration = async (email: string, password: string) => {
-    console.log('email ', email);
-    console.log('password ', password);
-
+  const handleRegistration = async (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    dateOfBirth: string,
+    street: string,
+    city: string,
+    postalCode: string,
+    country: string
+  ) => {
     try {
       const result: ClientResponse<CustomerSignInResult> = await apiRoot
         .me()
         .signup()
         .post({
           body: {
-            email: 'jenner@example.com',
-            password: 'password',
-            firstName: 'Jenniferr',
-            lastName: 'Robinsonn',
-            dateOfBirth: '2013-12-22',
+            email,
+            password,
+            firstName,
+            lastName,
+            dateOfBirth,
             addresses: [
               {
-                country: 'US',
-                city: 'n',
-                streetName: 'd2g',
-                postalCode: '10001-1234',
+                country,
+                city,
+                streetName: street,
+                postalCode,
               },
             ],
           },
         })
         .execute();
-      //setLoginResult(result);
+      setRegistrationResult(result);
       console.log(result);
       setError(null);
     } catch (caughtError) {
@@ -50,7 +56,7 @@ export const useRegistration = () => {
   };
 
   return {
-    loginResult,
+    registrationResult,
     error,
     handleRegistration,
   };
