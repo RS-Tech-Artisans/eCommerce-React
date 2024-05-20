@@ -5,6 +5,7 @@ import {
   CustomerSignInResult,
 } from '@commercetools/platform-sdk';
 import { apiRoot } from './getProjectInfo';
+import { useNavigate } from 'react-router-dom';
 
 interface MyApiError {
   message: string;
@@ -14,6 +15,8 @@ export const useRegistration = () => {
   const [registrationResult, setRegistrationResult] =
     useState<ClientResponse<CustomerSignInResult> | null>(null);
   const [error, setError] = useState<MyApiError | null>(null);
+  const navigate = useNavigate();
+
   const handleRegistration = async (
     email: string,
     password: string,
@@ -50,6 +53,7 @@ export const useRegistration = () => {
       setRegistrationResult(result);
       console.log(result);
       setError(null);
+      navigate('/main');
     } catch (caughtError) {
       console.log(caughtError);
       setError(caughtError as MyApiError);
