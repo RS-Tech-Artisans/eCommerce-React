@@ -412,6 +412,7 @@ export default function Registration() {
             <label htmlFor="street">Street: </label>
             <input
               id="street"
+              value={billingAdress ? street : ''}
               onInput={(e) => {
                 if (e.target instanceof HTMLInputElement) {
                   StreetValidation(
@@ -439,6 +440,7 @@ export default function Registration() {
             <label htmlFor="city">City: </label>
             <input
               id="city"
+              value={billingAdress ? city : ''}
               onInput={(e) => {
                 if (e.target instanceof HTMLInputElement) {
                   CityValidation(e.target.value, city, setCity, setCityErr);
@@ -458,6 +460,7 @@ export default function Registration() {
           <div>
             <label htmlFor="postal-code">Postal code: </label>
             <input
+              value={billingAdress ? postalCode : ''}
               onInput={(e) => {
                 if (e.target instanceof HTMLInputElement) {
                   PostalCodeValidation(
@@ -485,6 +488,7 @@ export default function Registration() {
           <div>
             <label htmlFor="country">Country: </label>
             <select
+              value={billingAdress ? country : ''}
               onClick={(e) => {
                 if (e.target instanceof HTMLSelectElement) {
                   CountryValidation(
