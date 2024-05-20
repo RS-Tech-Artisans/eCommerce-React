@@ -35,7 +35,7 @@
 }
 
 .registration-form input::placeholder {
-  color: #fff;
+  color: #b9f3ff;
 }
 
 .registration-form_input-box svg {
@@ -46,6 +46,10 @@
 
 .pass-toggle-icon-passive,
 .pass-toggle-icon-active {
+  cursor: pointer;
+}
+
+select {
   cursor: pointer;
 }
 
@@ -66,6 +70,12 @@
 
 .registration-form button:hover {
   background: #dbf9ff;
+}
+
+.registration-form button:disabled {
+  background: #b1b1b1;
+  color: #8c8c8c;
+  cursor: default;
 }
 
 .registration-form_input-box div {

@@ -35,7 +35,7 @@
 }
 
 .login-form_input-box input::placeholder {
-  color: #fff;
+  color: #b9f3ff;
 }
 
 .login-form_input-box svg {
@@ -59,13 +59,19 @@
   box-shadow: 0 0 10 px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   font-size: 16px;
-  color: #333;
+
   font-weight: 700;
   margin: 30px 0 10px;
 }
 
 .login-form button:hover {
   background: #dbf9ff;
+}
+
+.login-form button:disabled {
+  background: #b1b1b1;
+  color: #8c8c8c;
+  cursor: default;
 }
 
 .login-form div div p {
