@@ -64,9 +64,9 @@ export const useLogin = () => {
       setError(null);
       setIsLoggedIn(true);
       localStorage.setItem('isLoggedIn', 'true');
-      /* setTimeout(() => {
+      setTimeout(() => {
         window.location.reload();
-      }, 300); */
+      }, 300);
       navigate('/main');
     } catch (caughtError) {
       console.log(caughtError);
