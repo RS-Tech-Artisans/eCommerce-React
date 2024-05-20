@@ -22,9 +22,8 @@ type RestBlurHandlerRegistrProps = [
   React.Dispatch<React.SetStateAction<boolean>>,
   React.Dispatch<React.SetStateAction<boolean>>,
   React.Dispatch<React.SetStateAction<boolean>>,
-  React.Dispatch<React.SetStateAction<boolean>>
+  React.Dispatch<React.SetStateAction<boolean>>,
 ];
-
 
 export default function Registration() {
   const iconPassive = <FaLock />;
@@ -83,7 +82,6 @@ export default function Registration() {
     setPostalCodeFill,
   ];
 
-
   const { error, registrationResult, handleRegistration } = useRegistration();
 
   useEffect(() => {
@@ -114,9 +112,12 @@ export default function Registration() {
 
   return (
     <>
-      <form className="registration-form" onSubmit={(e) => {
-  e.preventDefault(); 
-}}>
+      <form
+        className="registration-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <h1>Registration</h1>
         <div className="registration-form_input-box">
           <input
@@ -375,25 +376,34 @@ export default function Registration() {
           )}
         </div>
         <div>
-        <button 
-  onClick={() => handleRegistration(email, password, nameUser, lastNameUser, birthdate, street, city, postalCode, 'US')} 
-  disabled={!formValid} 
-  type="submit"
->
-  Registration
-</button>
+          <button
+            onClick={() =>
+              handleRegistration(
+                email,
+                password,
+                nameUser,
+                lastNameUser,
+                birthdate,
+                street,
+                city,
+                postalCode,
+                'US'
+              )
+            }
+            disabled={!formValid}
+            type="submit"
+          >
+            Registration
+          </button>
         </div>
 
         <div style={{ color: 'green' }}>
-              {registrationResult && !error && <p>Registration successful!</p>}
-            </div>
-            <div style={{ color: 'red' }}>
-              {error && <p>Error: {error.message}</p>}
-            </div>
-            
+          {registrationResult && !error && <p>Registration successful!</p>}
+        </div>
+        <div style={{ color: 'red' }}>
+          {error && <p>Error: {error.message}</p>}
+        </div>
       </form>
-
-
     </>
   );
 }
