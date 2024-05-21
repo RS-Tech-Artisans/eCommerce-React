@@ -6,7 +6,11 @@ type BlurHandlerRegistrProps = (
   setStreetFill: React.Dispatch<React.SetStateAction<boolean>>,
   setCityFill: React.Dispatch<React.SetStateAction<boolean>>,
   setCountryFill: React.Dispatch<React.SetStateAction<boolean>>,
-  setPostalCodeFill: React.Dispatch<React.SetStateAction<boolean>>
+  setPostalCodeFill: React.Dispatch<React.SetStateAction<boolean>>,
+  setStreetFillBilling: React.Dispatch<React.SetStateAction<boolean>>,
+  setCityFillBilling: React.Dispatch<React.SetStateAction<boolean>>,
+  setCountryFillBilling: React.Dispatch<React.SetStateAction<boolean>>,
+  setPostalCodeFillBilling: React.Dispatch<React.SetStateAction<boolean>>
 ) => void;
 
 const BlurHandlerRegistr: BlurHandlerRegistrProps = (
@@ -17,7 +21,11 @@ const BlurHandlerRegistr: BlurHandlerRegistrProps = (
   setStreetFill,
   setCityFill,
   setCountryFill,
-  setPostalCodeFill
+  setPostalCodeFill,
+  setStreetFillBilling,
+  setCityFillBilling,
+  setCountryFillBilling,
+  setPostalCodeFillBilling
 ) => {
   let flag = false;
   switch (name) {
@@ -48,6 +56,22 @@ const BlurHandlerRegistr: BlurHandlerRegistrProps = (
     case 'postal-code':
       flag = true;
       setPostalCodeFill(true);
+      break;
+    case 'streetforBillingAdress':
+      flag = true;
+      setStreetFillBilling(true);
+      break;
+    case 'cityforBillingAdress':
+      flag = true;
+      setCityFillBilling(true);
+      break;
+    case 'countryforBillingAdress':
+      flag = true;
+      setCountryFillBilling(true);
+      break;
+    case 'postal-codeforBillingAdress':
+      flag = true;
+      setPostalCodeFillBilling(true);
       break;
   }
   return flag;
