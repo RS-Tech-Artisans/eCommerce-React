@@ -6,6 +6,10 @@ type RestBlurHandlerRegProps = [
   React.Dispatch<React.SetStateAction<boolean>>,
   React.Dispatch<React.SetStateAction<boolean>>,
   React.Dispatch<React.SetStateAction<boolean>>,
+  React.Dispatch<React.SetStateAction<boolean>>,
+  React.Dispatch<React.SetStateAction<boolean>>,
+  React.Dispatch<React.SetStateAction<boolean>>,
+  React.Dispatch<React.SetStateAction<boolean>>,
 ];
 type RestToggleInput = [
   React.Dispatch<React.SetStateAction<string>>,
@@ -25,6 +29,10 @@ type RestValidationProps = [
   React.Dispatch<React.SetStateAction<string>>,
 ];
 const restBlurHandlerReg: RestBlurHandlerRegProps = [
+  () => {},
+  () => {},
+  () => {},
+  () => {},
   () => {},
   () => {},
   () => {},
