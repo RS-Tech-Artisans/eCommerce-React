@@ -54,7 +54,9 @@ export const useRegistration = () => {
       setRegistrationResult(result);
       console.log(result);
       setError(null);
-      navigate('/main');
+      setTimeout(() => {
+        navigate('/main');
+      }, 3000);
     } catch (caughtError) {
       console.log(caughtError);
       setError(caughtError as MyApiError);
