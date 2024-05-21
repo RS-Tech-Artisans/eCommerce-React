@@ -78,6 +78,64 @@ test('country validation', () => {
   expect(CountryValidation('', ...restValidation)).toBeFalsy();
 });
 
+import { findUser, findRegisteredUser } from '../utils/FindCustomer';
+import EmailValidation from '../utils/validation/EmailValidation';
+test('email validation on login page', async () => {
+  await expect(EmailValidation('a2-a3', ...restValidation)).resolves.toBe(
+    false
+  );
+  await expect(EmailValidation('a2-a3@', ...restValidation)).resolves.toBe(
+    false
+  );
+  await expect(EmailValidation('a2-a3@kl', ...restValidation)).resolves.toBe(
+    false
+  );
+  await expect(EmailValidation('a23@kl.', ...restValidation)).resolves.toBe(
+    false
+  );
+  await expect(EmailValidation('a3@kl.mi', ...restValidation)).resolves.toBe(
+    true
+  );
+  await expect(EmailValidation('', ...restValidation)).resolves.toBe(false);
+
+  return expect(findUser('jen@example.com')).resolves.toBe('');
+});
+
+import EmailValidationRegistr from '../utils/validation/EmailValidationRegistr';
+test('email validation on registration page', async () => {
+  await expect(
+    EmailValidationRegistr('bj@fd.com', ...restValidation)
+  ).resolves.toBeTruthy();
+  await expect(
+    EmailValidationRegistr('do-do@npm.com', ...restValidation)
+  ).resolves.toBeTruthy();
+  await expect(
+    EmailValidationRegistr('a2-a3@kl.mi', ...restValidation)
+  ).resolves.toBeTruthy();
+  await expect(
+    EmailValidationRegistr(`a2-a3`, ...restValidation)
+  ).resolves.toBe(false);
+  await expect(
+    EmailValidationRegistr(`a2-a3@`, ...restValidation)
+  ).resolves.toBe(false);
+  await expect(
+    EmailValidationRegistr(`a2-a3@kl`, ...restValidation)
+  ).resolves.toBe(false);
+  await expect(
+    EmailValidationRegistr(`a23@kl.`, ...restValidation)
+  ).resolves.toBe(false);
+  await expect(
+    EmailValidationRegistr(` a3@kl.mi `, ...restValidation)
+  ).resolves.toBe(false);
+  await expect(
+    EmailValidationRegistr('', ...restValidation)
+  ).resolves.toBeFalsy();
+
+  return expect(findRegisteredUser(`jen@example.com`)).resolves.toBe(
+    'This email address already registered.'
+  );
+});
+
 import PasswordValidation from '../utils/validation/PasswordValidation';
 test('password validation', () => {
   expect(PasswordValidation('L2_f(;!?', ...restValidation)).toBeTruthy();
