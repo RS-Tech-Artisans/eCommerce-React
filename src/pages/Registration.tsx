@@ -119,7 +119,7 @@ export default function Registration() {
   const { error, registrationResult, handleRegistration } = useRegistration();
 
   useEffect(() => {
-    if (
+    const hasError =
       emailErr ||
       passwordErr ||
       nameUserErr ||
@@ -132,10 +132,9 @@ export default function Registration() {
       streetErrBilling ||
       cityErrBilling ||
       countryErrBilling ||
-      postalCodeErrBilling
-    ) {
-      setFormValid(false);
-    } else setFormValid(true);
+      postalCodeErrBilling;
+
+    setFormValid(!hasError);
   }, [
     emailErr,
     passwordErr,
@@ -146,12 +145,10 @@ export default function Registration() {
     cityErr,
     countryErr,
     postalCodeErr,
-    postalCodeErr,
     streetErrBilling,
     cityErrBilling,
     countryErrBilling,
     postalCodeErrBilling,
-    defaultAdress,
   ]);
 
   return (

@@ -24,7 +24,7 @@ export const useLogin = () => {
     console.log('email ', email);
     console.log('password ', password);
 
-    clearTokenCache();
+    // clearTokenCache();
 
     const PasswordOptions: PasswordAuthMiddlewareOptions = {
       host: 'https://auth.us-central1.gcp.commercetools.com',
