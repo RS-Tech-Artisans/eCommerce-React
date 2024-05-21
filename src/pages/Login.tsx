@@ -9,9 +9,12 @@ import { useLogin } from '../utils/Login';
 import './Login.css';
 import './Pages.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSession } from '../utils/SessionContext';
 
 export default function Login() {
-  const { loginResult, error, handleLogin, isLoggedIn } = useLogin();
+  //const { loginResult, error, handleLogin, isLoggedIn } = useLogin();
+  const { token } = useSession();
+  const { loginResult, error, handleLogin } = useLogin();
   const navigate = useNavigate();
   const iconPassive = <FaLock />;
   const iconActive = <FaUnlock />;
@@ -40,11 +43,16 @@ export default function Login() {
     } else setFormValid(true);
   }, [emailErr, passwordErr]);
 
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     navigate('/main');
+  //   }
+  // }, [isLoggedIn, navigate]);
   useEffect(() => {
-    if (isLoggedIn) {
+    if (token) {
       navigate('/main');
     }
-  }, [isLoggedIn, navigate]);
+  }, [token, navigate]);
 
   return (
     <>

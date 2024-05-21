@@ -3,7 +3,7 @@ import {
   AuthMiddlewareOptions,
   HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-import { myTokenCache } from './tokenStore';
+//import { myTokenCache } from './tokenStore';
 
 export const authMiddlewareOptions: AuthMiddlewareOptions = {
   host: 'https://auth.us-central1.gcp.commercetools.com',
@@ -12,7 +12,7 @@ export const authMiddlewareOptions: AuthMiddlewareOptions = {
     clientId: 'RlxVza_Z9B7Fm83frzN4ks58',
     clientSecret: 'A1PzY6KA6kCT0VwHhKzyQhoiToAqIWDa',
   },
-  tokenCache: myTokenCache,
+  //tokenCache: myTokenCache,
   scopes: ['manage_project:my-company'],
   fetch,
 };
