@@ -1,6 +1,15 @@
-h1 {
-  color: rgb(69, 126, 23);
+a:link,
+a:visited,
+a:active {
+  text-decoration: none;
+  padding-right: 20px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 400;
 }
-h2 {
-  color: rgb(6, 97, 158);
+
+a:link:hover,
+a:visited:hover,
+a:active:hover {
+  text-decoration: underline;
 }

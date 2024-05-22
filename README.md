@@ -75,4 +75,6 @@ npm run test
 
 - Utils - helper utilities, functions, and classes that can be used in different parts of your application.
 
+- Pages - components that represent individual pages.
+
 ## Screenshots

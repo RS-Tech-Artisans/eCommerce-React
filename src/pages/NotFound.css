@@ -1,0 +1,20 @@
+.error-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.error_number {
+  color: red;
+  font-size: 50px;
+  font-weight: 600;
+}
+
+.error_text {
+  font-size: 35px;
+  font-weight: 600;
+}
