@@ -126,7 +126,10 @@ export default function Login() {
           <button
             disabled={!formValid}
             type="button"
-            onClick={() => handleLogin(email, password)}
+            onClick={() => {
+              handleLogin(email, password);
+              //navigate('/main');
+            }}
           >
             Login
           </button>
