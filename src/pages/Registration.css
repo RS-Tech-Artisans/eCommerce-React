@@ -1,5 +1,5 @@
 .registration-form {
-  width: 420px;
+  width: 700px;
   background: transparent;
   border: 2px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(30px);
@@ -94,6 +94,12 @@ select {
 }
 
 .registration-form_checkbox input {
-  width: 30%;
-  height: 30%;
+  width: 25px;
+  height: 25px;
+}
+
+@media (max-width: 800px) {
+  .registration-form {
+    width: 90vw;
+  }
 }
