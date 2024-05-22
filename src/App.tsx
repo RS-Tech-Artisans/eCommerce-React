@@ -4,7 +4,7 @@ import Login from './pages/Login';
 import Registration from './pages/Registration';
 import Main from './pages/Main';
 import NotFound from './pages/NotFound';
-import UserProfile from './pages/UserProfile'
+import UserProfile from './pages/UserProfile';
 import './styles.css';
 import { SessionProvider } from './utils/SessionContext';
 
