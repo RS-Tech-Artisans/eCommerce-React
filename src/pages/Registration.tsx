@@ -17,7 +17,8 @@ import './Pages.css';
 import { useRegistration } from '../utils/Registration';
 import { useLogin } from '../utils/Login';
 //import { useNavigate } from 'react-router-dom';
-
+import { useSession } from '../utils/SessionContext';
+ 
 type RestBlurHandlerRegistrProps = [
   React.Dispatch<React.SetStateAction<boolean>>,
   React.Dispatch<React.SetStateAction<boolean>>,
@@ -119,6 +120,7 @@ export default function Registration() {
   ];
 
   const { error, registrationResult, handleRegistration } = useRegistration();
+  const { token } = useSession();
 
   useEffect(() => {
     const hasError =
@@ -134,7 +136,8 @@ export default function Registration() {
       streetErrBilling ||
       cityErrBilling ||
       countryErrBilling ||
-      postalCodeErrBilling;
+      postalCodeErrBilling ||
+      token;
 
     setFormValid(!hasError);
   }, [
