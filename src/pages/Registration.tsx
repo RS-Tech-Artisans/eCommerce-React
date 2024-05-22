@@ -119,7 +119,7 @@ export default function Registration() {
   const { error, registrationResult, handleRegistration } = useRegistration();
 
   useEffect(() => {
-    if (
+    const hasError =
       emailErr ||
       passwordErr ||
       nameUserErr ||
@@ -132,10 +132,9 @@ export default function Registration() {
       streetErrBilling ||
       cityErrBilling ||
       countryErrBilling ||
-      postalCodeErrBilling
-    ) {
-      setFormValid(false);
-    } else setFormValid(true);
+      postalCodeErrBilling;
+
+    setFormValid(!hasError);
   }, [
     emailErr,
     passwordErr,
@@ -146,12 +145,10 @@ export default function Registration() {
     cityErr,
     countryErr,
     postalCodeErr,
-    postalCodeErr,
     streetErrBilling,
     cityErrBilling,
     countryErrBilling,
     postalCodeErrBilling,
-    defaultAdress,
   ]);
 
   return (
@@ -393,7 +390,7 @@ export default function Registration() {
           <div>
             <label htmlFor="country">Country: </label>
             <select
-              onClick={(e) => {
+              onChange={(e) => {
                 if (e.target instanceof HTMLSelectElement) {
                   CountryValidation(
                     e.target.value,
@@ -448,10 +445,9 @@ export default function Registration() {
         <div className="registration-form_input-box">
           <p>Billing Address fields:</p>
           <div>
-            <label htmlFor="street">Street: </label>
+            <label htmlFor="street-billing">Street: </label>
             <input
-              id="street"
-              value={billingAdress ? streetBilling : ''}
+              id="street-billing"
               onInput={(e) => {
                 if (e.target instanceof HTMLInputElement) {
                   StreetValidation(
@@ -470,19 +466,19 @@ export default function Registration() {
                   );
                 }
               }}
-              name="street"
+              value={billingAdress ? street : streetBilling}
+              name="street-billing"
               type="text"
               autoComplete="off"
             />
           </div>
-          {streetFillBilling && streetErrBilling && billingAdress && (
+          {streetFillBilling && streetErrBilling && !billingAdress && (
             <div style={{ color: 'red' }}>{streetErrBilling}</div>
           )}
           <div>
-            <label htmlFor="city">City: </label>
+            <label htmlFor="city-billing">City: </label>
             <input
-              id="city"
-              value={billingAdress ? cityBilling : ''}
+              id="city-billing"
               onInput={(e) => {
                 if (e.target instanceof HTMLInputElement) {
                   CityValidation(
@@ -501,18 +497,18 @@ export default function Registration() {
                   );
                 }
               }}
+              value={billingAdress ? city : cityBilling}
               name="city"
               type="text"
               autoComplete="off"
             />
           </div>
-          {cityFillBilling && cityErrBilling && billingAdress && (
+          {cityFillBilling && cityErrBilling && !billingAdress && (
             <div style={{ color: 'red' }}>{cityErrBilling}</div>
           )}
           <div>
-            <label htmlFor="postal-code">Postal code: </label>
+            <label htmlFor="postal-code-billing">Postal code: </label>
             <input
-              value={billingAdress ? postalCodeBilling : ''}
               onInput={(e) => {
                 if (e.target instanceof HTMLInputElement) {
                   PostalCodeValidation(
@@ -531,20 +527,20 @@ export default function Registration() {
                   );
                 }
               }}
+              value={billingAdress ? postalCode : postalCodeBilling}
               name="postal-code"
-              id="postal-code"
+              id="postal-code-billing"
               autoComplete="off"
               required
             />
           </div>
-          {postalCodeFillBilling && postalCodeErrBilling && billingAdress && (
+          {postalCodeFillBilling && postalCodeErrBilling && !billingAdress && (
             <div style={{ color: 'red' }}>{postalCodeErrBilling}</div>
           )}
           <div>
-            <label htmlFor="country">Country: </label>
+            <label htmlFor="country-billing">Country: </label>
             <select
-              value={!billingAdress ? '' : 'USA'}
-              onClick={(e) => {
+              onChange={(e) => {
                 if (e.target instanceof HTMLSelectElement) {
                   CountryValidation(
                     e.target.value,
@@ -562,14 +558,15 @@ export default function Registration() {
                   );
                 }
               }}
+              value={billingAdress ? country : countryBilling}
               name="country"
-              id="country"
+              id="country-billing"
             >
               <option value=""></option>
               <option value="USA">USA</option>
             </select>
           </div>
-          {countryFillBilling && countryErrBilling && billingAdress && (
+          {countryFillBilling && countryErrBilling && !billingAdress && (
             <div style={{ color: 'red' }}>{countryErrBilling}</div>
           )}
         </div>
@@ -587,6 +584,7 @@ export default function Registration() {
                 postalCode,
                 'US'
               );
+
               handleLogin(email, password);
             }}
             disabled={!formValid}

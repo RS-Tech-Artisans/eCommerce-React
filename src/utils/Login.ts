@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ClientResponse } from '@commercetools/platform-sdk';
 import { CustomerSignInResult } from '@commercetools/platform-sdk';
 import {
@@ -8,23 +8,26 @@ import {
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { useNavigate } from 'react-router-dom';
 import { clearTokenCache, myTokenCache } from './tokenStore';
+import { useSession } from './SessionContext';
 
 interface MyApiError {
   message: string;
 }
 
 export const useLogin = () => {
+  const { setToken } = useSession();
   const [loginResult, setLoginResult] =
     useState<ClientResponse<CustomerSignInResult> | null>(null);
   const [error, setError] = useState<MyApiError | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  //const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   const handleLogin = async (email: string, password: string) => {
     console.log('email ', email);
     console.log('password ', password);
 
-    clearTokenCache();
+    // clearTokenCache();
 
     const PasswordOptions: PasswordAuthMiddlewareOptions = {
       host: 'https://auth.us-central1.gcp.commercetools.com',
@@ -62,11 +65,13 @@ export const useLogin = () => {
         .execute();
       setLoginResult(result);
       setError(null);
-      setIsLoggedIn(true);
-      localStorage.setItem('isLoggedIn', 'true');
-      setTimeout(() => {
-        window.location.reload();
-      }, 300);
+      //setIsLoggedIn(true);
+      //localStorage.setItem('isLoggedIn', 'true');
+      setToken(localStorage.getItem('token'));
+
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 300);
       navigate('/main');
     } catch (caughtError) {
       console.log(caughtError);
@@ -76,21 +81,22 @@ export const useLogin = () => {
 
   const handleLogout = () => {
     setLoginResult(null);
-    setIsLoggedIn(false);
-    localStorage.removeItem('isLoggedIn');
+    //setIsLoggedIn(false);
+    //localStorage.removeItem('isLoggedIn');
+    setToken(null);
     clearTokenCache();
     navigate('/login');
   };
 
-  useEffect(() => {
-    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
-    setIsLoggedIn(loggedInStatus);
-  }, []);
+  // useEffect(() => {
+  //   const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+  //   setIsLoggedIn(loggedInStatus);
+  // }, []);
 
   return {
     loginResult,
     error,
-    isLoggedIn,
+    //isLoggedIn,
     handleLogin,
     handleLogout,
   };
