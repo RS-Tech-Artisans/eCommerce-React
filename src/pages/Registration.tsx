@@ -16,6 +16,7 @@ import './Registration.css';
 import './Pages.css';
 import { useRegistration } from '../utils/Registration';
 import { useLogin } from '../utils/Login';
+import { useNavigate } from 'react-router-dom';
 
 type RestBlurHandlerRegistrProps = [
   React.Dispatch<React.SetStateAction<boolean>>,
@@ -32,6 +33,7 @@ type RestBlurHandlerRegistrProps = [
 ];
 
 export default function Registration() {
+  const navigate = useNavigate();
   const iconPassive = <FaLock />;
   const iconActive = <FaUnlock />;
 
@@ -150,6 +152,30 @@ export default function Registration() {
     countryErrBilling,
     postalCodeErrBilling,
   ]);
+
+  useEffect(() => {
+    if (billingAdress) {
+      StreetValidation(
+        street,
+        streetBilling,
+        setStreetBilling,
+        setStreetErrBilling
+      );
+      CityValidation(city, cityBilling, setCityBilling, setCityErrBilling);
+      CountryValidation(
+        country,
+        countryBilling,
+        setCountryBilling,
+        setCountryErrBilling
+      );
+      PostalCodeValidation(
+        postalCode,
+        postalCodeBilling,
+        setPostalCodeBilling,
+        setPostalCodeErrBilling
+      );
+    }
+  }, [billingAdress, street, city, country, postalCode]);
 
   return (
     <>
@@ -585,7 +611,13 @@ export default function Registration() {
                 'US'
               );
 
-              handleLogin(email, password);
+              setTimeout(() => {
+                handleLogin(email, password);
+              }, 1000);
+
+              setTimeout(() => {
+                navigate('/main');
+              }, 3000);
             }}
             disabled={!formValid}
             type="submit"
@@ -595,10 +627,10 @@ export default function Registration() {
         </div>
 
         <div style={{ color: 'green' }}>
-          {registrationResult && !error && <p>Registration successful!</p>}
+          {registrationResult && !error && <h2>Registration successful!</h2>}
         </div>
         <div style={{ color: 'red' }}>
-          {error && <p>Error: {error.message}</p>}
+          {error && <h2>Error: {error.message}</h2>}
         </div>
       </form>
     </>

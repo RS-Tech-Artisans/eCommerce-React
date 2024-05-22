@@ -72,7 +72,7 @@ export const useLogin = () => {
       // setTimeout(() => {
       //   window.location.reload();
       // }, 300);
-      navigate('/main');
+      //navigate('/main');
     } catch (caughtError) {
       console.log(caughtError);
       setError(caughtError as MyApiError);
