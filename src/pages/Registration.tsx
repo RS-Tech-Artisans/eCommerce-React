@@ -611,7 +611,9 @@ export default function Registration() {
                 'US'
               );
 
-              handleLogin(email, password);
+              setTimeout(() => {
+                handleLogin(email, password);
+              }, 1000);
 
               setTimeout(() => {
                 navigate('/main');
