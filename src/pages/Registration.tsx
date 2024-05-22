@@ -18,7 +18,7 @@ import { useRegistration } from '../utils/Registration';
 import { useLogin } from '../utils/Login';
 //import { useNavigate } from 'react-router-dom';
 import { useSession } from '../utils/SessionContext';
- 
+
 type RestBlurHandlerRegistrProps = [
   React.Dispatch<React.SetStateAction<boolean>>,
   React.Dispatch<React.SetStateAction<boolean>>,
