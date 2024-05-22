@@ -151,6 +151,30 @@ export default function Registration() {
     postalCodeErrBilling,
   ]);
 
+  useEffect(() => {
+    if (billingAdress) {
+      StreetValidation(
+        street,
+        streetBilling,
+        setStreetBilling,
+        setStreetErrBilling
+      );
+      CityValidation(city, cityBilling, setCityBilling, setCityErrBilling);
+      CountryValidation(
+        country,
+        countryBilling,
+        setCountryBilling,
+        setCountryErrBilling
+      );
+      PostalCodeValidation(
+        postalCode,
+        postalCodeBilling,
+        setPostalCodeBilling,
+        setPostalCodeErrBilling
+      );
+    }
+  }, [billingAdress, street, city, country, postalCode]);
+
   return (
     <>
       <form
