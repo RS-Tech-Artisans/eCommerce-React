@@ -50,7 +50,7 @@ export default function Login() {
   // }, [isLoggedIn, navigate]);
   useEffect(() => {
     if (token) {
-      navigate('/main');
+      navigate('/catalog');
     }
   }, [token, navigate]);
 

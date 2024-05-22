@@ -616,7 +616,7 @@ export default function Registration() {
               }, 1000);
 
               setTimeout(() => {
-                navigate('/main');
+                navigate('/catalog');
               }, 3000);
             }}
             disabled={!formValid}
