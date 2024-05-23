@@ -26,7 +26,8 @@ export const useRegistration = () => {
     street: string,
     city: string,
     postalCode: string,
-    country: string
+    country: string,
+    defaultAddress: boolean,
   ) => {
     try {
       const result: ClientResponse<CustomerSignInResult> = await apiRoot
@@ -47,7 +48,7 @@ export const useRegistration = () => {
                 postalCode,
               },
             ],
-            defaultShippingAddress: 0 || undefined,
+            defaultShippingAddress: defaultAddress ? 0 : undefined,
           },
         })
         .execute();
