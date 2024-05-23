@@ -627,6 +627,13 @@ export default function Registration() {
           >
             Registration
           </button>
+
+          <div>
+            Email Is Already Registered? Try{' '}
+            <a href="/login" style={{ textDecoration: 'underline' }}>
+              Login
+            </a>
+          </div>
         </div>
 
         <div style={{ color: 'green' }}>
