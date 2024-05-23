@@ -26,12 +26,17 @@ export const useRegistration = () => {
     street: string,
     city: string,
     postalCode: string,
-    country: string
+    country: string,
+    defaultAddress: boolean,
+    defaultBillingAddress: boolean,
+    streetBilling: string,
+    cityBilling: string,
+    postalCodeBilling: string,
+    countryBilling: string
   ) => {
     try {
       const result: ClientResponse<CustomerSignInResult> = await apiRoot
-        .me()
-        .signup()
+        .customers()
         .post({
           body: {
             email,
@@ -46,8 +51,16 @@ export const useRegistration = () => {
                 streetName: street,
                 postalCode,
               },
+              {
+                country: countryBilling,
+                city: cityBilling,
+                streetName: streetBilling,
+                postalCode: postalCodeBilling,
+              },
             ],
-            defaultShippingAddress: 0 || undefined,
+            defaultShippingAddress: defaultAddress ? 0 : undefined,
+            defaultBillingAddress: defaultBillingAddress ? 1 : undefined,
+            billingAddresses: [1],
           },
         })
         .execute();

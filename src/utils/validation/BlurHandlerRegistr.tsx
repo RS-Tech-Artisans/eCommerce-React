@@ -57,19 +57,19 @@ const BlurHandlerRegistr: BlurHandlerRegistrProps = (
       flag = true;
       setPostalCodeFill(true);
       break;
-    case 'streetforBillingAdress':
+    case 'streetforBillingAddress':
       flag = true;
       setStreetFillBilling(true);
       break;
-    case 'cityforBillingAdress':
+    case 'cityforBillingAddress':
       flag = true;
       setCityFillBilling(true);
       break;
-    case 'countryforBillingAdress':
+    case 'countryforBillingAddress':
       flag = true;
       setCountryFillBilling(true);
       break;
-    case 'postal-codeforBillingAdress':
+    case 'postal-codeforBillingAddress':
       flag = true;
       setPostalCodeFillBilling(true);
       break;
