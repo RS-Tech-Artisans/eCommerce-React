@@ -27,7 +27,7 @@ export const useRegistration = () => {
     city: string,
     postalCode: string,
     country: string,
-    defaultAddress: boolean,
+    defaultAddress: boolean
   ) => {
     try {
       const result: ClientResponse<CustomerSignInResult> = await apiRoot
