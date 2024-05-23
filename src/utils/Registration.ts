@@ -35,8 +35,7 @@ export const useRegistration = () => {
   ) => {
     try {
       const result: ClientResponse<CustomerSignInResult> = await apiRoot
-        .me()
-        .signup()
+        .customers()
         .post({
           body: {
             email,
@@ -59,7 +58,7 @@ export const useRegistration = () => {
               },
             ],
             defaultShippingAddress: defaultAddress ? 0 : undefined,
-            defaultBillingAddress: 1,
+            billingAddresses: [1],
           },
         })
         .execute();
