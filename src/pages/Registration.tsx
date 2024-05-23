@@ -612,7 +612,11 @@ export default function Registration() {
                 city,
                 postalCode,
                 'US',
-                defaultAddress
+                defaultAddress,
+                streetBilling,
+                cityBilling,
+                postalCodeBilling,
+                'US'
               );
 
               setTimeout(() => {
