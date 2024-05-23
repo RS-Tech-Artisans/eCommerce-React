@@ -56,6 +56,8 @@ export default function Registration() {
 
   const [defaultAddress, setDefaultAddress] = useState<boolean>(false);
   const [billingAddress, setBillingAddress] = useState<boolean>(false);
+  const [defaultBillingAddress, setDefaultBillingAddress] =
+    useState<boolean>(false);
 
   const [emailErr, setEmailErr] = useState('Please fill out this field'),
     [passwordErr, setPasswordErr] = useState('Please fill out this field'),
@@ -447,7 +449,7 @@ export default function Registration() {
         </div>
         <div style={{ display: 'flex' }}>
           <div className="registration-form_checkbox">
-            <label htmlFor="default-address">Default address</label>
+            <label htmlFor="default-address">Default shipping address</label>
             <input
               id="default-address"
               type="checkbox"
@@ -598,6 +600,23 @@ export default function Registration() {
           {countryFillBilling && countryErrBilling && !billingAddress && (
             <div style={{ color: 'red' }}>{countryErrBilling}</div>
           )}
+
+          <div style={{ display: 'flex' }}>
+            <div className="registration-form_checkbox">
+              <label htmlFor="default-billing-address">
+                Default billing address
+              </label>
+              <input
+                id="default-billing-address"
+                type="checkbox"
+                name="default-billing-address"
+                checked={defaultBillingAddress}
+                onChange={(): void => {
+                  setDefaultBillingAddress(!defaultBillingAddress);
+                }}
+              />
+            </div>
+          </div>
         </div>
         <div>
           <button
@@ -613,6 +632,7 @@ export default function Registration() {
                 postalCode,
                 'US',
                 defaultAddress,
+                defaultBillingAddress,
                 streetBilling,
                 cityBilling,
                 postalCodeBilling,

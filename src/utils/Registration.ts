@@ -28,6 +28,7 @@ export const useRegistration = () => {
     postalCode: string,
     country: string,
     defaultAddress: boolean,
+    defaultBillingAddress: boolean,
     streetBilling: string,
     cityBilling: string,
     postalCodeBilling: string,
@@ -58,6 +59,7 @@ export const useRegistration = () => {
               },
             ],
             defaultShippingAddress: defaultAddress ? 0 : undefined,
+            defaultBillingAddress: defaultBillingAddress ? 1 : undefined,
             billingAddresses: [1],
           },
         })
