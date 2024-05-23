@@ -19,15 +19,12 @@ export const useLogin = () => {
   const [loginResult, setLoginResult] =
     useState<ClientResponse<CustomerSignInResult> | null>(null);
   const [error, setError] = useState<MyApiError | null>(null);
-  //const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
   const handleLogin = async (email: string, password: string) => {
     console.log('email ', email);
     console.log('password ', password);
-
-    // clearTokenCache();
 
     const PasswordOptions: PasswordAuthMiddlewareOptions = {
       host: 'https://auth.us-central1.gcp.commercetools.com',
@@ -65,14 +62,7 @@ export const useLogin = () => {
         .execute();
       setLoginResult(result);
       setError(null);
-      //setIsLoggedIn(true);
-      //localStorage.setItem('isLoggedIn', 'true');
       setToken(localStorage.getItem('token'));
-
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 300);
-      //navigate('/main');
     } catch (caughtError) {
       console.log(caughtError);
       setError(caughtError as MyApiError);
@@ -81,22 +71,14 @@ export const useLogin = () => {
 
   const handleLogout = () => {
     setLoginResult(null);
-    //setIsLoggedIn(false);
-    //localStorage.removeItem('isLoggedIn');
     setToken(null);
     clearTokenCache();
     navigate('/login');
   };
 
-  // useEffect(() => {
-  //   const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
-  //   setIsLoggedIn(loggedInStatus);
-  // }, []);
-
   return {
     loginResult,
     error,
-    //isLoggedIn,
     handleLogin,
     handleLogout,
   };

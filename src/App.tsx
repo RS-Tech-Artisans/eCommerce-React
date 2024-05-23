@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Registration from './pages/Registration';
 import Catalog from './pages/Catalog';
 import NotFound from './pages/NotFound';
+import UserProfile from './pages/UserProfile';
 import './styles.css';
 import { SessionProvider } from './utils/SessionContext';
 
@@ -17,6 +18,7 @@ const App: React.FC = () => {
             <Route path="catalog" element={<Catalog />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Registration />} />
+            <Route path="profile" element={<UserProfile />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

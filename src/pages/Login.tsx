@@ -12,7 +12,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSession } from '../utils/SessionContext';
 
 export default function Login() {
-  //const { loginResult, error, handleLogin, isLoggedIn } = useLogin();
   const { token } = useSession();
   const { loginResult, error, handleLogin } = useLogin();
   const navigate = useNavigate();
@@ -43,11 +42,6 @@ export default function Login() {
     } else setFormValid(true);
   }, [emailErr, passwordErr]);
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     navigate('/main');
-  //   }
-  // }, [isLoggedIn, navigate]);
   useEffect(() => {
     if (token) {
       navigate('/catalog');
@@ -128,7 +122,6 @@ export default function Login() {
             type="button"
             onClick={() => {
               handleLogin(email, password);
-              //navigate('/main');
             }}
           >
             Login

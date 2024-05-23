@@ -5,7 +5,7 @@ import {
   CustomerSignInResult,
 } from '@commercetools/platform-sdk';
 import { apiRoot } from './getProjectInfo';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface MyApiError {
   message: string;
@@ -15,7 +15,7 @@ export const useRegistration = () => {
   const [registrationResult, setRegistrationResult] =
     useState<ClientResponse<CustomerSignInResult> | null>(null);
   const [error, setError] = useState<MyApiError | null>(null);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleRegistration = async (
     email: string,
@@ -26,12 +26,17 @@ export const useRegistration = () => {
     street: string,
     city: string,
     postalCode: string,
-    country: string
+    country: string,
+    defaultAddress: boolean,
+    defaultBillingAddress: boolean,
+    streetBilling: string,
+    cityBilling: string,
+    postalCodeBilling: string,
+    countryBilling: string
   ) => {
     try {
       const result: ClientResponse<CustomerSignInResult> = await apiRoot
-        .me()
-        .signup()
+        .customers()
         .post({
           body: {
             email,
@@ -46,17 +51,25 @@ export const useRegistration = () => {
                 streetName: street,
                 postalCode,
               },
+              {
+                country: countryBilling,
+                city: cityBilling,
+                streetName: streetBilling,
+                postalCode: postalCodeBilling,
+              },
             ],
-            defaultShippingAddress: 0 || undefined,
+            defaultShippingAddress: defaultAddress ? 0 : undefined,
+            defaultBillingAddress: defaultBillingAddress ? 1 : undefined,
+            billingAddresses: [1],
           },
         })
         .execute();
       setRegistrationResult(result);
       console.log(result);
       setError(null);
-      // setTimeout(() => {
-      //   navigate('/main');
-      // }, 3000);
+      setTimeout(() => {
+        navigate('/main');
+      }, 3000);
     } catch (caughtError) {
       console.log(caughtError);
       setError(caughtError as MyApiError);
