@@ -16,7 +16,8 @@ import './Registration.css';
 import './Pages.css';
 import { useRegistration } from '../utils/Registration';
 import { useLogin } from '../utils/Login';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
+import { useSession } from '../utils/SessionContext';
 
 type RestBlurHandlerRegistrProps = [
   React.Dispatch<React.SetStateAction<boolean>>,
@@ -33,7 +34,7 @@ type RestBlurHandlerRegistrProps = [
 ];
 
 export default function Registration() {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const iconPassive = <FaLock />;
   const iconActive = <FaUnlock />;
 
@@ -119,6 +120,7 @@ export default function Registration() {
   ];
 
   const { error, registrationResult, handleRegistration } = useRegistration();
+  const { token } = useSession();
 
   useEffect(() => {
     const hasError =
@@ -134,7 +136,8 @@ export default function Registration() {
       streetErrBilling ||
       cityErrBilling ||
       countryErrBilling ||
-      postalCodeErrBilling;
+      postalCodeErrBilling ||
+      token;
 
     setFormValid(!hasError);
   }, [
@@ -615,22 +618,29 @@ export default function Registration() {
                 handleLogin(email, password);
               }, 1000);
 
-              setTimeout(() => {
-                navigate('/main');
-              }, 3000);
+              // setTimeout(() => {
+              //   navigate('/main');
+              // }, 3000);
             }}
             disabled={!formValid}
             type="submit"
           >
             Registration
           </button>
+
+          <div>
+            Email Is Already Registered? Try{' '}
+            <a href="/login" style={{ textDecoration: 'underline' }}>
+              Login
+            </a>
+          </div>
         </div>
 
         <div style={{ color: 'green' }}>
           {registrationResult && !error && <h2>Registration successful!</h2>}
         </div>
         <div style={{ color: 'red' }}>
-          {error && <h2>Error: {error.message}</h2>}
+          {error && <h2>Error: try again later</h2>}
         </div>
       </form>
     </>
