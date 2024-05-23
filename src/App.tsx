@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './common/NavBar';
 import Login from './pages/Login';
 import Registration from './pages/Registration';
-import Main from './pages/Main';
+import Catalog from './pages/Catalog';
 import NotFound from './pages/NotFound';
 import UserProfile from './pages/UserProfile';
 import './styles.css';
@@ -14,8 +14,8 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route index element={<Main />} />
-            <Route path="main" element={<Main />} />
+            <Route index element={<Catalog />} />
+            <Route path="catalog" element={<Catalog />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Registration />} />
             <Route path="profile" element={<UserProfile />} />

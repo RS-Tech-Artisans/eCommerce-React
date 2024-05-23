@@ -643,9 +643,9 @@ export default function Registration() {
                 handleLogin(email, password);
               }, 1000);
 
-              // setTimeout(() => {
-              //   navigate('/main');
-              // }, 3000);
+              setTimeout(() => {
+                navigate('/catalog');
+              }, 3000);
             }}
             disabled={!formValid}
             type="submit"
