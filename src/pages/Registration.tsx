@@ -16,7 +16,6 @@ import './Registration.css';
 import './Pages.css';
 import { useRegistration } from '../utils/Registration';
 import { useLogin } from '../utils/Login';
-//import { useNavigate } from 'react-router-dom';
 import { useSession } from '../utils/SessionContext';
 
 type RestBlurHandlerRegistrProps = [
@@ -34,7 +33,6 @@ type RestBlurHandlerRegistrProps = [
 ];
 
 export default function Registration() {
-  //const navigate = useNavigate();
   const iconPassive = <FaLock />;
   const iconActive = <FaUnlock />;
 
@@ -642,10 +640,6 @@ export default function Registration() {
               setTimeout(() => {
                 handleLogin(email, password);
               }, 1000);
-
-              setTimeout(() => {
-                navigate('/catalog');
-              }, 3000);
             }}
             disabled={!formValid}
             type="submit"
