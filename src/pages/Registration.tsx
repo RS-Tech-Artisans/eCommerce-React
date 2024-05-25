@@ -645,7 +645,7 @@ export default function Registration() {
                 streetBilling,
                 cityBilling,
                 postalCodeBilling,
-                countryBilling,
+                countryBilling
               );
 
               setTimeout(() => {
