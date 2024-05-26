@@ -16,7 +16,6 @@ import './Registration.css';
 import './Pages.css';
 import { useRegistration } from '../utils/Registration';
 import { useLogin } from '../utils/Login';
-//import { useNavigate } from 'react-router-dom';
 import { useSession } from '../utils/SessionContext';
 
 type RestBlurHandlerRegistrProps = [
@@ -34,7 +33,6 @@ type RestBlurHandlerRegistrProps = [
 ];
 
 export default function Registration() {
-  //const navigate = useNavigate();
   const iconPassive = <FaLock />;
   const iconActive = <FaUnlock />;
 
@@ -156,6 +154,7 @@ export default function Registration() {
     cityErrBilling,
     countryErrBilling,
     postalCodeErrBilling,
+    token,
   ]);
 
   useEffect(() => {
@@ -180,7 +179,17 @@ export default function Registration() {
         setPostalCodeErrBilling
       );
     }
-  }, [billingAddress, street, city, country, postalCode]);
+  }, [
+    billingAddress,
+    street,
+    city,
+    country,
+    postalCode,
+    cityBilling,
+    countryBilling,
+    postalCodeBilling,
+    streetBilling,
+  ]);
 
   return (
     <>
@@ -440,7 +449,7 @@ export default function Registration() {
               id="country"
             >
               <option value=""></option>
-              <option value="USA">USA</option>
+              <option value="US">USA</option>
             </select>
           </div>
           {countryFill && countryErr && (
@@ -594,7 +603,7 @@ export default function Registration() {
               id="country-billing"
             >
               <option value=""></option>
-              <option value="USA">USA</option>
+              <option value="US">USA</option>
             </select>
           </div>
           {countryFillBilling && countryErrBilling && !billingAddress && (
@@ -630,22 +639,18 @@ export default function Registration() {
                 street,
                 city,
                 postalCode,
-                'US',
+                country,
                 defaultAddress,
                 defaultBillingAddress,
                 streetBilling,
                 cityBilling,
                 postalCodeBilling,
-                'US'
+                countryBilling
               );
 
               setTimeout(() => {
                 handleLogin(email, password);
               }, 1000);
-
-              setTimeout(() => {
-                navigate('/catalog');
-              }, 3000);
             }}
             disabled={!formValid}
             type="submit"
@@ -655,7 +660,10 @@ export default function Registration() {
 
           <div>
             Email Is Already Registered? Try{' '}
-            <a href="/login" style={{ textDecoration: 'underline' }}>
+            <a
+              href="/login"
+              style={{ textDecoration: 'underline', fontWeight: 'bold' }}
+            >
               Login
             </a>
           </div>
