@@ -38,7 +38,7 @@ export const extractNamesAndPrices = (products: Product[]): ProductInfo[] => {
     const priceArray = product.masterData.current.masterVariant.prices;
     const productPrice = priceArray
       ? (priceArray.find((price) => price.value.currencyCode === 'USD')?.value
-        .centAmount || 0) / 100
+          .centAmount || 0) / 100
       : 0;
     return { name, imageUrl, description, price: productPrice };
   });
