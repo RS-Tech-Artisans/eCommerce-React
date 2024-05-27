@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 import { ProductInfo } from '../utils/Catalog';
+import './ProductGrid.css'; // Import the CSS file
 
 interface ProductGridProps {
   products: ProductInfo[];
@@ -8,10 +9,7 @@ interface ProductGridProps {
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   return (
-    <div
-      className="product-grid"
-      style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}
-    >
+    <div className="product-grid">
       {products.length > 0 ? (
         products.map((product) => (
           <ProductCard

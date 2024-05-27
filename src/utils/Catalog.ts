@@ -11,9 +11,7 @@ export interface ProductInfo {
   price: number;
 }
 
-type ApiResponseType = ProductPagedQueryResponse;
-
-export const getProject = (): Promise<ApiResponseType> => {
+export const getProject = (): Promise<ProductPagedQueryResponse> => {
   return apiRoot
     .products()
     .get()
@@ -38,7 +36,7 @@ export const extractNamesAndPrices = (products: Product[]): ProductInfo[] => {
     const priceArray = product.masterData.current.masterVariant.prices;
     const productPrice = priceArray
       ? (priceArray.find((price) => price.value.currencyCode === 'USD')?.value
-          .centAmount || 0) / 100
+        .centAmount || 0) / 100
       : 0;
     return { name, imageUrl, description, price: productPrice };
   });

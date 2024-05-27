@@ -1,5 +1,6 @@
 import React from 'react';
 import { ProductInfo } from '../utils/Catalog';
+import './ProductCard.css';
 
 const ProductCard: React.FC<ProductInfo> = ({
   name,
@@ -8,24 +9,9 @@ const ProductCard: React.FC<ProductInfo> = ({
   price,
 }) => {
   return (
-    <div
-      className="product-card"
-      style={{
-        backgroundColor: '#333',
-        color: '#fff',
-        padding: '10px',
-        borderRadius: '5px',
-        textAlign: 'center',
-        width: '300px',
-        margin: '10px',
-      }}
-    >
+    <div className="product-card">
       <h3>{name}</h3>
-      <img
-        src={imageUrl}
-        alt={name}
-        style={{ width: '250px', height: '250px', margin: '0 auto' }}
-      />
+      <img src={imageUrl} alt={name} />
       <p>{description}</p>
       <p>Price: ${price.toFixed(2)}</p>
     </div>
