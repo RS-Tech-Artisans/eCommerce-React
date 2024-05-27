@@ -1,13 +1,7 @@
 import React from 'react';
+import { ProductInfo } from '../utils/Catalog';
 
-export interface ProductCardProps {
-  name: string;
-  imageUrl: string;
-  description: string;
-  price: number;
-}
-
-const ProductCard: React.FC<ProductCardProps> = ({
+const ProductCard: React.FC<ProductInfo> = ({
   name,
   imageUrl,
   description,
