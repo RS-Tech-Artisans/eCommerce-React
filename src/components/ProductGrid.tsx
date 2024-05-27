@@ -2,9 +2,9 @@ import React from 'react';
 import ProductCard from './ProductCard';
 import { ProductInfo } from '../utils/Catalog';
 import './ProductGrid.css'; // Import the CSS file
-import { useState } from "react";
-import { Form, InputGroup } from "react-bootstrap";
-import { BsSearch } from "react-icons/bs";
+import { useState } from 'react';
+import { Form, InputGroup } from 'react-bootstrap';
+import { BsSearch } from 'react-icons/bs';
 interface ProductGridProps {
   products: ProductInfo[];
 }
