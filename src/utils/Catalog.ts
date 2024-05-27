@@ -11,10 +11,13 @@ export interface ProductInfo {
   price: number;
 }
 
-export const getProject = (): Promise<ProductPagedQueryResponse> => {
+export const getProject = (
+  limit: number = 500,
+  offset: number = 0
+): Promise<ProductPagedQueryResponse> => {
   return apiRoot
     .products()
-    .get()
+    .get({ queryArgs: { limit, offset } })
     .execute()
     .then((response) => response.body);
 };
