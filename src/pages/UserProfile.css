@@ -1,0 +1,63 @@
+.user-profile_information,
+.user-profile_default-addresses,
+.user-profile_saved-addresses {
+  width: 80vw;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  color: #fff;
+  margin: 40px auto 0;
+  padding: 20px;
+}
+
+h1,
+h2 {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+input {
+  height: 40px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  outline: none;
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+  padding: 10px 45px 10px 20px;
+}
+
+.information-input {
+  display: flex;
+}
+
+.information-input input {
+  min-width: 20%;
+}
+
+.container-default-addresses {
+  display: flex;
+  justify-content: space-around;
+}
+
+.shipping-default-addresses,
+.billing-default-addresses {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 45%;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.shipping-default-addresses {
+  background: rgba(122, 128, 0, 0.187);
+}
+
+.billing-default-addresses {
+  background: rgba(128, 30, 0, 0.187);
+}
