@@ -3,3 +3,13 @@
   flex-wrap: wrap;
   gap: 10px;
 }
+
+.search-icon {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3c4d70;
+  font-size: 32px;
+  padding: 0;
+}
