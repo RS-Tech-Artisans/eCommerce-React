@@ -33,7 +33,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
         </InputGroup>
       </Form>
       <div className="product-grid">
-        {filteredProducts.length > 0 && products.length > 0 ? (
+        {products.length > 0 ? (
           filteredProducts.map((product) => (
             <ProductCard
               key={product.name}
