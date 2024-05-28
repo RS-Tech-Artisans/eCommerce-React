@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   ClientResponse,
-  //CustomerDraft,
   CustomerSignInResult,
 } from '@commercetools/platform-sdk';
 import { apiRoot } from './getProjectInfo';

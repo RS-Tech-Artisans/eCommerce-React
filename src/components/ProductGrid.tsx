@@ -1,12 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import ProductCard, { ProductInfo } from './ProductCard';
+import ProductCard from './ProductCard';
 import './ProductGrid.css';
 import { Form, InputGroup } from 'react-bootstrap';
 import { BsSearch } from 'react-icons/bs';
-
-interface ProductGridProps {
-  products: ProductInfo[];
-}
+import { ProductGridProps } from '../utils/Interfaces';
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   const [search, setSearch] = useState('');
@@ -14,8 +11,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   const filteredProducts = useMemo(() => {
     return search
       ? products.filter((item) =>
-        item.name.toLowerCase().includes(search.toLowerCase())
-      )
+          item.name.toLowerCase().includes(search.toLowerCase())
+        )
       : products;
   }, [search, products]);
 
