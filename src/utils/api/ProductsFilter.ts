@@ -7,16 +7,24 @@ const DEFAULT_OFFSET = 0;
 export const getFiltredProductsFromAPI = (
   minPrice: number,
   maxPrice: number,
-  filterStr: string = `variants.price.centAmount: range(${minPrice} to ${maxPrice})`,
+  brandFilter: string | null,
   limit = DEFAULT_LIMIT,
   offset = DEFAULT_OFFSET
 ): Promise<ProductProjectionPagedSearchResponse> => {
+  const filterArr: string[] = [];
+  filterArr.push(
+    `variants.price.centAmount: range(${minPrice} to ${maxPrice})`
+  );
+  if (brandFilter) {
+    filterArr.push(`variants.attributes.brand: "${brandFilter}"`);
+  }
+
   return apiRoot
     .productProjections()
     .search()
     .get({
       queryArgs: {
-        filter: filterStr,
+        filter: filterArr,
         limit,
         offset,
       },

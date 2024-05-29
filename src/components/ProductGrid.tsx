@@ -2,15 +2,19 @@ import React, { useState, useMemo, useEffect } from 'react';
 import ProductCard from './ProductCard';
 import './ProductGrid.css';
 import './PriceFilter.css';
-import { Form, InputGroup } from 'react-bootstrap';
+import './DropdownButtonStyles.css';
+import { Form, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { BsSearch } from 'react-icons/bs';
 import { ProductGridProps } from '../utils/Interfaces';
 import { mapProducts } from '../utils/productMapper';
 import { getFiltredProductsFromAPI } from '../utils/api/ProductsFilter';
 import { filterProducts } from './PriceFilter';
+import { getBrandsFromAPI } from '../utils/api/getBrands';
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   const [search, setSearch] = useState('');
+  const [brandFilter, setBrandFilter] = useState<string | null>(null);
+  const [brands, setBrands] = useState<string[]>([]);
   const [priceFilter, setPriceFilter] = useState<{
     minPrice: string;
     maxPrice: string;
@@ -18,6 +22,19 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     minPrice: '',
     maxPrice: '',
   });
+
+  useEffect(() => {
+    const fetchBrands = async () => {
+      try {
+        const fetchedBrands = await getBrandsFromAPI();
+        setBrands(fetchedBrands);
+      } catch (error) {
+        console.error('Error fetching brands:', error);
+      }
+    };
+
+    fetchBrands();
+  }, []);
 
   const fetchFilteredProducts = async () => {
     try {
@@ -31,7 +48,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
           : parseFloat(priceFilter.maxPrice) * 100;
       const filteredResponse = await getFiltredProductsFromAPI(
         minPriceInCents,
-        maxPriceInCents
+        maxPriceInCents,
+        brandFilter || ''
       );
       console.log('New Filtered Products:', filteredResponse.results);
       const productInfoArray = mapProducts(filteredResponse.results);
@@ -43,7 +61,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
 
   useEffect(() => {
     fetchFilteredProducts();
-  }, [priceFilter]);
+  }, [priceFilter, brandFilter]);
 
   const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPriceFilter((prevState) => ({
@@ -57,6 +75,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
       ...prevState,
       maxPrice: e.target.value,
     }));
+  };
+
+  const handleBrandChange = (brand: string | null) => {
+    setBrandFilter(brand);
   };
 
   const filteredProducts = useMemo(() => {
@@ -96,6 +118,23 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
             onChange={handleMaxPriceChange}
           />
         </InputGroup>
+        <h4 className="price-filter-header">Filter by Brand</h4>
+        <DropdownButton
+          id="brand-filter-dropdown"
+          title={brandFilter ? brandFilter : 'Select Brand'}
+          onSelect={handleBrandChange}
+          className="custom-dropdown"
+        >
+          <Dropdown.Item key="no-brand" eventKey="">
+            No brand
+          </Dropdown.Item>
+
+          {brands.map((brand) => (
+            <Dropdown.Item key={brand} eventKey={brand}>
+              {brand}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
       </Form>
       <div className="product-grid">
         {filteredProducts.length > 0 ? (
