@@ -1,15 +1,35 @@
 .product-card {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  text-align: center;
-  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 250px;
   margin: 10px;
+  text-align: center;
+  background: white;
 }
 
-.product-card img {
+.product-image {
   width: 250px;
   height: 250px;
   margin: 0 auto;
+}
+
+.product-details {
+  padding: 16px;
+}
+
+.price {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 8px;
+}
+
+.discounted-price {
+  color: #e60023;
+  font-weight: bold;
 }

@@ -1,28 +1,50 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import ProductCard from './ProductCard';
-import { ProductInfo } from '../utils/Catalog';
-import './ProductGrid.css'; // Import the CSS file
-
-interface ProductGridProps {
-  products: ProductInfo[];
-}
+import './ProductGrid.css';
+import { Form, InputGroup } from 'react-bootstrap';
+import { BsSearch } from 'react-icons/bs';
+import { ProductGridProps } from '../utils/Interfaces';
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
+  const [search, setSearch] = useState('');
+
+  const filteredProducts = useMemo(() => {
+    return search
+      ? products.filter((item) =>
+          item.name.toLowerCase().includes(search.toLowerCase())
+        )
+      : products;
+  }, [search, products]);
+
   return (
-    <div className="product-grid">
-      {products.length > 0 ? (
-        products.map((product) => (
-          <ProductCard
-            key={product.name}
-            name={product.name}
-            imageUrl={product.imageUrl}
-            description={product.description}
-            price={product.price}
+    <div>
+      <Form>
+        <InputGroup className="search-input-group">
+          <InputGroup.Text>
+            <BsSearch />
+          </InputGroup.Text>
+          <Form.Control
+            value={search}
+            placeholder="Search"
+            onChange={(e) => setSearch(e.target.value)}
           />
-        ))
-      ) : (
-        <p>No products found</p>
-      )}
+        </InputGroup>
+      </Form>
+      <div className="product-grid">
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <ProductCard
+              key={product.name}
+              name={product.name}
+              imageUrl={product.imageUrl}
+              description={product.description}
+              price={product.price}
+            />
+          ))
+        ) : (
+          <p>No products found</p>
+        )}
+      </div>
     </div>
   );
 };

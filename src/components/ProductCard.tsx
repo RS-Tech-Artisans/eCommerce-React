@@ -1,19 +1,45 @@
 import React from 'react';
-import { ProductInfo } from '../utils/Catalog';
 import './ProductCard.css';
+import { ProductCardProps } from '../utils/Interfaces';
 
-const ProductCard: React.FC<ProductInfo> = ({
+const formatPrice = (price: number, currency: string) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency,
+  }).format(price / 100);
+};
+
+const ProductCard: React.FC<ProductCardProps> = ({
   name,
   imageUrl,
   description,
   price,
 }) => {
+  const originalPrice = price.value.centAmount;
+  const discountedPrice = price.discounted?.value.centAmount;
+  const currency = price.value.currencyCode;
+
   return (
     <div className="product-card">
-      <h3>{name}</h3>
-      <img src={imageUrl} alt={name} />
-      <p>{description}</p>
-      <p>Price: ${price.toFixed(2)}</p>
+      <img src={imageUrl} alt={name} className="product-image" />
+      <div className="product-details">
+        <h3>{name}</h3>
+        <p>{description}</p>
+        {discountedPrice ? (
+          <div className="price">
+            <span className="original-price">
+              {formatPrice(originalPrice, currency)}
+            </span>
+            <span className="discounted-price">
+              {formatPrice(discountedPrice, currency)}
+            </span>
+          </div>
+        ) : (
+          <div className="price">
+            <span>{formatPrice(originalPrice, currency)}</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
