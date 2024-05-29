@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { apiRoot } from "../utils/getProjectInfo";
+import { useState } from 'react';
+import { apiRoot } from '../utils/getProjectInfo';
 
 export const Sorting = () => {
   const [sortAttribute, setSortAttribute] = useState('');
@@ -22,16 +22,16 @@ export const Sorting = () => {
       </select>
     </div>
   );
-}
+};
 
-const getSortProduct = (
-) => {
+const getSortProduct = () => {
   return apiRoot
     .productProjections()
     .search()
     .get({
       queryArgs: {
-        sort: ['price asc', 'price desc', 'name.us asc', 'name.us desc']}
+        sort: ['price asc', 'price desc', 'name.us asc', 'name.us desc'],
+      },
     })
     .execute()
     .then((response) => response.body);
@@ -43,10 +43,7 @@ getSortProduct()
   })
   .catch(console.error);
 
-
-  
-
- /*  switch (sortAttribute){
+/*  switch (sortAttribute){
     case: 'ascending':
       order: 'price asc';
       break;
@@ -60,7 +57,6 @@ getSortProduct()
       order: 'name.de asc';
       break;
     default;} */
-
 
 /* data.sort((a,b)=> {
   if(a>b)return 1;
