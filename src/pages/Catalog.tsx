@@ -5,6 +5,7 @@ import {
   ProductInfo,
 } from '../utils/Catalog';
 import ProductGrid from '../components/ProductGrid';
+import { Sorting } from '../components/Sorting';
 
 const Catalog: React.FC = () => {
   const [products, setProducts] = useState<ProductInfo[]>([]);
@@ -21,6 +22,7 @@ const Catalog: React.FC = () => {
   return (
     <div className="catalog">
       <h1>Catalog page</h1>
+      <Sorting />
       <ProductGrid products={products} />
     </div>
   );
