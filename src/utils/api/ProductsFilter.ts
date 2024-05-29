@@ -8,6 +8,7 @@ export const getFiltredProductsFromAPI = (
   minPrice: number,
   maxPrice: number,
   brandFilter: string | null,
+  colorFilter: string | null,
   limit = DEFAULT_LIMIT,
   offset = DEFAULT_OFFSET
 ): Promise<ProductProjectionPagedSearchResponse> => {
@@ -17,6 +18,10 @@ export const getFiltredProductsFromAPI = (
   );
   if (brandFilter) {
     filterArr.push(`variants.attributes.brand: "${brandFilter}"`);
+  }
+  if (colorFilter) {
+    //filterArr.push(`variants.attributes.color-filter.key:"#964B00"`);
+    filterArr.push(`variants.attributes.color.en-US: "${colorFilter}"`);
   }
 
   return apiRoot

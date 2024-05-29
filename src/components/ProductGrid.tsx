@@ -15,6 +15,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   const [search, setSearch] = useState('');
   const [brandFilter, setBrandFilter] = useState<string | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
+  const [colorFilter, setColorFilter] = useState<string | null>(null);
   const [priceFilter, setPriceFilter] = useState<{
     minPrice: string;
     maxPrice: string;
@@ -22,6 +23,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     minPrice: '',
     maxPrice: '',
   });
+
+  const colors = ['Grey', 'Black', 'White'];
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -49,7 +52,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
       const filteredResponse = await getFiltredProductsFromAPI(
         minPriceInCents,
         maxPriceInCents,
-        brandFilter || ''
+        brandFilter || '',
+        colorFilter || ''
       );
       console.log('New Filtered Products:', filteredResponse.results);
       const productInfoArray = mapProducts(filteredResponse.results);
@@ -61,7 +65,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
 
   useEffect(() => {
     fetchFilteredProducts();
-  }, [priceFilter, brandFilter]);
+  }, [priceFilter, brandFilter, colorFilter]);
 
   const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPriceFilter((prevState) => ({
@@ -79,6 +83,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
 
   const handleBrandChange = (brand: string | null) => {
     setBrandFilter(brand);
+  };
+
+  const handleColorChange = (color: string | null) => {
+    setColorFilter(color);
   };
 
   const filteredProducts = useMemo(() => {
@@ -126,12 +134,28 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
           className="custom-dropdown"
         >
           <Dropdown.Item key="no-brand" eventKey="">
-            No brand
+            no brand
           </Dropdown.Item>
 
           {brands.map((brand) => (
             <Dropdown.Item key={brand} eventKey={brand}>
               {brand}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+        <h4 className="price-filter-header">Filter by Color</h4>
+        <DropdownButton
+          id="color-filter-dropdown"
+          title={colorFilter ? colorFilter : 'Select Color'}
+          onSelect={handleColorChange}
+          className="custom-dropdown"
+        >
+          <Dropdown.Item key="no-color" eventKey="">
+            no color
+          </Dropdown.Item>
+          {colors.map((color) => (
+            <Dropdown.Item key={color} eventKey={color}>
+              {color}
             </Dropdown.Item>
           ))}
         </DropdownButton>
