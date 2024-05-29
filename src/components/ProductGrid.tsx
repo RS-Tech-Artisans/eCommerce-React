@@ -16,6 +16,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   const [brandFilter, setBrandFilter] = useState<string | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
   const [colorFilter, setColorFilter] = useState<string | null>(null);
+  const [sizeFilter, setSizeFilter] = useState<string | null>(null);
   const [priceFilter, setPriceFilter] = useState<{
     minPrice: string;
     maxPrice: string;
@@ -25,6 +26,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   });
 
   const colors = ['Grey', 'Black', 'White'];
+  const sizes = ['Small', 'Big'];
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -53,7 +55,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         minPriceInCents,
         maxPriceInCents,
         brandFilter || '',
-        colorFilter || ''
+        colorFilter || '',
+        sizeFilter || ''
       );
       console.log('New Filtered Products:', filteredResponse.results);
       const productInfoArray = mapProducts(filteredResponse.results);
@@ -65,7 +68,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
 
   useEffect(() => {
     fetchFilteredProducts();
-  }, [priceFilter, brandFilter, colorFilter]);
+  }, [priceFilter, brandFilter, colorFilter, sizeFilter]);
 
   const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPriceFilter((prevState) => ({
@@ -87,6 +90,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
 
   const handleColorChange = (color: string | null) => {
     setColorFilter(color);
+  };
+
+  const handleSizeChange = (size: string | null) => {
+    setSizeFilter(size);
   };
 
   const filteredProducts = useMemo(() => {
@@ -145,7 +152,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         </DropdownButton>
         <h4 className="price-filter-header">Filter by Color</h4>
         <DropdownButton
-          id="color-filter-dropdown"
+          id="filter-dropdown"
           title={colorFilter ? colorFilter : 'Select Color'}
           onSelect={handleColorChange}
           className="custom-dropdown"
@@ -156,6 +163,22 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
           {colors.map((color) => (
             <Dropdown.Item key={color} eventKey={color}>
               {color}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+        <h4 className="price-filter-header">Filter by Size</h4>
+        <DropdownButton
+          id="size-filter-dropdown"
+          title={sizeFilter ? sizeFilter : 'Select Size'}
+          onSelect={handleSizeChange}
+          className="custom-dropdown"
+        >
+          <Dropdown.Item key="no-size" eventKey="">
+            no size
+          </Dropdown.Item>
+          {sizes.map((size) => (
+            <Dropdown.Item key={size} eventKey={size}>
+              {size}
             </Dropdown.Item>
           ))}
         </DropdownButton>
