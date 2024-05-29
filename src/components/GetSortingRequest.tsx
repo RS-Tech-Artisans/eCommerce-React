@@ -7,7 +7,6 @@ export const GetSorting = () => {
   const [responseData, setResponseData] = useState<ProductProjection[]>([]);
   console.log(`response is ${responseData}`);
 
-
   const getSortProduct = async () => {
     return apiRoot
       .productProjections()
