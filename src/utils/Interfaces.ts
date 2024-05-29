@@ -38,3 +38,20 @@ export interface ProductGridProps {
 export interface MyApiError {
   message: string;
 }
+
+export interface SidebarFiltersProps {
+  search: string;
+  setSearch: (value: string) => void;
+  brandFilter: string | null;
+  setBrandFilter: (value: string | null) => void;
+  brands: string[];
+  colorFilter: string | null;
+  setColorFilter: (value: string | null) => void;
+  colors: string[];
+  sizeFilter: string | null;
+  setSizeFilter: (value: string | null) => void;
+  sizes: string[];
+  priceFilter: { minPrice: string; maxPrice: string };
+  setPriceFilter: (value: { minPrice: string; maxPrice: string }) => void;
+  handleResetFilters: () => void;
+}
