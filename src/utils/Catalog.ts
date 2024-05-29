@@ -36,25 +36,25 @@ export const extractNamesAndPrices = (products: Product[]): ProductInfo[] => {
 
     const productPrice: Price = foundPrice
       ? {
-          value: {
-            centAmount: foundPrice.value.centAmount,
-            currencyCode: foundPrice.value.currencyCode,
-          },
-          discounted: foundPrice.discounted
-            ? {
-                value: {
-                  centAmount: foundPrice.discounted.value.centAmount,
-                  currencyCode: foundPrice.discounted.value.currencyCode,
-                },
-              }
-            : undefined,
-        }
+        value: {
+          centAmount: foundPrice.value.centAmount,
+          currencyCode: foundPrice.value.currencyCode,
+        },
+        discounted: foundPrice.discounted
+          ? {
+            value: {
+              centAmount: foundPrice.discounted.value.centAmount,
+              currencyCode: foundPrice.discounted.value.currencyCode,
+            },
+          }
+          : undefined,
+      }
       : {
-          value: {
-            centAmount: 0,
-            currencyCode: 'USD',
-          },
-        };
+        value: {
+          centAmount: 0,
+          currencyCode: 'USD',
+        },
+      };
 
     return { name, imageUrl, description, price: productPrice };
   });

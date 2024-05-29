@@ -11,8 +11,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   const filteredProducts = useMemo(() => {
     return search
       ? products.filter((item) =>
-          item.name.toLowerCase().includes(search.toLowerCase())
-        )
+        item.name.toLowerCase().includes(search.toLowerCase())
+      )
       : products;
   }, [search, products]);
 

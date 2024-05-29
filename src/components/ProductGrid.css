@@ -14,3 +14,9 @@
   font-size: 32px;
   padding: 0;
 }
+
+@media (max-width: 980px) {
+  .product-grid {
+    gap: 1px;
+  }
+}
