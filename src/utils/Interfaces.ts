@@ -1,7 +1,3 @@
-export interface ProductGridProps {
-  products: ProductInfo[];
-}
-
 export interface Price {
   value: {
     centAmount: number;
@@ -15,12 +11,16 @@ export interface Price {
   };
 }
 
+export interface Description {
+  en: string;
+}
+
 export interface ProductInfo {
-  discountedPrice: number;
   name: string;
   imageUrl: string;
   description: string;
-  price: Price;
+  price: Price; // Используем тип Price
+  discountedPrice: number;
 }
 
 export interface ProductCardProps {
@@ -28,4 +28,13 @@ export interface ProductCardProps {
   imageUrl: string;
   description: string;
   price: Price;
+}
+
+export interface ProductGridProps {
+  products: ProductInfo[];
+  setProducts: React.Dispatch<React.SetStateAction<ProductInfo[]>>;
+}
+
+export interface MyApiError {
+  message: string;
 }

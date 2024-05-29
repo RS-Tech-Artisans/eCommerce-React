@@ -9,10 +9,8 @@ import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { useNavigate } from 'react-router-dom';
 import { clearTokenCache, myTokenCache } from './tokenStore';
 import { useSession } from './SessionContext';
+import { MyApiError } from './Interfaces';
 
-interface MyApiError {
-  message: string;
-}
 
 export const useLogin = () => {
   const { setToken } = useSession();

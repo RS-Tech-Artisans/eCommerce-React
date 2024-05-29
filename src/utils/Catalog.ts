@@ -1,23 +1,5 @@
+import { Product } from '@commercetools/platform-sdk';
 import { Price, ProductInfo } from './Interfaces';
-import { apiRoot } from './getProjectInfo';
-import {
-  ProductPagedQueryResponse,
-  Product,
-} from '@commercetools/platform-sdk';
-
-const DEFAULT_LIMIT = 500;
-const DEFAULT_OFFSET = 0;
-
-export const getProject = (
-  limit: number = DEFAULT_LIMIT,
-  offset: number = DEFAULT_OFFSET
-): Promise<ProductPagedQueryResponse> => {
-  return apiRoot
-    .products()
-    .get({ queryArgs: { limit, offset } })
-    .execute()
-    .then((response) => response.body);
-};
 
 export const extractNamesAndPrices = (products: Product[]): ProductInfo[] => {
   return products.map((product) => {
@@ -36,25 +18,25 @@ export const extractNamesAndPrices = (products: Product[]): ProductInfo[] => {
 
     const productPrice: Price = foundPrice
       ? {
-          value: {
-            centAmount: foundPrice.value.centAmount,
-            currencyCode: foundPrice.value.currencyCode,
-          },
-          discounted: foundPrice.discounted
-            ? {
-                value: {
-                  centAmount: foundPrice.discounted.value.centAmount,
-                  currencyCode: foundPrice.discounted.value.currencyCode,
-                },
-              }
-            : undefined,
-        }
+        value: {
+          centAmount: foundPrice.value.centAmount,
+          currencyCode: foundPrice.value.currencyCode,
+        },
+        discounted: foundPrice.discounted
+          ? {
+            value: {
+              centAmount: foundPrice.discounted.value.centAmount,
+              currencyCode: foundPrice.discounted.value.currencyCode,
+            },
+          }
+          : undefined,
+      }
       : {
-          value: {
-            centAmount: 0,
-            currencyCode: 'USD',
-          },
-        };
+        value: {
+          centAmount: 0,
+          currencyCode: 'USD',
+        },
+      };
 
     const discountedPrice =
       productPrice.discounted?.value.centAmount ||
@@ -70,13 +52,14 @@ export const extractNamesAndPrices = (products: Product[]): ProductInfo[] => {
   });
 };
 
-getProject()
-  .then((response) => {
-    const products = (response as ProductPagedQueryResponse).results;
-    console.log('products', products);
-    const productInfo = extractNamesAndPrices(products);
-    console.log('productInfo', productInfo);
-  })
-  .catch(console.error);
-
-export { ProductInfo };
+// export const fetchProductInfo = async () => {
+//   try {
+//     const response = await getProductsFromAPI();
+//     const products = response.results;
+//     const productInfo = extractNamesAndPrices(products);
+//     return productInfo;
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+// };
