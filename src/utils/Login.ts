@@ -11,7 +11,6 @@ import { clearTokenCache, myTokenCache } from './tokenStore';
 import { useSession } from './SessionContext';
 import { MyApiError } from './Interfaces';
 
-
 export const useLogin = () => {
   const { setToken } = useSession();
   const [loginResult, setLoginResult] =
