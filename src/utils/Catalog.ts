@@ -56,7 +56,17 @@ export const extractNamesAndPrices = (products: Product[]): ProductInfo[] => {
           },
         };
 
-    return { name, imageUrl, description, price: productPrice };
+    const discountedPrice =
+      productPrice.discounted?.value.centAmount ||
+      productPrice.value.centAmount;
+
+    return {
+      name,
+      imageUrl,
+      description,
+      price: productPrice,
+      discountedPrice,
+    };
   });
 };
 

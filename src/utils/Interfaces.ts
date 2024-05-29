@@ -16,6 +16,7 @@ export interface Price {
 }
 
 export interface ProductInfo {
+  discountedPrice: number;
   name: string;
   imageUrl: string;
   description: string;

@@ -4,17 +4,33 @@ import './ProductGrid.css';
 import { Form, InputGroup } from 'react-bootstrap';
 import { BsSearch } from 'react-icons/bs';
 import { ProductGridProps } from '../utils/Interfaces';
+import PriceFilter from './PriceFilter';
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   const [search, setSearch] = useState('');
+  const [priceFilter, setPriceFilter] = useState<{
+    minPrice: number;
+    maxPrice: number;
+  }>({ minPrice: 0, maxPrice: Infinity });
 
   const filteredProducts = useMemo(() => {
-    return search
-      ? products.filter((item) =>
-          item.name.toLowerCase().includes(search.toLowerCase())
-        )
-      : products;
-  }, [search, products]);
+    return products.filter((item) => {
+      const minPriceInCents = priceFilter.minPrice * 100; // 1 dollar = 100 cents
+      const maxPriceInCents = priceFilter.maxPrice * 100;
+      return (
+        item.name.toLowerCase().includes(search.toLowerCase()) &&
+        item.price.value.centAmount >= minPriceInCents &&
+        item.price.value.centAmount <= maxPriceInCents
+      );
+    });
+  }, [search, products, priceFilter]);
+
+  const handlePriceFilterChange = (filter: {
+    minPrice: number;
+    maxPrice: number;
+  }) => {
+    setPriceFilter(filter);
+  };
 
   return (
     <div>
@@ -30,6 +46,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
           />
         </InputGroup>
       </Form>
+      <PriceFilter onFilterChange={handlePriceFilterChange} />
       <div className="product-grid">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
