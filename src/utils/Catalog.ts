@@ -1,19 +1,16 @@
+import { Price, ProductInfo } from './Interfaces';
 import { apiRoot } from './getProjectInfo';
 import {
   ProductPagedQueryResponse,
   Product,
 } from '@commercetools/platform-sdk';
 
-export interface ProductInfo {
-  name: string;
-  imageUrl: string;
-  description: string;
-  price: number;
-}
+const DEFAULT_LIMIT = 500;
+const DEFAULT_OFFSET = 0;
 
 export const getProject = (
-  limit: number = 500,
-  offset: number = 0
+  limit: number = DEFAULT_LIMIT,
+  offset: number = DEFAULT_OFFSET
 ): Promise<ProductPagedQueryResponse> => {
   return apiRoot
     .products()
@@ -21,10 +18,6 @@ export const getProject = (
     .execute()
     .then((response) => response.body);
 };
-
-console.log('Catalog');
-
-//getProject().then(console.log).catch(console.error);
 
 export const extractNamesAndPrices = (products: Product[]): ProductInfo[] => {
   return products.map((product) => {
@@ -37,10 +30,32 @@ export const extractNamesAndPrices = (products: Product[]): ProductInfo[] => {
       product.masterData.current.description?.['en-US'] ||
       'No description available';
     const priceArray = product.masterData.current.masterVariant.prices;
-    const productPrice = priceArray
-      ? (priceArray.find((price) => price.value.currencyCode === 'USD')?.value
-          .centAmount || 0) / 100
-      : 0;
+    const foundPrice = priceArray
+      ? priceArray.find((p) => p.value.currencyCode === 'USD')
+      : null;
+
+    const productPrice: Price = foundPrice
+      ? {
+          value: {
+            centAmount: foundPrice.value.centAmount,
+            currencyCode: foundPrice.value.currencyCode,
+          },
+          discounted: foundPrice.discounted
+            ? {
+                value: {
+                  centAmount: foundPrice.discounted.value.centAmount,
+                  currencyCode: foundPrice.discounted.value.currencyCode,
+                },
+              }
+            : undefined,
+        }
+      : {
+          value: {
+            centAmount: 0,
+            currencyCode: 'USD',
+          },
+        };
+
     return { name, imageUrl, description, price: productPrice };
   });
 };
@@ -53,3 +68,5 @@ getProject()
     console.log('productInfo', productInfo);
   })
   .catch(console.error);
+
+export { ProductInfo };
