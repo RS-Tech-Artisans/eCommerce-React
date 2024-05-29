@@ -3,7 +3,13 @@ import ProductCard from './ProductCard';
 import './ProductGrid.css';
 import './PriceFilter.css';
 import './DropdownButtonStyles.css';
-import { Form, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
+import {
+  Form,
+  InputGroup,
+  DropdownButton,
+  Dropdown,
+  Button,
+} from 'react-bootstrap';
 import { BsSearch } from 'react-icons/bs';
 import { ProductGridProps } from '../utils/Interfaces';
 import { mapProducts } from '../utils/productMapper';
@@ -96,6 +102,14 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     setSizeFilter(size);
   };
 
+  const handleResetFilters = () => {
+    setSearch('');
+    setBrandFilter(null);
+    setColorFilter(null);
+    setSizeFilter(null);
+    setPriceFilter({ minPrice: '', maxPrice: '' });
+  };
+
   const filteredProducts = useMemo(() => {
     return filterProducts(
       products,
@@ -182,6 +196,13 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
             </Dropdown.Item>
           ))}
         </DropdownButton>
+        <Button
+          onClick={handleResetFilters}
+          variant="secondary"
+          className="reset-filters-button"
+        >
+          Reset Filters
+        </Button>
       </Form>
       <div className="product-grid">
         {filteredProducts.length > 0 ? (
