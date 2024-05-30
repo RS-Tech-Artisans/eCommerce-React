@@ -81,7 +81,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
           className="custom-dropdown"
         >
           <Dropdown.Item key="no-brand" eventKey="">
-            no brand
+            all brands
           </Dropdown.Item>
 
           {brands.map((brand) => (
@@ -98,7 +98,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
           className="custom-dropdown"
         >
           <Dropdown.Item key="no-color" eventKey="">
-            no color
+            all colors
           </Dropdown.Item>
           {colors.map((color) => (
             <Dropdown.Item key={color} eventKey={color}>
@@ -114,7 +114,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
           className="custom-dropdown"
         >
           <Dropdown.Item key="no-size" eventKey="">
-            no size
+            all sizes
           </Dropdown.Item>
           {sizes.map((size) => (
             <Dropdown.Item key={size} eventKey={size}>
