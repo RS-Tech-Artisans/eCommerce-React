@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { apiRoot } from '../utils/api/getProjectInfo';
+import { mapProducts } from '../utils/productMapper';
+import { ProductInfo } from '../utils/Interfaces';
 
 export const GetSorting = () => {
+  const [products, setProducts] = useState<ProductInfo[]>([]);
   const [sortAttribute, setSortAttribute] = useState('');
 
   const getSortProduct = async () => {
@@ -16,14 +19,15 @@ export const GetSorting = () => {
       })
       .execute()
       .then((response) => response.body)
-      .then((data) => data.results);
   };
 
   useEffect(() => {
     const fetchSortingData = async () => {
       if (sortAttribute) {
-        const products = await getSortProduct();
-        console.log('Fetched sorting Products:', products);
+        const fetchProducts = await getSortProduct();
+        console.log('Fetched sorting Products:', fetchProducts);
+        const productInfoArray = mapProducts(fetchProducts.results);
+        setProducts(productInfoArray);
       }
     };
     fetchSortingData();
