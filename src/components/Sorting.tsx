@@ -9,7 +9,7 @@ export const Sorting = () => {
       <Form.Select value={sortAttribute} onChange={handleChange}>
         <option value={''}>Sort by</option>
         <option value={'price asc'} defaultValue={'low'}>
-          Low prise
+          Low price
         </option>
         <option value={'price desc'}>High price</option>
         <option value={'name.en-us asc'}>a-z</option>

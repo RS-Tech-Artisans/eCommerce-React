@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
-import { ProductProjection } from '@commercetools/platform-sdk';
 import { apiRoot } from '../utils/api/getProjectInfo';
 
 export const GetSorting = () => {
   const [sortAttribute, setSortAttribute] = useState('');
-  const [responseData, setResponseData] = useState<ProductProjection[]>([]);
-  console.log(`response is ${responseData}`);
 
   const getSortProduct = async () => {
     return apiRoot
@@ -13,22 +10,23 @@ export const GetSorting = () => {
       .search()
       .get({
         queryArgs: {
+          limit: 500,
           sort: [sortAttribute],
         },
       })
       .execute()
-      .then((response) => response.body);
+      .then((response) => response.body)
+      .then((data) => data.results);
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSortingData = async () => {
       if (sortAttribute) {
-        const response = await getSortProduct();
-        setResponseData(response.results);
-        console.log(`this ${response.results}`);
+        const products = await getSortProduct();
+        console.log('Fetched sorting Products:', products);
       }
     };
-    fetchData();
+    fetchSortingData();
   }, [sortAttribute]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
