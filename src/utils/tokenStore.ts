@@ -9,7 +9,8 @@ const createTokenCache = (): TokenCache => {
 
   const set = (newCache: TokenStore): void => {
     myCache = newCache;
-    localStorage.setItem('token', myCache.token);
+    if (myCache.refreshToken)
+      localStorage.setItem('refresh_token', myCache.refreshToken);
   };
 
   const get = (): TokenStore => {
@@ -30,7 +31,7 @@ const clearTokenCache = (): void => {
     expirationTime: 0,
     refreshToken: '',
   });
-  localStorage.removeItem('token');
+  localStorage.removeItem('refresh_token');
 };
 
 export { clearTokenCache };

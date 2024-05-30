@@ -642,10 +642,6 @@ export default function Registration() {
               setTimeout(() => {
                 handleLogin(email, password);
               }, 1000);
-
-              setTimeout(() => {
-                navigate('/catalog');
-              }, 3000);
             }}
             disabled={!formValid}
             type="submit"

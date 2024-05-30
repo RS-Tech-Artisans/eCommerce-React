@@ -1,9 +1,27 @@
 import './Pages.css';
 import './UserProfile.css';
 import UsersProfileAdresses from '../components/UsersProfileAdresses';
+import { fetchCustomerData } from '../utils/api/getCustomer';
+import { useEffect } from 'react';
 
 const inputsBoxAdresses = UsersProfileAdresses();
+
 export default function UserProfile() {
+  //just downloaded the test data to check on the profile page
+  useEffect(() => {
+    const getCustomerData = async () => {
+      try {
+        const data = await fetchCustomerData();
+        console.log('Customer data:', data);
+      } catch (error) {
+        console.error('Error fetching customer data:', error);
+      }
+    };
+
+    getCustomerData();
+  }, []);
+  //just downloaded the test data to check on the profile page
+
   return (
     <>
       <h1>User profile</h1>

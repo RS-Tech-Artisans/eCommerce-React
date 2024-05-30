@@ -12,7 +12,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSession } from '../utils/SessionContext';
 
 export default function Login() {
-  const { token } = useSession();
+  const { token: token } = useSession();
   const { loginResult, error, handleLogin } = useLogin();
   const navigate = useNavigate();
   const iconPassive = <FaLock />;

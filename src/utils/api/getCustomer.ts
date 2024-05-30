@@ -1,0 +1,16 @@
+import { apiRoot } from '../getProjectInfo';
+
+export const fetchCustomerData = async () => {
+  try {
+    const response = await apiRoot.get().execute();
+
+    if (!response.body) {
+      throw new Error('Failed to fetch customer data');
+    }
+
+    return response.body;
+  } catch (error) {
+    console.error('Failed to fetch customer data:', error);
+    throw error;
+  }
+};
