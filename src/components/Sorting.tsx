@@ -1,3 +1,4 @@
+import { Form } from 'react-bootstrap';
 import { GetSorting } from './GetSortingRequest';
 
 export const Sorting = () => {
@@ -5,15 +6,15 @@ export const Sorting = () => {
 
   return (
     <div>
-      <select value={sortAttribute} onChange={handleChange}>
-        <option value={''}>By default</option>
+      <Form.Select value={sortAttribute} onChange={handleChange}>
+        <option value={''}>Sort by</option>
         <option value={'price asc'} defaultValue={'low'}>
           Low prise
         </option>
         <option value={'price desc'}>High price</option>
         <option value={'name.en-us asc'}>a-z</option>
         <option value={'name.en-us desc'}>z-a</option>
-      </select>
+      </Form.Select>
     </div>
   );
 };

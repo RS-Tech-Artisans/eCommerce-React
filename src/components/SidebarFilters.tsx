@@ -8,6 +8,7 @@ import {
 } from 'react-bootstrap';
 import { BsSearch } from 'react-icons/bs';
 import { SidebarFiltersProps } from '../utils/Interfaces';
+import { Sorting } from './Sorting';
 
 const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   search,
@@ -58,6 +59,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
             onChange={(e) => setSearch(e.target.value)}
           />
         </InputGroup>
+        <Sorting />
         <h4 className="filter-header">Filter by Price</h4>
         <InputGroup className="price-filter-input-group">
           <Form.Control
