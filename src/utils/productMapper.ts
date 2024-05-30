@@ -3,6 +3,7 @@ import { ProductInfo } from '../utils/Interfaces';
 
 export const mapProducts = (products: ProductProjection[]): ProductInfo[] => {
   return products.map((product: ProductProjection) => {
+    const id = product.id;
     const name = product.name['en-US'] || 'No name available';
     const imageUrl =
       (product.masterVariant.images ?? [])[0]?.url || 'No image available';
@@ -27,6 +28,6 @@ export const mapProducts = (products: ProductProjection[]): ProductInfo[] => {
     };
     const discountedPrice =
       price.discounted?.value?.centAmount || price.value?.centAmount;
-    return { name, imageUrl, description, price, discountedPrice };
+    return { id, name, imageUrl, description, price, discountedPrice };
   });
 };

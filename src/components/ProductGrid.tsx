@@ -108,6 +108,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <ProductCard
+              id={product.id}
               key={product.name}
               name={product.name}
               imageUrl={product.imageUrl}
