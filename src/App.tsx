@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import UserProfile from './pages/UserProfile';
 import './styles.css';
 import { SessionProvider } from './utils/SessionContext';
+import ProductDetail from './components/ProductDetail';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
             <Route path="register" element={<Registration />} />
             <Route path="profile" element={<UserProfile />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
           </Route>
         </Routes>
       </BrowserRouter>
