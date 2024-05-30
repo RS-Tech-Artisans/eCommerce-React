@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { apiRoot } from '../utils/getProjectInfo';
 import { ProductProjection } from '@commercetools/platform-sdk';
+import { apiRoot } from '../utils/api/getProjectInfo';
 
 export const GetSorting = () => {
   const [sortAttribute, setSortAttribute] = useState('');

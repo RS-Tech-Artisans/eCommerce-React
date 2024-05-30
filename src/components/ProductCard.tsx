@@ -21,24 +21,30 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div className="product-card">
-      <img src={imageUrl} alt={name} className="product-image" />
-      <div className="product-details">
-        <h3>{name}</h3>
-        <p>{description}</p>
-        {discountedPrice ? (
-          <div className="price">
-            <span className="original-price">
-              {formatPrice(originalPrice, currency)}
-            </span>
-            <span className="discounted-price">
-              {formatPrice(discountedPrice, currency)}
-            </span>
-          </div>
-        ) : (
-          <div className="price">
-            <span>{formatPrice(originalPrice, currency)}</span>
-          </div>
-        )}
+      <div className="product-image-wrapper">
+        <img src={imageUrl} alt={name} className="product-image" />
+      </div>
+      <div className="product-content">
+        <div className="product-details">
+          <h3>{name}</h3>
+          <p>{description}</p>
+        </div>
+        <div className="price-wrapper">
+          {discountedPrice ? (
+            <div className="price">
+              <span className="original-price">
+                {formatPrice(originalPrice, currency)}
+              </span>
+              <span className="discounted-price">
+                {formatPrice(discountedPrice, currency)}
+              </span>
+            </div>
+          ) : (
+            <div className="price">
+              <span>{formatPrice(originalPrice, currency)}</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

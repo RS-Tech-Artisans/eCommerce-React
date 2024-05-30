@@ -1,4 +1,4 @@
-import { findRegisteredUser } from '../FindCustomer';
+import { findRegisteredUser } from '../api/FindCustomer';
 
 type EmailHandlerProps = (
   value: string,
