@@ -9,11 +9,13 @@ import { mapProducts } from '../utils/productMapper';
 import { getFiltredProductsFromAPI } from '../utils/api/ProductsFilter';
 import { filterProducts } from './PriceFilter';
 import { getBrandsFromAPI } from '../utils/api/getBrands';
+import { getSizesFromAPI } from '../utils/api/getSizes';
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   const [search, setSearch] = useState('');
   const [brandFilter, setBrandFilter] = useState<string | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
+  const [sizes, setSizes] = useState<string[]>([]);
   const [colorFilter, setColorFilter] = useState<string | null>(null);
   const [sizeFilter, setSizeFilter] = useState<string | null>(null);
   const [priceFilter, setPriceFilter] = useState<{
@@ -25,7 +27,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   });
 
   const colors = ['Grey', 'Black', 'White'];
-  const sizes = ['Small', 'Big'];
+  //const sizes = ['Small', 'Big'];
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -38,6 +40,17 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     };
 
     fetchBrands();
+
+    const fetchSizes = async () => {
+      try {
+        const fetchedSizes = await getSizesFromAPI();
+        setSizes(fetchedSizes);
+      } catch (error) {
+        console.error('Error fetching sizes:', error);
+      }
+    };
+
+    fetchSizes();
   }, []);
 
   const fetchFilteredProducts = async () => {
@@ -108,6 +121,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <ProductCard
+              id={product.id}
               key={product.name}
               name={product.name}
               imageUrl={product.imageUrl}

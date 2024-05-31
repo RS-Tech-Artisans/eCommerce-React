@@ -16,6 +16,7 @@ export interface Description {
 }
 
 export interface ProductInfo {
+  id: string;
   name: string;
   imageUrl: string;
   description: string;
@@ -24,6 +25,7 @@ export interface ProductInfo {
 }
 
 export interface ProductCardProps {
+  id: string;
   name: string;
   imageUrl: string;
   description: string;
