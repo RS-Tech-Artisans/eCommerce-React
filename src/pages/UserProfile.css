@@ -31,6 +31,8 @@ input {
 
 .information-input {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .information-input input {
@@ -40,6 +42,8 @@ input {
 .container-default-addresses {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .shipping-default-addresses,
@@ -48,6 +52,7 @@ input {
   flex-direction: column;
   gap: 5px;
   width: 45%;
+  min-width: 290px;
   backdrop-filter: blur(30px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
