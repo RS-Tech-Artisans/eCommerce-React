@@ -7,6 +7,7 @@ import { mapProducts } from '../utils/productMapper';
 import { MdArrowBackIos } from 'react-icons/md';
 import { getBrandsFromAPI } from '../utils/api/getBrands';
 import { getSizesFromAPI } from '../utils/api/getSizes';
+import './ProductCard.css';
 
 const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
@@ -55,10 +56,23 @@ const ProductDetail: React.FC = () => {
     getProductData();
   }, [id]);
 
+  const formatPrice = (priceObject: { centAmount: number; currencyCode: string } | undefined) => {
+    if (priceObject) {
+      const formattedPrice = (priceObject.centAmount / 100).toFixed(2) + ' ' + priceObject.currencyCode;
+      return formattedPrice;
+    }
+    return 'No price available';
+  };
+
+  const discountedPrice = product?.price?.discounted?.value.centAmount;
+
   return (
     <>
       {/* <div>Product Page for ID: {id} </div> */}
-      <Container className="bg-secondary bg-gradient" style={{marginTop: "40px"}}>
+      <Container
+        className="bg-secondary bg-gradient"
+        style={{ marginTop: '40px' }}
+      >
         <Link to={`/catalog`} style={{ fontSize: '20px' }}>
           <MdArrowBackIos /> To Catalog
         </Link>
@@ -70,9 +84,31 @@ const ProductDetail: React.FC = () => {
             <div>
               <h3>{product.name}</h3>
               <p>{product.description}</p>
-              <p><span style={{fontWeight: "bold"}}>Brand:</span> {brands}</p>
-              <p><span style={{fontWeight: "bold"}}>Size:</span> {sizes}</p>
-              <p><span style={{fontWeight: "bold"}}>Color:</span> {color}</p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Brand:</span> {brands}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Size:</span> {sizes}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Color:</span> {color}
+              </p>
+            </div>
+            <div className="price">
+              { discountedPrice !== undefined && discountedPrice > 0 ? (
+                <>
+                  <div className='original-price '>
+                    {formatPrice(product.price?.value)}
+                  </div>
+                  <div className="discounted-price">
+                    {formatPrice(product.price?.discounted?.value)}
+                  </div>
+                </>
+              ) : (
+                <div>
+                  {formatPrice(product.price?.value)}
+                </div>
+              )}
             </div>
           </Container>
         ) : (

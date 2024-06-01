@@ -25,7 +25,6 @@ const Catalog: React.FC = () => {
 
   return (
     <div className="catalog">
-      <h1>Catalog page</h1>
       <ProductGrid products={products} setProducts={setProducts} />
     </div>
   );

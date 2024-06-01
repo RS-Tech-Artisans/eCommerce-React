@@ -30,6 +30,7 @@ export interface ProductCardProps {
   imageUrl: string;
   description: string;
   price: Price;
+  discounted?: Price;
 }
 
 export interface ProductGridProps {
