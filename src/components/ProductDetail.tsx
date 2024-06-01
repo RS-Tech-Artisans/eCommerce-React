@@ -5,17 +5,46 @@ import { Container } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { mapProducts } from '../utils/productMapper';
 import { MdArrowBackIos } from 'react-icons/md';
+import { getBrandsFromAPI } from '../utils/api/getBrands';
+import { getSizesFromAPI } from '../utils/api/getSizes';
 
 const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
+  const [brands, setBrands] = useState<string[]>([]);
+  const [sizes, setSizes] = useState<string[]>([]);
+  const [color, setColor] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    const fetchBrands = async () => {
+      try {
+        const fetchedBrands = await getBrandsFromAPI();
+        setBrands(fetchedBrands);
+      } catch (error) {
+        console.error('Error fetching brands:', error);
+      }
+    };
+
+    fetchBrands();
+
+    const fetchSizes = async () => {
+      try {
+        const fetchedSizes = await getSizesFromAPI();
+        setSizes(fetchedSizes);
+      } catch (error) {
+        console.error('Error fetching sizes:', error);
+      }
+    };
+
+    fetchSizes();
+  }, []);
 
   useEffect(() => {
     const getProductData = async () => {
       if (id) {
         try {
           const fetchProducts = await getProductDetailById(id);
-          console.log('Fetched dataaaaaaaaa:', fetchProducts);
+          console.log('Fetched data detail product:', fetchProducts);
           const productDetail = mapProducts([fetchProducts]);
           setProduct(productDetail[0]);
         } catch (error) {
@@ -28,8 +57,8 @@ const ProductDetail: React.FC = () => {
 
   return (
     <>
-      <div>Product Page for ID: {id} </div>
-      <Container>
+      {/* <div>Product Page for ID: {id} </div> */}
+      <Container className="bg-secondary bg-gradient" style={{marginTop: "40px"}}>
         <Link to={`/catalog`} style={{ fontSize: '20px' }}>
           <MdArrowBackIos /> To Catalog
         </Link>
@@ -41,6 +70,9 @@ const ProductDetail: React.FC = () => {
             <div>
               <h3>{product.name}</h3>
               <p>{product.description}</p>
+              <p><span style={{fontWeight: "bold"}}>Brand:</span> {brands}</p>
+              <p><span style={{fontWeight: "bold"}}>Size:</span> {sizes}</p>
+              <p><span style={{fontWeight: "bold"}}>Color:</span> {color}</p>
             </div>
           </Container>
         ) : (
