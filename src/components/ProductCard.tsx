@@ -3,7 +3,7 @@ import './ProductCard.css';
 import { ProductCardProps } from '../utils/Interfaces';
 import { Link } from 'react-router-dom';
 
-const formatPrice = (price: number, currency: string) => {
+export const formatPrice = (price: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: currency,
@@ -26,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="product-image-wrapper">
         <img src={imageUrl} alt={name} className="product-image" />
       </div>
-      <Link to={`/product/${id}`} className="view-details-button">
+      <Link to={`/catalog/product/${id}`} className="view-details-button">
         View Details
       </Link>
 
