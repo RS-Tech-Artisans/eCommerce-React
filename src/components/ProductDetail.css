@@ -7,6 +7,14 @@
   margin-right: 0;
 }
 
+.image-gallery-slides{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  min-height: 466px;
+}
+
 .image-gallery-content.fullscreen {
   width: 90%;
   position: fixed;
