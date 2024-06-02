@@ -13,7 +13,7 @@ const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
   const [sizes, setSizes] = useState<string[]>([]);
-  const [color, setColor] = useState<string[]>([]);
+  const [color] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -56,9 +56,14 @@ const ProductDetail: React.FC = () => {
     getProductData();
   }, [id]);
 
-  const formatPrice = (priceObject: { centAmount: number; currencyCode: string } | undefined) => {
+  const formatPrice = (
+    priceObject: { centAmount: number; currencyCode: string } | undefined
+  ) => {
     if (priceObject) {
-      const formattedPrice = (priceObject.centAmount / 100).toFixed(2) + ' ' + priceObject.currencyCode;
+      const formattedPrice =
+        (priceObject.centAmount / 100).toFixed(2) +
+        ' ' +
+        priceObject.currencyCode;
       return formattedPrice;
     }
     return 'No price available';
@@ -95,9 +100,9 @@ const ProductDetail: React.FC = () => {
               </p>
             </div>
             <div className="price">
-              { discountedPrice !== undefined && discountedPrice > 0 ? (
+              {discountedPrice !== undefined && discountedPrice > 0 ? (
                 <>
-                  <div className='original-price '>
+                  <div className="original-price ">
                     {formatPrice(product.price?.value)}
                   </div>
                   <div className="discounted-price">
@@ -105,9 +110,7 @@ const ProductDetail: React.FC = () => {
                   </div>
                 </>
               ) : (
-                <div>
-                  {formatPrice(product.price?.value)}
-                </div>
+                <div>{formatPrice(product.price?.value)}</div>
               )}
             </div>
           </Container>

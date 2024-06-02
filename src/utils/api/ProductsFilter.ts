@@ -24,10 +24,11 @@ export const getFiltredProductsFromAPI = (
   }
   if (colorFilter) {
     //filterArr.push(`variants.attributes.color-filter.key:"#964B00"`);
+    //filterArr.push(`variants.attributes.color.en-US: "${colorFilter}"`);
     filterArr.push(`variants.attributes.color.en-US: "${colorFilter}"`);
   }
   if (sizeFilter) {
-    filterArr.push(`variants.attributes.size.en-US: "${sizeFilter}"`);
+    filterArr.push(`variants.attributes.size: "${sizeFilter}"`);
   }
 
   if (sortFilter) {
