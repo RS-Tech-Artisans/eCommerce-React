@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export const Main = () => {
   return (
@@ -10,7 +10,7 @@ export const Main = () => {
         alignItems: 'center',
         alignContent: 'center',
         height: '100vh',
-        color: 'rgb(111 231 255)'
+        color: 'rgb(111 231 255)',
       }}
     >
       <h1>Main page</h1>
