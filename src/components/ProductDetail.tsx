@@ -82,7 +82,6 @@ const ProductDetail: React.FC = () => {
 
   return (
     <>
-      {/* <div>Product Page for ID: {id} </div> */}
       <Container
         className="bg-light pt-3 rounded shadow-lg"
         style={{ marginTop: '40px' }}
@@ -156,5 +155,6 @@ const ProductDetail: React.FC = () => {
     </>
   );
 };
+
 
 export default ProductDetail;
