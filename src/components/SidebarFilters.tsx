@@ -15,9 +15,9 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   brandFilter,
   setBrandFilter,
   brands,
-  colorFilter,
-  setColorFilter,
-  colors,
+  displayFilter: displayFilter,
+  setDisplayFilter: setDisplayFilter,
+  displays,
   sizeFilter,
   setSizeFilter,
   sizes,
@@ -38,8 +38,8 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
     setBrandFilter(brand);
   };
 
-  const handleColorChange = (color: string | null) => {
-    setColorFilter(color);
+  const handleDisplayChange = (display: string | null) => {
+    setDisplayFilter(display);
   };
 
   const handleSizeChange = (size: string | null) => {
@@ -108,19 +108,19 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
             </Dropdown.Item>
           ))}
         </DropdownButton>
-        <h4 className="filter-header">Filter by Color</h4>
+        <h4 className="filter-header">Filter by Display Technology</h4>
         <DropdownButton
           id="filter-dropdown"
-          title={colorFilter ? colorFilter : 'Select Color'}
-          onSelect={handleColorChange}
+          title={displayFilter ? displayFilter : 'Select Display'}
+          onSelect={handleDisplayChange}
           className="custom-dropdown"
         >
-          <Dropdown.Item key="no-color" eventKey="">
-            all colors
+          <Dropdown.Item key="all-displays" eventKey="">
+            all displays
           </Dropdown.Item>
-          {colors.map((color) => (
-            <Dropdown.Item key={color} eventKey={color}>
-              {color}
+          {displays.map((display) => (
+            <Dropdown.Item key={display} eventKey={display}>
+              {display}
             </Dropdown.Item>
           ))}
         </DropdownButton>

@@ -48,9 +48,9 @@ export interface SidebarFiltersProps {
   brandFilter: string | null;
   setBrandFilter: (value: string | null) => void;
   brands: string[];
-  colorFilter: string | null;
-  setColorFilter: (value: string | null) => void;
-  colors: string[];
+  displayFilter: string | null;
+  setDisplayFilter: (value: string | null) => void;
+  displays: string[];
   sizeFilter: string | null;
   setSizeFilter: (value: string | null) => void;
   sizes: string[];

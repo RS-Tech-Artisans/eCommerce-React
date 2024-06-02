@@ -13,7 +13,7 @@ const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
   const [sizes, setSizes] = useState<string[]>([]);
-  const [color] = useState<string[]>([]);
+  //const [color] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -94,9 +94,6 @@ const ProductDetail: React.FC = () => {
               </p>
               <p>
                 <span style={{ fontWeight: 'bold' }}>Size:</span> {sizes}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Color:</span> {color}
               </p>
             </div>
             <div className="price">
