@@ -1,0 +1,155 @@
+import React from 'react';
+import {
+  Form,
+  InputGroup,
+  DropdownButton,
+  Dropdown,
+  Button,
+} from 'react-bootstrap';
+import { BsSearch } from 'react-icons/bs';
+import { SidebarFiltersProps } from '../utils/Interfaces';
+
+const SidebarFilters: React.FC<SidebarFiltersProps> = ({
+  search,
+  setSearch,
+  brandFilter,
+  setBrandFilter,
+  brands,
+  displayFilter: displayFilter,
+  setDisplayFilter: setDisplayFilter,
+  displays,
+  sizeFilter,
+  setSizeFilter,
+  sizes,
+  priceFilter,
+  setPriceFilter,
+  handleResetFilters,
+  setSortFilter,
+}) => {
+  const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPriceFilter({ ...priceFilter, minPrice: e.target.value });
+  };
+
+  const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPriceFilter({ ...priceFilter, maxPrice: e.target.value });
+  };
+
+  const handleBrandChange = (brand: string | null) => {
+    setBrandFilter(brand);
+  };
+
+  const handleDisplayChange = (display: string | null) => {
+    setDisplayFilter(display);
+  };
+
+  const handleSizeChange = (size: string | null) => {
+    setSizeFilter(size);
+  };
+
+  const handleSortFilter = (sortAttribute: string | null) => {
+    setSortFilter(sortAttribute);
+  };
+
+  return (
+    <div className="sidebar-filters">
+      <Form className="filters">
+        <InputGroup className="search-input-group">
+          <InputGroup.Text>
+            <BsSearch />
+          </InputGroup.Text>
+          <Form.Control
+            value={search}
+            placeholder="Search"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </InputGroup>
+
+        <div>
+          <Form.Select onChange={(e) => handleSortFilter(e.target.value)}>
+            <option value={''}>Sort by</option>
+            <option value={'price asc'} defaultValue={'low'}>
+              Low price
+            </option>
+            <option value={'price desc'}>High price</option>
+            <option value={'name.en-us asc'}>a-z</option>
+            <option value={'name.en-us desc'}>z-a</option>
+          </Form.Select>
+        </div>
+
+        <h4 className="filter-header">Filter by Price</h4>
+        <InputGroup className="price-filter-input-group">
+          <Form.Control
+            type="number"
+            value={priceFilter.minPrice}
+            placeholder="0"
+            onChange={handleMinPriceChange}
+          />
+          <Form.Control
+            type="number"
+            value={priceFilter.maxPrice}
+            placeholder="999999"
+            onChange={handleMaxPriceChange}
+          />
+        </InputGroup>
+        <h4 className="filter-header">Filter by Brand</h4>
+        <DropdownButton
+          id="brand-filter-dropdown"
+          title={brandFilter ? brandFilter : 'Select Brand'}
+          onSelect={handleBrandChange}
+          className="custom-dropdown"
+        >
+          <Dropdown.Item key="no-brand" eventKey="">
+            all brands
+          </Dropdown.Item>
+
+          {brands.map((brand) => (
+            <Dropdown.Item key={brand} eventKey={brand}>
+              {brand}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+        <h4 className="filter-header">Filter by Display Technology</h4>
+        <DropdownButton
+          id="filter-dropdown"
+          title={displayFilter ? displayFilter : 'Select Display'}
+          onSelect={handleDisplayChange}
+          className="custom-dropdown"
+        >
+          <Dropdown.Item key="all-displays" eventKey="">
+            all displays
+          </Dropdown.Item>
+          {displays.map((display) => (
+            <Dropdown.Item key={display} eventKey={display}>
+              {display}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+        <h4 className="filter-header">Filter by Size</h4>
+        <DropdownButton
+          id="size-filter-dropdown"
+          title={sizeFilter ? sizeFilter : 'Select Size'}
+          onSelect={handleSizeChange}
+          className="custom-dropdown"
+        >
+          <Dropdown.Item key="no-size" eventKey="">
+            all sizes
+          </Dropdown.Item>
+          {sizes.map((size) => (
+            <Dropdown.Item key={size} eventKey={size}>
+              {size}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+        <Button
+          onClick={handleResetFilters}
+          variant="secondary"
+          className="reset-filters-button"
+        >
+          Reset Filters
+        </Button>
+      </Form>
+    </div>
+  );
+};
+
+export default SidebarFilters;

@@ -1,55 +1,65 @@
-import { apiRoot } from './getProjectInfo';
-import {
-  ProductPagedQueryResponse,
-  Product,
-} from '@commercetools/platform-sdk';
+// import { Product } from '@commercetools/platform-sdk';
+// import { Price, ProductInfo } from './Interfaces';
 
-export interface ProductInfo {
-  name: string;
-  imageUrl: string;
-  description: string;
-  price: number;
-}
+// export const extractNamesAndPrices = (products: Product[]): ProductInfo[] => {
+//   return products.map((product) => {
+//     const name =
+//       product.masterData.current.name['en-US'] || 'No name available';
+//     const imageUrl =
+//       (product.masterData.current.masterVariant.images ?? [])[0]?.url ||
+//       'No image available';
+//     const description =
+//       product.masterData.current.description?.['en-US'] ||
+//       'No description available';
+//     const priceArray = product.masterData.current.masterVariant.prices;
+//     const foundPrice = priceArray
+//       ? priceArray.find((p) => p.value.currencyCode === 'USD')
+//       : null;
 
-export const getProject = (
-  limit: number = 500,
-  offset: number = 0
-): Promise<ProductPagedQueryResponse> => {
-  return apiRoot
-    .products()
-    .get({ queryArgs: { limit, offset } })
-    .execute()
-    .then((response) => response.body);
-};
+//     const productPrice: Price = foundPrice
+//       ? {
+//           value: {
+//             centAmount: foundPrice.value.centAmount,
+//             currencyCode: foundPrice.value.currencyCode,
+//           },
+//           discounted: foundPrice.discounted
+//             ? {
+//                 value: {
+//                   centAmount: foundPrice.discounted.value.centAmount,
+//                   currencyCode: foundPrice.discounted.value.currencyCode,
+//                 },
+//               }
+//             : undefined,
+//         }
+//       : {
+//           value: {
+//             centAmount: 0,
+//             currencyCode: 'USD',
+//           },
+//         };
 
-console.log('Catalog');
+//     const discountedPrice =
+//       productPrice.discounted?.value.centAmount ||
+//       productPrice.value.centAmount;
 
-//getProject().then(console.log).catch(console.error);
+//     return {
+//       name,
+//       imageUrl,
+//       description,
+//       price: productPrice,
+//       discountedPrice,
+//     };
+//   });
+// };
 
-export const extractNamesAndPrices = (products: Product[]): ProductInfo[] => {
-  return products.map((product) => {
-    const name =
-      product.masterData.current.name['en-US'] || 'No name available';
-    const imageUrl =
-      (product.masterData.current.masterVariant.images ?? [])[0]?.url ||
-      'No image available';
-    const description =
-      product.masterData.current.description?.['en-US'] ||
-      'No description available';
-    const priceArray = product.masterData.current.masterVariant.prices;
-    const productPrice = priceArray
-      ? (priceArray.find((price) => price.value.currencyCode === 'USD')?.value
-          .centAmount || 0) / 100
-      : 0;
-    return { name, imageUrl, description, price: productPrice };
-  });
-};
-
-getProject()
-  .then((response) => {
-    const products = (response as ProductPagedQueryResponse).results;
-    console.log('products', products);
-    const productInfo = extractNamesAndPrices(products);
-    console.log('productInfo', productInfo);
-  })
-  .catch(console.error);
+// // export const fetchProductInfo = async () => {
+// //   try {
+// //     const response = await getProductsFromAPI();
+// //     const products = response.results;
+// //     const productInfo = extractNamesAndPrices(products);
+// //     return productInfo;
+// //   } catch (error) {
+// //     console.error(error);
+// //     return [];
+// //   }
+// // };

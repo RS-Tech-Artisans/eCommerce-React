@@ -86,7 +86,7 @@ test('country validation', () => {
   expect(CountryValidation('', ...restValidation)).toBeFalsy();
 });
 
-import { findUser, findRegisteredUser } from '../utils/FindCustomer';
+import { findUser, findRegisteredUser } from '../utils/api/FindCustomer';
 import EmailValidation from '../utils/validation/EmailValidation';
 test('email validation on login page', async () => {
   await expect(EmailValidation('a2-a3', ...restValidation)).resolves.toBe(

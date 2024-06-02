@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import {
   ClientResponse,
-  //CustomerDraft,
   CustomerSignInResult,
 } from '@commercetools/platform-sdk';
-import { apiRoot } from './getProjectInfo';
+import { apiRoot } from './api/getProjectInfo';
 import { useNavigate } from 'react-router-dom';
-
-interface MyApiError {
-  message: string;
-}
+import { MyApiError } from './Interfaces';
 
 export const useRegistration = () => {
   const [registrationResult, setRegistrationResult] =
