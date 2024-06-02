@@ -13,7 +13,7 @@ const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
   const [sizes, setSizes] = useState<string[]>([]);
-  const [color, setColor] = useState<string[]>([]);
+  //const [color] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -56,9 +56,14 @@ const ProductDetail: React.FC = () => {
     getProductData();
   }, [id]);
 
-  const formatPrice = (priceObject: { centAmount: number; currencyCode: string } | undefined) => {
+  const formatPrice = (
+    priceObject: { centAmount: number; currencyCode: string } | undefined
+  ) => {
     if (priceObject) {
-      const formattedPrice = (priceObject.centAmount / 100).toFixed(2) + ' ' + priceObject.currencyCode;
+      const formattedPrice =
+        (priceObject.centAmount / 100).toFixed(2) +
+        ' ' +
+        priceObject.currencyCode;
       return formattedPrice;
     }
     return 'No price available';
@@ -70,7 +75,7 @@ const ProductDetail: React.FC = () => {
     <>
       {/* <div>Product Page for ID: {id} </div> */}
       <Container
-        className="bg-secondary bg-gradient"
+        className="bg-light text-dark bg-gradient"
         style={{ marginTop: '40px' }}
       >
         <Link to={`/catalog`} style={{ fontSize: '20px' }}>
@@ -79,7 +84,7 @@ const ProductDetail: React.FC = () => {
         {product ? (
           <Container className="d-flex p-2 flex-row">
             <div style={{ marginRight: '20px' }}>
-              <img src={product.imageUrl} alt="" width={400} height={400} />
+              <img src={product.imageUrl} alt="" />
             </div>
             <div>
               <h3>{product.name}</h3>
@@ -90,14 +95,11 @@ const ProductDetail: React.FC = () => {
               <p>
                 <span style={{ fontWeight: 'bold' }}>Size:</span> {sizes}
               </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Color:</span> {color}
-              </p>
             </div>
             <div className="price">
-              { discountedPrice !== undefined && discountedPrice > 0 ? (
+              {discountedPrice !== undefined && discountedPrice > 0 ? (
                 <>
-                  <div className='original-price '>
+                  <div className="original-price ">
                     {formatPrice(product.price?.value)}
                   </div>
                   <div className="discounted-price">
@@ -105,9 +107,7 @@ const ProductDetail: React.FC = () => {
                   </div>
                 </>
               ) : (
-                <div>
-                  {formatPrice(product.price?.value)}
-                </div>
+                <div>{formatPrice(product.price?.value)}</div>
               )}
             </div>
           </Container>

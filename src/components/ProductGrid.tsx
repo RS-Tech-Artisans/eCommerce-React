@@ -10,13 +10,15 @@ import { getFiltredProductsFromAPI } from '../utils/api/ProductsFilter';
 import { filterProducts } from './PriceFilter';
 import { getBrandsFromAPI } from '../utils/api/getBrands';
 import { getSizesFromAPI } from '../utils/api/getSizes';
+import { getDisplaysFromAPI } from '../utils/api/getDisplays';
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   const [search, setSearch] = useState('');
   const [brandFilter, setBrandFilter] = useState<string | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
   const [sizes, setSizes] = useState<string[]>([]);
-  const [colorFilter, setColorFilter] = useState<string | null>(null);
+  const [displays, setDisplays] = useState<string[]>([]);
+  const [displayFilter, setDisplayFilter] = useState<string | null>(null);
   const [sizeFilter, setSizeFilter] = useState<string | null>(null);
   const [sortFilter, setSortFilter] = useState<string | null>(null);
   const [priceFilter, setPriceFilter] = useState<{
@@ -27,7 +29,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     maxPrice: '',
   });
 
-  const colors = ['Grey', 'Black', 'White'];
+  //const colors = ['Grey', 'Black', 'White'];
   //const sizes = ['Small', 'Big'];
 
   useEffect(() => {
@@ -52,6 +54,17 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     };
 
     fetchSizes();
+
+    const fetchDisplays = async () => {
+      try {
+        const fetchedDisplays = await getDisplaysFromAPI();
+        setDisplays(fetchedDisplays);
+      } catch (error) {
+        console.error('Error fetching Displays:', error);
+      }
+    };
+
+    fetchDisplays();
   }, []);
 
   const fetchFilteredProducts = async () => {
@@ -68,7 +81,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         minPriceInCents,
         maxPriceInCents,
         brandFilter || '',
-        colorFilter || '',
+        displayFilter || '',
         sizeFilter || '',
         sortFilter || ''
       );
@@ -83,12 +96,12 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
 
   useEffect(() => {
     fetchFilteredProducts();
-  }, [priceFilter, brandFilter, colorFilter, sizeFilter, sortFilter]);
+  }, [priceFilter, brandFilter, displayFilter, sizeFilter, sortFilter]);
 
   const handleResetFilters = () => {
     setSearch('');
     setBrandFilter(null);
-    setColorFilter(null);
+    setDisplayFilter(null);
     setSizeFilter(null);
     setSortFilter(null);
     setPriceFilter({ minPrice: '', maxPrice: '' });
@@ -111,9 +124,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         brandFilter={brandFilter}
         setBrandFilter={setBrandFilter}
         brands={brands}
-        colorFilter={colorFilter}
-        setColorFilter={setColorFilter}
-        colors={colors}
+        displayFilter={displayFilter}
+        setDisplayFilter={setDisplayFilter}
+        displays={displays}
         sizeFilter={sizeFilter}
         setSizeFilter={setSizeFilter}
         sizes={sizes}
