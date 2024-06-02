@@ -75,7 +75,7 @@ const ProductDetail: React.FC = () => {
     <>
       {/* <div>Product Page for ID: {id} </div> */}
       <Container
-        className="bg-secondary bg-gradient"
+        className="bg-light text-dark bg-gradient"
         style={{ marginTop: '40px' }}
       >
         <Link to={`/catalog`} style={{ fontSize: '20px' }}>
@@ -84,7 +84,7 @@ const ProductDetail: React.FC = () => {
         {product ? (
           <Container className="d-flex p-2 flex-row">
             <div style={{ marginRight: '20px' }}>
-              <img src={product.imageUrl} alt="" width={400} height={400} />
+              <img src={product.imageUrl} alt="" />
             </div>
             <div>
               <h3>{product.name}</h3>
