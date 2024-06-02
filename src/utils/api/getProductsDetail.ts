@@ -7,5 +7,4 @@ export const getProductDetailById = (ID: string) => {
     .get()
     .execute()
     .then((response) => response.body);
-  /* .then((body)=> body.results) */
 };
