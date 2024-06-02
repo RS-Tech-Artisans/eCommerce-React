@@ -31,6 +31,15 @@ export interface ProductCardProps {
   description: string;
   price: Price;
   discounted?: Price;
+  images?: ProductImages[];
+}
+
+export interface ProductImages {
+  dimensions: {
+    w: number;
+    h: number;
+  };
+  url: string;
 }
 
 export interface ProductGridProps {

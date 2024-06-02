@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { getProductDetailById } from '../utils/api/getProductsDetail';
-import { ProductCardProps } from '../utils/Interfaces';
+import { ProductCardProps, ProductImages } from '../utils/Interfaces';
 import { Container } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { mapProducts } from '../utils/productMapper';
@@ -8,12 +8,16 @@ import { MdArrowBackIos } from 'react-icons/md';
 import { getBrandsFromAPI } from '../utils/api/getBrands';
 import { getSizesFromAPI } from '../utils/api/getSizes';
 import './ProductCard.css';
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+import React from 'react';
+import "./ProductDetail.css"
 
 const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>([]);
   const [sizes, setSizes] = useState<string[]>([]);
-  const [color, setColor] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -45,9 +49,12 @@ const ProductDetail: React.FC = () => {
       if (id) {
         try {
           const fetchProducts = await getProductDetailById(id);
-          console.log('Fetched data detail product:', fetchProducts);
           const productDetail = mapProducts([fetchProducts]);
+          const images1 = fetchProducts?.masterVariant?.images?.map((image: ProductImages) => image.url);
+          console.log('Fetched data detail product:', fetchProducts);
+
           setProduct(productDetail[0]);
+          setImages(images1 || []);
         } catch (error) {
           console.error('Error fetching product details:', error);
         }
@@ -55,6 +62,8 @@ const ProductDetail: React.FC = () => {
     };
     getProductData();
   }, [id]);
+
+
 
   const formatPrice = (priceObject: { centAmount: number; currencyCode: string } | undefined) => {
     if (priceObject) {
@@ -70,45 +79,58 @@ const ProductDetail: React.FC = () => {
     <>
       {/* <div>Product Page for ID: {id} </div> */}
       <Container
-        className="bg-secondary bg-gradient"
+        className="bg-light pt-3 rounded shadow-lg"
         style={{ marginTop: '40px' }}
       >
-        <Link to={`/catalog`} style={{ fontSize: '20px' }}>
+        <Link to={`/catalog`} style={{ fontSize: '20px', fontWeight: 'bold' }} className='text-dark'>
           <MdArrowBackIos /> To Catalog
         </Link>
         {product ? (
-          <Container className="d-flex p-2 flex-row">
-            <div style={{ marginRight: '20px' }}>
-              <img src={product.imageUrl} alt="" width={400} height={400} />
+          <Container className="d-flex flex-column mt-4">
+            <div className="container-detail">
+              <div className="slide-container">
+                {images.length > 0 ? (
+                  <ImageGallery items={images.map(url => (
+                    { original: url,
+                      thumbnail: url }
+                  ))} />
+                ) : (
+                  <img src={product.imageUrl} alt="" width={400} height={400} />
+                )
+                }
+              </div>
+              <div>
+                <h3 style={{ marginBottom: "20px"}}>{product.name}</h3>
+                <p>
+                  <span style={{ fontWeight: 'bold', marginRight: '20px'}}>Brand:</span>{brands}
+                </p>
+                <p>
+                  <span style={{ fontWeight: 'bold', marginRight: '20px'}}>Size:</span>{sizes}
+                </p>
+                <p>
+                  <span style={{ fontWeight: 'bold', marginRight: '20px'}}>Display:</span>
+                </p>
+                <div className="price">
+                  { discountedPrice !== undefined && discountedPrice > 0 ? (
+                    <>
+                      <div className='original-price '>
+                        {formatPrice(product.price?.value)}
+                      </div>
+                      <div className="discounted-price">
+                        {formatPrice(product.price?.discounted?.value)}
+                      </div>
+                    </>
+                  ) : (
+                    <div>
+                      {formatPrice(product.price?.value)}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
             <div>
-              <h3>{product.name}</h3>
+              <h4>Description</h4>
               <p>{product.description}</p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Brand:</span> {brands}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Size:</span> {sizes}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Color:</span> {color}
-              </p>
-            </div>
-            <div className="price">
-              { discountedPrice !== undefined && discountedPrice > 0 ? (
-                <>
-                  <div className='original-price '>
-                    {formatPrice(product.price?.value)}
-                  </div>
-                  <div className="discounted-price">
-                    {formatPrice(product.price?.discounted?.value)}
-                  </div>
-                </>
-              ) : (
-                <div>
-                  {formatPrice(product.price?.value)}
-                </div>
-              )}
             </div>
           </Container>
         ) : (
