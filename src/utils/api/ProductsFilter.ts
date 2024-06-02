@@ -10,10 +10,12 @@ export const getFiltredProductsFromAPI = (
   brandFilter: string | null,
   colorFilter: string | null,
   sizeFilter: string | null,
+  sortFilter: string | null,
   limit = DEFAULT_LIMIT,
   offset = DEFAULT_OFFSET
 ): Promise<ProductProjectionPagedSearchResponse> => {
   const filterArr: string[] = [];
+  const sortArr: string[] = [];
   filterArr.push(
     `variants.price.centAmount: range(${minPrice} to ${maxPrice})`
   );
@@ -28,12 +30,17 @@ export const getFiltredProductsFromAPI = (
     filterArr.push(`variants.attributes.size.en-US: "${sizeFilter}"`);
   }
 
+  if (sortFilter) {
+    sortArr.push(`${sortFilter}`);
+  }
+
   return apiRoot
     .productProjections()
     .search()
     .get({
       queryArgs: {
         filter: filterArr,
+        sort: sortArr,
         limit,
         offset,
       },

@@ -8,7 +8,6 @@ import {
 } from 'react-bootstrap';
 import { BsSearch } from 'react-icons/bs';
 import { SidebarFiltersProps } from '../utils/Interfaces';
-import { Sorting } from './Sorting';
 
 const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   search,
@@ -25,6 +24,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   priceFilter,
   setPriceFilter,
   handleResetFilters,
+  setSortFilter,
 }) => {
   const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPriceFilter({ ...priceFilter, minPrice: e.target.value });
@@ -46,6 +46,10 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
     setSizeFilter(size);
   };
 
+  const handleSortFilter = (sortAttribute: string | null) => {
+    setSortFilter(sortAttribute);
+  };
+
   return (
     <div className="sidebar-filters">
       <Form className="filters">
@@ -59,7 +63,19 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
             onChange={(e) => setSearch(e.target.value)}
           />
         </InputGroup>
-        <Sorting />
+
+        <div>
+          <Form.Select onChange={(e) => handleSortFilter(e.target.value)}>
+            <option value={''}>Sort by</option>
+            <option value={'price asc'} defaultValue={'low'}>
+              Low price
+            </option>
+            <option value={'price desc'}>High price</option>
+            <option value={'name.en-us asc'}>a-z</option>
+            <option value={'name.en-us desc'}>z-a</option>
+          </Form.Select>
+        </div>
+
         <h4 className="filter-header">Filter by Price</h4>
         <InputGroup className="price-filter-input-group">
           <Form.Control

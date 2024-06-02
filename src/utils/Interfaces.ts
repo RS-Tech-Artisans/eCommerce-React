@@ -53,5 +53,6 @@ export interface SidebarFiltersProps {
   sizes: string[];
   priceFilter: { minPrice: string; maxPrice: string };
   setPriceFilter: (value: { minPrice: string; maxPrice: string }) => void;
+  setSortFilter: (value: string | null) => void;
   handleResetFilters: () => void;
 }
