@@ -18,6 +18,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   const [sizes, setSizes] = useState<string[]>([]);
   const [colorFilter, setColorFilter] = useState<string | null>(null);
   const [sizeFilter, setSizeFilter] = useState<string | null>(null);
+  const [sortFilter, setSortFilter] = useState<string | null>(null);
   const [priceFilter, setPriceFilter] = useState<{
     minPrice: string;
     maxPrice: string;
@@ -68,8 +69,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         maxPriceInCents,
         brandFilter || '',
         colorFilter || '',
-        sizeFilter || ''
+        sizeFilter || '',
+        sortFilter || ''
       );
+      console.log('sortFilter: ', sortFilter);
       console.log('New Filtered Products:', filteredResponse.results);
       const productInfoArray = mapProducts(filteredResponse.results);
       setProducts(productInfoArray);
@@ -80,13 +83,14 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
 
   useEffect(() => {
     fetchFilteredProducts();
-  }, [priceFilter, brandFilter, colorFilter, sizeFilter]);
+  }, [priceFilter, brandFilter, colorFilter, sizeFilter, sortFilter]);
 
   const handleResetFilters = () => {
     setSearch('');
     setBrandFilter(null);
     setColorFilter(null);
     setSizeFilter(null);
+    setSortFilter(null);
     setPriceFilter({ minPrice: '', maxPrice: '' });
   };
 
@@ -115,6 +119,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         sizes={sizes}
         priceFilter={priceFilter}
         setPriceFilter={setPriceFilter}
+        setSortFilter={setSortFilter}
         handleResetFilters={handleResetFilters}
       />
       <div className="product-grid">
