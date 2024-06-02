@@ -8,10 +8,10 @@ import { MdArrowBackIos } from 'react-icons/md';
 import { getBrandsFromAPI } from '../utils/api/getBrands';
 import { getSizesFromAPI } from '../utils/api/getSizes';
 import './ProductCard.css';
-import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
+import ImageGallery from 'react-image-gallery';
+import 'react-image-gallery/styles/css/image-gallery.css';
 import React from 'react';
-import "./ProductDetail.css"
+import './ProductDetail.css';
 
 const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
@@ -50,7 +50,9 @@ const ProductDetail: React.FC = () => {
         try {
           const fetchProducts = await getProductDetailById(id);
           const productDetail = mapProducts([fetchProducts]);
-          const images1 = fetchProducts?.masterVariant?.images?.map((image: ProductImages) => image.url);
+          const images1 = fetchProducts?.masterVariant?.images?.map(
+            (image: ProductImages) => image.url
+          );
           console.log('Fetched data detail product:', fetchProducts);
 
           setProduct(productDetail[0]);
@@ -63,11 +65,14 @@ const ProductDetail: React.FC = () => {
     getProductData();
   }, [id]);
 
-
-
-  const formatPrice = (priceObject: { centAmount: number; currencyCode: string } | undefined) => {
+  const formatPrice = (
+    priceObject: { centAmount: number; currencyCode: string } | undefined
+  ) => {
     if (priceObject) {
-      const formattedPrice = (priceObject.centAmount / 100).toFixed(2) + ' ' + priceObject.currencyCode;
+      const formattedPrice =
+        (priceObject.centAmount / 100).toFixed(2) +
+        ' ' +
+        priceObject.currencyCode;
       return formattedPrice;
     }
     return 'No price available';
@@ -82,7 +87,11 @@ const ProductDetail: React.FC = () => {
         className="bg-light pt-3 rounded shadow-lg"
         style={{ marginTop: '40px' }}
       >
-        <Link to={`/catalog`} style={{ fontSize: '20px', fontWeight: 'bold' }} className='text-dark'>
+        <Link
+          to={`/catalog`}
+          style={{ fontSize: '20px', fontWeight: 'bold' }}
+          className="text-dark"
+        >
           <MdArrowBackIos /> To Catalog
         </Link>
         {product ? (
@@ -90,30 +99,39 @@ const ProductDetail: React.FC = () => {
             <div className="container-detail">
               <div className="slide-container">
                 {images.length > 0 ? (
-                  <ImageGallery items={images.map(url => (
-                    { original: url,
-                      thumbnail: url }
-                  ))} />
+                  <ImageGallery
+                    items={images.map((url) => ({
+                      original: url,
+                      thumbnail: url,
+                    }))}
+                  />
                 ) : (
                   <img src={product.imageUrl} alt="" width={400} height={400} />
-                )
-                }
+                )}
               </div>
               <div>
-                <h3 style={{ marginBottom: "20px"}}>{product.name}</h3>
+                <h3 style={{ marginBottom: '20px' }}>{product.name}</h3>
                 <p>
-                  <span style={{ fontWeight: 'bold', marginRight: '20px'}}>Brand:</span>{brands}
+                  <span style={{ fontWeight: 'bold', marginRight: '20px' }}>
+                    Brand:
+                  </span>
+                  {brands}
                 </p>
                 <p>
-                  <span style={{ fontWeight: 'bold', marginRight: '20px'}}>Size:</span>{sizes}
+                  <span style={{ fontWeight: 'bold', marginRight: '20px' }}>
+                    Size:
+                  </span>
+                  {sizes}
                 </p>
                 <p>
-                  <span style={{ fontWeight: 'bold', marginRight: '20px'}}>Display:</span>
+                  <span style={{ fontWeight: 'bold', marginRight: '20px' }}>
+                    Display:
+                  </span>
                 </p>
                 <div className="price">
-                  { discountedPrice !== undefined && discountedPrice > 0 ? (
+                  {discountedPrice !== undefined && discountedPrice > 0 ? (
                     <>
-                      <div className='original-price '>
+                      <div className="original-price ">
                         {formatPrice(product.price?.value)}
                       </div>
                       <div className="discounted-price">
@@ -121,9 +139,7 @@ const ProductDetail: React.FC = () => {
                       </div>
                     </>
                   ) : (
-                    <div>
-                      {formatPrice(product.price?.value)}
-                    </div>
+                    <div>{formatPrice(product.price?.value)}</div>
                   )}
                 </div>
               </div>
