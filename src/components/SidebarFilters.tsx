@@ -15,15 +15,16 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   brandFilter,
   setBrandFilter,
   brands,
-  colorFilter,
-  setColorFilter,
-  colors,
+  displayFilter: displayFilter,
+  setDisplayFilter: setDisplayFilter,
+  displays,
   sizeFilter,
   setSizeFilter,
   sizes,
   priceFilter,
   setPriceFilter,
   handleResetFilters,
+  setSortFilter,
 }) => {
   const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPriceFilter({ ...priceFilter, minPrice: e.target.value });
@@ -37,12 +38,16 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
     setBrandFilter(brand);
   };
 
-  const handleColorChange = (color: string | null) => {
-    setColorFilter(color);
+  const handleDisplayChange = (display: string | null) => {
+    setDisplayFilter(display);
   };
 
   const handleSizeChange = (size: string | null) => {
     setSizeFilter(size);
+  };
+
+  const handleSortFilter = (sortAttribute: string | null) => {
+    setSortFilter(sortAttribute);
   };
 
   return (
@@ -58,6 +63,19 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
             onChange={(e) => setSearch(e.target.value)}
           />
         </InputGroup>
+
+        <div>
+          <Form.Select onChange={(e) => handleSortFilter(e.target.value)}>
+            <option value={''}>Sort by</option>
+            <option value={'price asc'} defaultValue={'low'}>
+              Low price
+            </option>
+            <option value={'price desc'}>High price</option>
+            <option value={'name.en-us asc'}>a-z</option>
+            <option value={'name.en-us desc'}>z-a</option>
+          </Form.Select>
+        </div>
+
         <h4 className="filter-header">Filter by Price</h4>
         <InputGroup className="price-filter-input-group">
           <Form.Control
@@ -90,19 +108,19 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
             </Dropdown.Item>
           ))}
         </DropdownButton>
-        <h4 className="filter-header">Filter by Color</h4>
+        <h4 className="filter-header">Filter by Display Technology</h4>
         <DropdownButton
           id="filter-dropdown"
-          title={colorFilter ? colorFilter : 'Select Color'}
-          onSelect={handleColorChange}
+          title={displayFilter ? displayFilter : 'Select Display'}
+          onSelect={handleDisplayChange}
           className="custom-dropdown"
         >
-          <Dropdown.Item key="no-color" eventKey="">
-            all colors
+          <Dropdown.Item key="all-displays" eventKey="">
+            all displays
           </Dropdown.Item>
-          {colors.map((color) => (
-            <Dropdown.Item key={color} eventKey={color}>
-              {color}
+          {displays.map((display) => (
+            <Dropdown.Item key={display} eventKey={display}>
+              {display}
             </Dropdown.Item>
           ))}
         </DropdownButton>

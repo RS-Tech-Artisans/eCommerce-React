@@ -7,11 +7,7 @@ export default function LogoutButton() {
 
   return (
     <div>
-      <Button
-        className="btn-dark"
-        style={{ fontSize: '28px' }}
-        onClick={handleLogout}
-      >
+      <Button className="btn-dark btn-lg" onClick={handleLogout}>
         <RiLogoutBoxRLine />
       </Button>
     </div>

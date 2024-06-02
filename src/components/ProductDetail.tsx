@@ -156,4 +156,5 @@ const ProductDetail: React.FC = () => {
   );
 };
 
+
 export default ProductDetail;
