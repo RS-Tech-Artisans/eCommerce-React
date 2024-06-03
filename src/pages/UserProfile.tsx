@@ -49,6 +49,7 @@ export default function UserProfile() {
               name="last-name"
               type="text"
               autoComplete="off"
+              value={userData?.lastName || ''}
             />
           </div>
           <div>
@@ -58,6 +59,7 @@ export default function UserProfile() {
               name="birth"
               type="text"
               autoComplete="off"
+              value={userData?.dateOfBirth || ''}
             />
           </div>
         </div>
