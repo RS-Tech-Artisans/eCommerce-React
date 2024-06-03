@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
 
 export default function UserProfile() {
+
+
+  const inputsBoxAdresses = UsersProfileAdresses;
   const [userData, setData] = useState<Customer>();
-
-  const inputsBoxAdresses = UsersProfileAdresses();
-
   //just downloaded the test data to check on the profile page
   useEffect(() => {
     const getCustomerData = async () => {
@@ -39,7 +39,7 @@ export default function UserProfile() {
               name="first-name"
               type="text"
               autoComplete="off"
-              value={userData?.firstName || ''}
+              value= {userData?.firstName || ''}
             />
           </div>
           <div>
@@ -69,12 +69,17 @@ export default function UserProfile() {
         <div className="container-default-addresses">
           <div className="billing-default-addresses">
             <p>Billing addresses (default)</p>
-            {inputsBoxAdresses}
+           {
+            userData?.defaultBillingAddressId && 
+              inputsBoxAdresses(userData, 1)
+            }
           </div>
 
           <div className="shipping-default-addresses">
             <p>Shipping addresses (default)</p>
-            {inputsBoxAdresses}
+            {userData?.defaultShippingAddressId && 
+          inputsBoxAdresses(userData,0)
+        }
           </div>
         </div>
       </div>
@@ -83,12 +88,16 @@ export default function UserProfile() {
         <div className="container-addresses">
           <div className="billing-addresses">
             <p>Billing addresses</p>
-            {inputsBoxAdresses}
+            {userData?.billingAddressIds && 
+          inputsBoxAdresses(userData,1)
+        }
           </div>
 
           <div className="shipping-addresses">
             <p>Shipping addresses</p>
-            {inputsBoxAdresses}
+           {userData?.shippingAddressIds && 
+          inputsBoxAdresses(userData,0)
+        }
           </div>
         </div>
       </div>

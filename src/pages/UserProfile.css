@@ -106,3 +106,7 @@ input {
 .billing-addresses {
   background: rgb(234 234 234 / 19%);
 }
+
+label {
+  margin-right: 10px;
+}
