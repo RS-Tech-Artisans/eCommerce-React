@@ -4,7 +4,7 @@ import {
   HttpMiddlewareOptions,
   RefreshAuthMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-import { myTokenCache } from './tokenStore';
+import { myTokenCache } from '../tokenStore';
 
 function getToken(): string | null {
   return localStorage.getItem('refresh_token');

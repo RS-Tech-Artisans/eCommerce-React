@@ -4,11 +4,8 @@ import { CustomerSignInResult } from '@commercetools/platform-sdk';
 import { useNavigate } from 'react-router-dom';
 import { clearTokenCache } from './tokenStore';
 import { useSession } from './SessionContext';
+import { MyApiError } from './Interfaces';
 import { createApiPasswordRoot } from './api/apiPasswordRoot';
-
-interface MyApiError {
-  message: string;
-}
 
 export const useLogin = () => {
   const { setToken } = useSession();
