@@ -11,6 +11,7 @@ import { filterProducts } from './PriceFilter';
 import { getBrandsFromAPI } from '../utils/api/getBrands';
 import { getSizesFromAPI } from '../utils/api/getSizes';
 import { getDisplaysFromAPI } from '../utils/api/getDisplays';
+import { getCategoriesFromAPI } from '../utils/api/getCategories';
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   const [search, setSearch] = useState('');
@@ -32,7 +33,24 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   //const colors = ['Grey', 'Black', 'White'];
   //const sizes = ['Small', 'Big'];
 
+
+  
+
+
   useEffect(() => {
+
+
+    const categories = async () => {
+      try {
+        const fetchedCategories = await getCategoriesFromAPI();
+        console.log('fetchedCategories ', fetchedCategories);
+      }
+       catch (error) {
+        console.error('Error fetching Categories:', error);
+      }
+    };
+    categories();
+
     const fetchBrands = async () => {
       try {
         const fetchedBrands = await getBrandsFromAPI();
