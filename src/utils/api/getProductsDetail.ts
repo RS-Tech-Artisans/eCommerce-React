@@ -1,4 +1,4 @@
-import { apiRoot } from './getProjectInfo';
+import { apiRoot } from './BuildClient';
 
 export const getProductDetailById = (ID: string) => {
   return apiRoot

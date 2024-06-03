@@ -3,9 +3,9 @@ import {
   ClientResponse,
   CustomerSignInResult,
 } from '@commercetools/platform-sdk';
-import { apiRoot } from './api/getProjectInfo';
 import { useNavigate } from 'react-router-dom';
 import { MyApiError } from './Interfaces';
+import { apiRoot } from './api/BuildClient';
 
 export const useRegistration = () => {
   const [registrationResult, setRegistrationResult] =
