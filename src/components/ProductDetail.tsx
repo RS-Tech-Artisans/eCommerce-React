@@ -1,6 +1,10 @@
 import { Link, useParams } from 'react-router-dom';
 import { getProductDetailById } from '../utils/api/getProductsDetail';
-import { ProductAttributes, ProductCardProps, ProductImages } from '../utils/Interfaces';
+import {
+  ProductAttributes,
+  ProductCardProps,
+  ProductImages,
+} from '../utils/Interfaces';
 import { Container } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { mapProducts } from '../utils/productMapper';
@@ -30,7 +34,7 @@ const ProductDetail: React.FC = () => {
             (brand: ProductAttributes) => brand.value
           );
 
-          setAttributes(atributesArray || [])
+          setAttributes(atributesArray || []);
           setProduct(productDetail[0]);
           setImages(images1 || []);
         } catch (error) {
@@ -40,7 +44,6 @@ const ProductDetail: React.FC = () => {
     };
     getProductData();
   }, [id]);
-
 
   const formatPrice = (
     priceObject: { centAmount: number; currencyCode: string } | undefined
@@ -56,7 +59,7 @@ const ProductDetail: React.FC = () => {
   };
 
   const discountedPrice = product?.price?.discounted?.value.centAmount;
-  const typeAttribute: string[] = ['Brand: ', 'Size: ', 'Display: ']
+  const typeAttribute: string[] = ['Brand: ', 'Size: ', 'Display: '];
 
   return (
     <>
@@ -130,6 +133,5 @@ const ProductDetail: React.FC = () => {
     </>
   );
 };
-
 
 export default ProductDetail;

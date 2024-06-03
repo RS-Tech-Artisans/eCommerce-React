@@ -32,7 +32,7 @@ export interface ProductCardProps {
   price: Price;
   discounted?: Price;
   images?: ProductImages[];
-  attributes?: ProductAttributes[]
+  attributes?: ProductAttributes[];
 }
 
 export interface ProductImages {
