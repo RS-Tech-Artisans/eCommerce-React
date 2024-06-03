@@ -1,4 +1,4 @@
-import { apiRoot } from "./getProjectInfo";
+import { apiRoot } from './getProjectInfo';
 
 export const fetchCustomerData = async () => {
   try {
