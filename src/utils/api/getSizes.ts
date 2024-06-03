@@ -1,5 +1,4 @@
-import { apiRoot } from "./BuildClient";
-
+import { apiRoot } from './BuildClient';
 
 export const getSizesFromAPI = async (): Promise<string[]> => {
   try {

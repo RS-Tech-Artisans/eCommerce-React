@@ -1,4 +1,3 @@
-
 import { ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
 import { apiRoot } from './BuildClient';
 
