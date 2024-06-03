@@ -33,19 +33,12 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   //const colors = ['Grey', 'Black', 'White'];
   //const sizes = ['Small', 'Big'];
 
-
-  
-
-
   useEffect(() => {
-
-
     const categories = async () => {
       try {
         const fetchedCategories = await getCategoriesFromAPI();
         console.log('fetchedCategories ', fetchedCategories);
-      }
-       catch (error) {
+      } catch (error) {
         console.error('Error fetching Categories:', error);
       }
     };
