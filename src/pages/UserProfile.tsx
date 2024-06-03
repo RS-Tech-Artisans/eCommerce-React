@@ -26,6 +26,12 @@ export default function UserProfile() {
   }, []);
   //just downloaded the test data to check on the profile page
 
+  const defaultBilling: string[] | null = userData?.billingAddressIds
+  const defaultShipping: string[] | null = userData?.shippingAddressIds
+  console.log(defaultBilling);
+  console.log(defaultShipping);
+
+
   return (
     <>
       <h1>User profile</h1>
