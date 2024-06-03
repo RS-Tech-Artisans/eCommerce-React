@@ -8,6 +8,7 @@ import UserProfile from './pages/UserProfile';
 import './styles.css';
 import { SessionProvider } from './utils/SessionContext';
 import ProductDetail from './components/ProductDetail';
+import { Main } from './pages/Main';
 
 const App: React.FC = () => {
   return (
@@ -15,7 +16,7 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route index element={<Catalog />} />
+            <Route index element={<Main />} />
             <Route path="catalog" element={<Catalog />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Registration />} />

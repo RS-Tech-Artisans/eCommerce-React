@@ -64,7 +64,7 @@ export const useRegistration = () => {
       console.log(result);
       setError(null);
       setTimeout(() => {
-        navigate('/catalog');
+        navigate('/');
       }, 3000);
     } catch (caughtError) {
       console.log(caughtError);
