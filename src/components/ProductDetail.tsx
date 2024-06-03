@@ -1,13 +1,14 @@
 import { Link, useParams } from 'react-router-dom';
 import { getProductDetailById } from '../utils/api/getProductsDetail';
-import { ProductCardProps, ProductImages } from '../utils/Interfaces';
+import {
+  ProductAttributes,
+  ProductCardProps,
+  ProductImages,
+} from '../utils/Interfaces';
 import { Container } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { mapProducts } from '../utils/productMapper';
 import { MdArrowBackIos } from 'react-icons/md';
-import { getBrandsFromAPI } from '../utils/api/getBrands';
-import { getSizesFromAPI } from '../utils/api/getSizes';
-import './ProductCard.css';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import React from 'react';
@@ -15,34 +16,9 @@ import './ProductDetail.css';
 
 const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
-  const [brands, setBrands] = useState<string[]>([]);
   const [images, setImages] = useState<string[]>([]);
-  const [sizes, setSizes] = useState<string[]>([]);
+  const [attributes, setAttributes] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
-
-  useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        const fetchedBrands = await getBrandsFromAPI();
-        setBrands(fetchedBrands);
-      } catch (error) {
-        console.error('Error fetching brands:', error);
-      }
-    };
-
-    fetchBrands();
-
-    const fetchSizes = async () => {
-      try {
-        const fetchedSizes = await getSizesFromAPI();
-        setSizes(fetchedSizes);
-      } catch (error) {
-        console.error('Error fetching sizes:', error);
-      }
-    };
-
-    fetchSizes();
-  }, []);
 
   useEffect(() => {
     const getProductData = async () => {
@@ -53,8 +29,11 @@ const ProductDetail: React.FC = () => {
           const images1 = fetchProducts?.masterVariant?.images?.map(
             (image: ProductImages) => image.url
           );
-          console.log('Fetched data detail product:', fetchProducts);
+          const atributesArray = fetchProducts?.masterVariant?.attributes?.map(
+            (brand: ProductAttributes) => brand.value
+          );
 
+          setAttributes(atributesArray || []);
           setProduct(productDetail[0]);
           setImages(images1 || []);
         } catch (error) {
@@ -79,6 +58,7 @@ const ProductDetail: React.FC = () => {
   };
 
   const discountedPrice = product?.price?.discounted?.value.centAmount;
+  const typeAttribute: string[] = ['Brand: ', 'Size: ', 'Display: '];
 
   return (
     <>
@@ -110,23 +90,20 @@ const ProductDetail: React.FC = () => {
               </div>
               <div>
                 <h3 style={{ marginBottom: '20px' }}>{product.name}</h3>
-                <p>
-                  <span style={{ fontWeight: 'bold', marginRight: '20px' }}>
-                    Brand:
-                  </span>
-                  {brands}
-                </p>
-                <p>
-                  <span style={{ fontWeight: 'bold', marginRight: '20px' }}>
-                    Size:
-                  </span>
-                  {sizes}
-                </p>
-                <p>
-                  <span style={{ fontWeight: 'bold', marginRight: '20px' }}>
-                    Display:
-                  </span>
-                </p>
+                {attributes.length > 0 && (
+                  <div className="attributes">
+                    {attributes.map((attribute, index) => (
+                      <p key={attribute}>
+                        <span
+                          style={{ fontWeight: 'bold', marginRight: '20px' }}
+                        >
+                          {typeAttribute[index]}
+                        </span>
+                        {attribute}
+                      </p>
+                    ))}
+                  </div>
+                )}
                 <div className="price">
                   {discountedPrice !== undefined && discountedPrice > 0 ? (
                     <>
@@ -155,6 +132,5 @@ const ProductDetail: React.FC = () => {
     </>
   );
 };
-
 
 export default ProductDetail;

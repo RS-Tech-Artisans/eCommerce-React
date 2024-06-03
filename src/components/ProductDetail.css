@@ -15,6 +15,26 @@
   min-height: 466px;
 }
 
+.price {
+  padding: 16px;
+  font-size: 24px;
+  background-color: #f8f9fa;
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 8px;
+}
+
+.discounted-price {
+  color: #e60023;
+  font-weight: bold;
+}
+
 .image-gallery-content.fullscreen {
   width: 90%;
   position: fixed;
