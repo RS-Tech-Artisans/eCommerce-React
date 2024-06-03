@@ -39,7 +39,7 @@ export default function UserProfile() {
               name="first-name"
               type="text"
               autoComplete="off"
-              value= {userData?.firstName || ''}
+              defaultValue= {userData?.firstName || ''}
             />
           </div>
           <div>
@@ -49,7 +49,7 @@ export default function UserProfile() {
               name="last-name"
               type="text"
               autoComplete="off"
-              value={userData?.lastName || ''}
+              defaultValue={userData?.lastName || ''}
             />
           </div>
           <div>
@@ -59,7 +59,7 @@ export default function UserProfile() {
               name="birth"
               type="text"
               autoComplete="off"
-              value={userData?.dateOfBirth || ''}
+              defaultValue={userData?.dateOfBirth || ''}
             />
           </div>
         </div>
@@ -73,6 +73,11 @@ export default function UserProfile() {
             userData?.defaultBillingAddressId && 
               inputsBoxAdresses(userData, 1)
             }
+            {
+            !(userData?.defaultBillingAddressId) && 
+            <><span>Enter Billing addresses information:</span>
+            <button>Click</button></>
+            }
           </div>
 
           <div className="shipping-default-addresses">
@@ -80,6 +85,11 @@ export default function UserProfile() {
             {userData?.defaultShippingAddressId && 
           inputsBoxAdresses(userData,0)
         }
+        {
+            !(userData?.defaultShippingAddressId) && 
+            <><span>Enter Shipping addresses information:</span>
+            <button>Click</button></>
+            }
           </div>
         </div>
       </div>
