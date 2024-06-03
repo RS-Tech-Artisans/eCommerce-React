@@ -80,6 +80,17 @@ export default function UserProfile() {
       </div>
       <div className="user-profile_saved-addresses">
         <h2>User&apos;s saved addresses</h2>
+        <div className="container-addresses">
+          <div className="billing-addresses">
+            <p>Billing addresses</p>
+            {inputsBoxAdresses}
+          </div>
+
+          <div className="shipping-addresses">
+            <p>Shipping addresses</p>
+            {inputsBoxAdresses}
+          </div>
+        </div>
       </div>
     </>
   );
