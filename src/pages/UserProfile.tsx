@@ -2,17 +2,21 @@ import './Pages.css';
 import './UserProfile.css';
 import UsersProfileAdresses from '../components/UsersProfileAdresses';
 import { fetchCustomerData } from '../utils/api/getCustomer';
-import { useEffect } from 'react';
-
-const inputsBoxAdresses = UsersProfileAdresses();
+import { useEffect, useState } from 'react';
+import { Customer } from '@commercetools/platform-sdk';
 
 export default function UserProfile() {
+  const [userData, setData] = useState<Customer>();
+
+  const inputsBoxAdresses = UsersProfileAdresses();
+
   //just downloaded the test data to check on the profile page
   useEffect(() => {
     const getCustomerData = async () => {
       try {
         const data = await fetchCustomerData();
         console.log('Customer data:', data);
+        setData(data);
       } catch (error) {
         console.error('Error fetching customer data:', error);
       }
@@ -35,6 +39,7 @@ export default function UserProfile() {
               name="first-name"
               type="text"
               autoComplete="off"
+              value={userData?.firstName || ''}
             />
           </div>
           <div>

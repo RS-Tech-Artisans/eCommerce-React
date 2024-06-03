@@ -2,7 +2,7 @@ import { apiRoot } from '../getProjectInfo';
 
 export const fetchCustomerData = async () => {
   try {
-    const response = await apiRoot.get().execute();
+    const response = await apiRoot.me().get().execute();
 
     if (!response.body) {
       throw new Error('Failed to fetch customer data');
