@@ -83,12 +83,94 @@ export default function UserProfile() {
         <div className="container-addresses">
           <div className="billing-addresses">
             <p>Billing addresses</p>
-            {inputsBoxAdresses}
+            <>
+              <div>
+                <label htmlFor="default-street">Street: </label>
+                <input
+                  id="default-street"
+                  name="default-street"
+                  type="text"
+                  autoComplete="off"
+                  value={userData?.addresses[1].streetName || ''}
+                />
+              </div>
+              <div>
+                <label htmlFor="default-city">City: </label>
+                <input
+                  id="default-city"
+                  name="default-city"
+                  type="text"
+                  autoComplete="off"
+                  value={userData?.addresses[1].city || ''}
+                />
+              </div>
+              <div>
+                <label htmlFor="default-postal-code">Postal code: </label>
+                <input
+                  id="default-postal-code"
+                  name="default-postal-code"
+                  type="text"
+                  autoComplete="off"
+                  value={userData?.addresses[1].postalCode || ''}
+                />
+              </div>
+              <div>
+                <label htmlFor="default-country">Country: </label>
+                <input
+                  id="default-country"
+                  name="default-country"
+                  type="text"
+                  autoComplete="off"
+                  value={userData?.addresses[1].country || ''}
+                />
+              </div>
+            </>
           </div>
 
           <div className="shipping-addresses">
             <p>Shipping addresses</p>
-            {inputsBoxAdresses}
+            <>
+              <div>
+                <label htmlFor="default-street">Street: </label>
+                <input
+                  id="default-street"
+                  name="default-street"
+                  type="text"
+                  autoComplete="off"
+                  value={userData?.addresses[0].streetName || ''}
+                />
+              </div>
+              <div>
+                <label htmlFor="default-city">City: </label>
+                <input
+                  id="default-city"
+                  name="default-city"
+                  type="text"
+                  autoComplete="off"
+                  value={userData?.addresses[0].city || ''}
+                />
+              </div>
+              <div>
+                <label htmlFor="default-postal-code">Postal code: </label>
+                <input
+                  id="default-postal-code"
+                  name="default-postal-code"
+                  type="text"
+                  autoComplete="off"
+                  value={userData?.addresses[0].postalCode || ''}
+                />
+              </div>
+              <div>
+                <label htmlFor="default-country">Country: </label>
+                <input
+                  id="default-country"
+                  name="default-country"
+                  type="text"
+                  autoComplete="off"
+                  value={userData?.addresses[0].country || ''}
+                />
+              </div>
+            </>
           </div>
         </div>
       </div>
