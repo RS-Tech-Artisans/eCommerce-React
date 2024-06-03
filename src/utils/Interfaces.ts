@@ -1,3 +1,5 @@
+import { Category } from '@commercetools/platform-sdk';
+
 export interface Price {
   value: {
     centAmount: number;
@@ -67,4 +69,5 @@ export interface SidebarFiltersProps {
   setPriceFilter: (value: { minPrice: string; maxPrice: string }) => void;
   setSortFilter: (value: string | null) => void;
   handleResetFilters: () => void;
+  categories: Category[];
 }

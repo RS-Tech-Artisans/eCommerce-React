@@ -8,6 +8,7 @@ import UserProfile from './pages/UserProfile';
 import './styles.css';
 import { SessionProvider } from './utils/SessionContext';
 import ProductDetail from './components/ProductDetail';
+import CategoryPage from './pages/CategoryPage';
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
             <Route path="profile" element={<UserProfile />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/catalog/product/:id" element={<ProductDetail />} />
+            <Route path="/category/*" element={<CategoryPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
