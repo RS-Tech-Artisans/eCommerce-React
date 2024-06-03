@@ -6,8 +6,6 @@ import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
 
 export default function UserProfile() {
-
-
   const inputsBoxAdresses = UsersProfileAdresses;
   const [userData, setData] = useState<Customer>();
   //just downloaded the test data to check on the profile page
@@ -39,7 +37,7 @@ export default function UserProfile() {
               name="first-name"
               type="text"
               autoComplete="off"
-              defaultValue= {userData?.firstName || ''}
+              defaultValue={userData?.firstName || ''}
             />
           </div>
           <div>
@@ -69,27 +67,26 @@ export default function UserProfile() {
         <div className="container-default-addresses">
           <div className="billing-default-addresses">
             <p>Billing addresses (default)</p>
-           {
-            userData?.defaultBillingAddressId && 
-              inputsBoxAdresses(userData, 1)
-            }
-            {
-            !(userData?.defaultBillingAddressId) && 
-            <><span>Enter Billing addresses information:</span>
-            <button>Click</button></>
-            }
+            {userData?.defaultBillingAddressId &&
+              inputsBoxAdresses(userData, 1)}
+            {!userData?.defaultBillingAddressId && (
+              <>
+                <span>Enter Billing addresses information:</span>
+                <button>Click</button>
+              </>
+            )}
           </div>
 
           <div className="shipping-default-addresses">
             <p>Shipping addresses (default)</p>
-            {userData?.defaultShippingAddressId && 
-          inputsBoxAdresses(userData,0)
-        }
-        {
-            !(userData?.defaultShippingAddressId) && 
-            <><span>Enter Shipping addresses information:</span>
-            <button>Click</button></>
-            }
+            {userData?.defaultShippingAddressId &&
+              inputsBoxAdresses(userData, 0)}
+            {!userData?.defaultShippingAddressId && (
+              <>
+                <span>Enter Shipping addresses information:</span>
+                <button>Click</button>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -98,16 +95,12 @@ export default function UserProfile() {
         <div className="container-addresses">
           <div className="billing-addresses">
             <p>Billing addresses</p>
-            {userData?.billingAddressIds && 
-          inputsBoxAdresses(userData,1)
-        }
+            {userData?.billingAddressIds && inputsBoxAdresses(userData, 1)}
           </div>
 
           <div className="shipping-addresses">
             <p>Shipping addresses</p>
-           {userData?.shippingAddressIds && 
-          inputsBoxAdresses(userData,0)
-        }
+            {userData?.shippingAddressIds && inputsBoxAdresses(userData, 0)}
           </div>
         </div>
       </div>

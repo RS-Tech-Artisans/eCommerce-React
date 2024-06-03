@@ -1,6 +1,9 @@
-import { Customer } from "@commercetools/platform-sdk";
+import { Customer } from '@commercetools/platform-sdk';
 
-export default function UsersProfileAdresses(userData: Customer | undefined, ind: number) {
+export default function UsersProfileAdresses(
+  userData: Customer | undefined,
+  ind: number
+) {
   return (
     <>
       <div>
@@ -30,7 +33,7 @@ export default function UsersProfileAdresses(userData: Customer | undefined, ind
           name="default-postal-code"
           type="text"
           autoComplete="off"
-          defaultValue= {userData?.addresses[ind].postalCode}
+          defaultValue={userData?.addresses[ind].postalCode}
         />
       </div>
       <div>
@@ -40,7 +43,7 @@ export default function UsersProfileAdresses(userData: Customer | undefined, ind
           name="default-country"
           type="text"
           autoComplete="off"
-          defaultValue={userData?.addresses[ind].country + "A"}
+          defaultValue={userData?.addresses[ind].country + 'A'}
         />
       </div>
     </>
