@@ -7,10 +7,11 @@ import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
 
 export default function UserProfile() {
-  //const inputsBoxAdresses = UsersProfileAdresses;
 
   const [userData, setData] = useState<Customer>();
-  //just downloaded the test data to check on the profile page
+  const [newFieldBilling, setNewFieldBilling] = useState(<></>);
+  const [newFieldShipping, setNewFieldShipping] = useState(<></>);
+
   useEffect(() => {
     const getCustomerData = async () => {
       try {
@@ -24,7 +25,6 @@ export default function UserProfile() {
 
     getCustomerData();
   }, []);
-  //just downloaded the test data to check on the profile page
 
   const [flagEditData, setFlagEditData] = useState(false);
   const body: HTMLBodyElement | null = document.querySelector('body');
@@ -87,18 +87,33 @@ export default function UserProfile() {
         <div className="container-default-addresses">
           <div className="billing-default-addresses">
             <p>Billing addresses (default)</p>
+            {newFieldBilling}
             {userData?.defaultBillingAddressId &&
               UsersProfileAdresses(userData, 1, flagEditData)}
-                            {!userData?.defaultBillingAddressId && flagEditData &&
-              EmptyUsersProfileAdresses()}
+            {!userData?.defaultBillingAddressId && flagEditData && <button
+              onClick={() => {
+                setNewFieldBilling(EmptyUsersProfileAdresses());
+                const button: HTMLElement | null = document.querySelector('.billing-default-addresses button');
+                if (button != null) button.style.display = "none";
+              }}
+            >+ add address</button>
+            }
+         
           </div>
 
           <div className="shipping-default-addresses">
             <p>Shipping addresses (default)</p>
+            {newFieldShipping}
             {userData?.defaultShippingAddressId &&
               UsersProfileAdresses(userData, 0, flagEditData)}
-                                          {!userData?.defaultShippingAddressId && flagEditData &&
-              EmptyUsersProfileAdresses()}
+            {!userData?.defaultShippingAddressId && flagEditData && <button
+              onClick={() => {
+                setNewFieldShipping(EmptyUsersProfileAdresses());
+                const button: HTMLElement | null = document.querySelector('.shipping-default-addresses button');
+                if (button != null) button.style.display = "none";
+              }}
+            >+ add address</button>
+            }
           </div>
         </div>
       </div>

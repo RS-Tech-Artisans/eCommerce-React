@@ -53,7 +53,7 @@ const UsersProfileAdresses = (
       </div>
     </>
   );
-}
+};
 
 const EmptyUsersProfileAdresses = () => {
   return (
@@ -96,7 +96,6 @@ const EmptyUsersProfileAdresses = () => {
       </div>
     </>
   );
-}
+};
 
-export { UsersProfileAdresses, EmptyUsersProfileAdresses }
-
+export { UsersProfileAdresses, EmptyUsersProfileAdresses };
