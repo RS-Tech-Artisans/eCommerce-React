@@ -1,5 +1,5 @@
-import { apiRoot } from './getProjectInfo';
 import { ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
+import { apiRoot } from './BuildClient';
 
 const DEFAULT_LIMIT = 500;
 const DEFAULT_OFFSET = 0;

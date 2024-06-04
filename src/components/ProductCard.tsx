@@ -37,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         <div className="price-wrapper">
           {discountedPrice ? (
-            <div className="price">
+            <div className="prices">
               <span className="original-price">
                 {formatPrice(originalPrice, currency)}
               </span>
@@ -46,7 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               </span>
             </div>
           ) : (
-            <div className="price">
+            <div className="prices">
               <span>{formatPrice(originalPrice, currency)}</span>
             </div>
           )}

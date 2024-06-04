@@ -3,9 +3,9 @@ import {
   ClientResponse,
   CustomerSignInResult,
 } from '@commercetools/platform-sdk';
-import { apiRoot } from './api/getProjectInfo';
 import { useNavigate } from 'react-router-dom';
 import { MyApiError } from './Interfaces';
+import { apiRoot } from './api/BuildClient';
 
 export const useRegistration = () => {
   const [registrationResult, setRegistrationResult] =
@@ -64,7 +64,7 @@ export const useRegistration = () => {
       console.log(result);
       setError(null);
       setTimeout(() => {
-        navigate('/catalog');
+        navigate('/');
       }, 3000);
     } catch (caughtError) {
       console.log(caughtError);

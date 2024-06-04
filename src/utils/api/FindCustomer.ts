@@ -1,4 +1,4 @@
-import { apiRoot } from './getProjectInfo';
+import { apiRoot } from './BuildClient';
 
 const findUser = async (email: string): Promise<string> => {
   try {

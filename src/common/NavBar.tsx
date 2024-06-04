@@ -6,10 +6,11 @@ import { CgProfile } from 'react-icons/cg';
 import LogoutButton from './LogoutButton';
 
 function NavBar() {
-  const { token } = useSession();
+  const { token: token } = useSession();
   return (
     <div>
       <Navbar expand="lg" className="bg-dark justify-content-end">
+        <Link to="/"> Main </Link>
         <Link to="/catalog"> Catalog </Link>
         <Link to="/login"> Login </Link>
         <Link to="/register"> Registration </Link>

@@ -44,7 +44,7 @@ export default function Login() {
 
   useEffect(() => {
     if (token) {
-      navigate('/catalog');
+      navigate('/');
     }
   }, [token, navigate]);
 

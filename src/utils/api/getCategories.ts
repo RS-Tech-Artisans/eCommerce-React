@@ -1,5 +1,5 @@
 import { CategoryPagedQueryResponse } from '@commercetools/platform-sdk';
-import { apiRoot } from './getProjectInfo';
+import { apiRoot } from './BuildClient';
 
 const DEFAULT_LIMIT = 500;
 const DEFAULT_DATE = '2024-05-02T06:47:20.547Z';
