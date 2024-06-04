@@ -4,6 +4,7 @@ import { ProductInfo } from '../utils/Interfaces';
 //import { getFiltredProductsFromAPI } from '../utils/api/ProductsFilter';
 //import { mapProducts } from '../utils/productMapper';
 
+//const DEFAULT_CATEGORY =  'a8ffbf68-e7fd-4860-96d5-40deb9032836';
 const Catalog: React.FC = () => {
   const [products, setProducts] = useState<ProductInfo[]>([]);
 
@@ -25,7 +26,11 @@ const Catalog: React.FC = () => {
 
   return (
     <div className="catalog">
-      <ProductGrid products={products} setProducts={setProducts} />
+      <ProductGrid
+        products={products}
+        setProducts={setProducts}
+        categoryID={undefined}
+      />
     </div>
   );
 };

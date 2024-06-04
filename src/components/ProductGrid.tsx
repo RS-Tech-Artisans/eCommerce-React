@@ -23,6 +23,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   const [displayFilter, setDisplayFilter] = useState<string | null>(null);
   const [sizeFilter, setSizeFilter] = useState<string | null>(null);
   const [sortFilter, setSortFilter] = useState<string | null>(null);
+  const [categoryId, setCategoryFilter] = useState<string | null>(null);
   const [priceFilter, setPriceFilter] = useState<{
     minPrice: string;
     maxPrice: string;
@@ -36,7 +37,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     const getCategories = async () => {
       try {
         const fetchedCategories = await getCategoriesFromAPI();
-        console.log('!!! fetchedCategories ', fetchedCategories);
         setCategories(fetchedCategories.results);
       } catch (error) {
         console.error('Error fetching Categories:', error);
@@ -52,7 +52,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         console.error('Error fetching brands:', error);
       }
     };
-
     fetchBrands();
 
     const fetchSizes = async () => {
@@ -63,7 +62,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         console.error('Error fetching sizes:', error);
       }
     };
-
     fetchSizes();
 
     const fetchDisplays = async () => {
@@ -74,7 +72,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         console.error('Error fetching Displays:', error);
       }
     };
-
     fetchDisplays();
   }, []);
 
@@ -94,10 +91,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         brandFilter || '',
         displayFilter || '',
         sizeFilter || '',
-        sortFilter || ''
+        sortFilter || '',
+        categoryId || ''
       );
-      console.log('sortFilter: ', sortFilter);
-      console.log('New Filtered Products:', filteredResponse.results);
       const productInfoArray = mapProducts(filteredResponse.results);
       setProducts(productInfoArray);
     } catch (error) {
@@ -107,7 +103,14 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
 
   useEffect(() => {
     fetchFilteredProducts();
-  }, [priceFilter, brandFilter, displayFilter, sizeFilter, sortFilter]);
+  }, [
+    priceFilter,
+    brandFilter,
+    displayFilter,
+    sizeFilter,
+    sortFilter,
+    categoryId,
+  ]);
 
   const handleResetFilters = () => {
     setSearch('');
@@ -146,6 +149,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         setSortFilter={setSortFilter}
         handleResetFilters={handleResetFilters}
         categories={categories}
+        setCategoryFilter={setCategoryFilter}
       />
       <div className="product-grid">
         {filteredProducts.length > 0 ? (
