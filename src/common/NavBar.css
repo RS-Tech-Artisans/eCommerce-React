@@ -2,13 +2,14 @@
   width: 100%;
   height: 80px;
   font-size: 25px;
-  gap: 1;
+  gap: 10px;
 }
 
 @media (max-width: 580px) {
   .navbar {
     font-size: 16px;
     padding: 0;
+    gap: 1px;
   }
 
   button.btn-dark.btn-lg.btn.btn-primary {
