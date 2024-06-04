@@ -7,3 +7,9 @@
 .category-link a:hover {
   text-decoration: dashed;
 }
+
+@media (max-width: 700px) {
+  .filter-categories {
+    display: none;
+  }
+}

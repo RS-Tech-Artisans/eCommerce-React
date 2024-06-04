@@ -29,28 +29,28 @@ type RestValidationProps = [
   React.Dispatch<React.SetStateAction<string>>,
 ];
 const restBlurHandlerReg: RestBlurHandlerRegProps = [
-  () => {},
-  () => {},
-  () => {},
-  () => {},
-  () => {},
-  () => {},
-  () => {},
-  () => {},
-  () => {},
-  () => {},
-  () => {},
+  () => { },
+  () => { },
+  () => { },
+  () => { },
+  () => { },
+  () => { },
+  () => { },
+  () => { },
+  () => { },
+  () => { },
+  () => { },
 ];
 const toggleInput: RestToggleInput = [
-  () => {},
-  () => {},
+  () => { },
+  () => { },
   <></>,
-  () => {},
-  () => {},
+  () => { },
+  () => { },
   <></>,
 ];
-const restBlurHandler: RestBlurHandlerProps = [() => {}, () => {}];
-const restValidation: RestValidationProps = ['', () => {}, () => {}];
+const restBlurHandler: RestBlurHandlerProps = [() => { }, () => { }];
+const restValidation: RestValidationProps = ['', () => { }, () => { }];
 
 import BlurHandler from '../utils/validation/BlurHundler';
 test('hundler input email/password', () => {
@@ -203,4 +203,32 @@ test('street validation', () => {
   expect(StreetValidation('2365', ...restValidation)).toBeTruthy();
   expect(StreetValidation('Str8 Lu-Street', ...restValidation)).toBeTruthy();
   expect(StreetValidation('', ...restValidation)).toBe(false);
+});
+
+import { getBrandsFromAPI } from '../utils/api/getBrands';
+test('get brands', () => {
+  return expect(getBrandsFromAPI()).resolves.toStrictEqual(
+    ["SAMSUNG", "Roku", "VIZIO", "TCL", "Sony", "LG"]
+  );
+});
+
+import { getDisplaysFromAPI } from '../utils/api/getDisplays';
+test('get display', () => {
+  return expect(getDisplaysFromAPI()).resolves.toStrictEqual(
+    ["LED", "QLED", "OLED"]
+  );
+});
+
+import { getSizesFromAPI } from '../utils/api/getSizes';
+test('get sizes', () => {
+  return expect(getSizesFromAPI()).resolves.toStrictEqual(
+    ["75-inch", "65-inch", "50-inch", "55-inch", "40-inch"]
+  );
+});
+
+import { getCategoriesFromAPI } from '../utils/api/getCategories';
+test('get sizes', () => {
+  return expect(getCategoriesFromAPI()).resolves.toStrictEqual(
+    { "count": 4, "limit": 500, "offset": 0, "results": [{ "ancestors": [], "assets": [], "createdAt": "2024-05-02T06:48:20.547Z", "createdBy": { "isPlatformClient": true, "user": { "id": "fdc5d6a4-eed4-4db5-8990-061679ba94c2", "typeId": "user" } }, "description": { "en-GB": "Televisions" }, "id": "a8ffbf68-e7fd-4860-96d5-40deb9032836", "lastMessageSequenceNumber": 1, "lastModifiedAt": "2024-05-31T04:52:11.339Z", "lastModifiedBy": { "isPlatformClient": true, "user": { "id": "fdc5d6a4-eed4-4db5-8990-061679ba94c2", "typeId": "user" } }, "name": { "en-GB": "Televisions", "en-US": "Televisions" }, "orderHint": "0.05", "slug": { "en-GB": "televisions" }, "version": 2, "versionModifiedAt": "2024-05-31T04:52:11.339Z" }, { "ancestors": [{ "id": "a8ffbf68-e7fd-4860-96d5-40deb9032836", "typeId": "category" }], "assets": [], "createdAt": "2024-05-31T04:55:20.773Z", "createdBy": { "isPlatformClient": true, "user": { "id": "fdc5d6a4-eed4-4db5-8990-061679ba94c2", "typeId": "user" } }, "description": { "en-US": "LED & LCD TVs" }, "id": "e1e60148-a824-49dc-a3ba-f69ba66c8609", "key": "LEDLCD", "lastMessageSequenceNumber": 1, "lastModifiedAt": "2024-05-31T04:55:20.773Z", "lastModifiedBy": { "isPlatformClient": true, "user": { "id": "fdc5d6a4-eed4-4db5-8990-061679ba94c2", "typeId": "user" } }, "metaTitle": { "en-US": "led-lcd" }, "name": { "en-US": "LED & LCD TVs" }, "orderHint": "0.05", "parent": { "id": "a8ffbf68-e7fd-4860-96d5-40deb9032836", "typeId": "category" }, "slug": { "en-US": "led-lcd" }, "version": 1, "versionModifiedAt": "2024-05-31T04:55:20.773Z" }, { "ancestors": [{ "id": "a8ffbf68-e7fd-4860-96d5-40deb9032836", "typeId": "category" }], "assets": [], "createdAt": "2024-06-02T18:00:22.926Z", "createdBy": { "isPlatformClient": true, "user": { "id": "fdc5d6a4-eed4-4db5-8990-061679ba94c2", "typeId": "user" } }, "description": { "en-US": "OLED TVs" }, "id": "be9dbd44-1e90-4f09-a198-ee5478eaa088", "lastMessageSequenceNumber": 1, "lastModifiedAt": "2024-06-02T18:00:22.926Z", "lastModifiedBy": { "isPlatformClient": true, "user": { "id": "fdc5d6a4-eed4-4db5-8990-061679ba94c2", "typeId": "user" } }, "name": { "en-US": "OLED TVs" }, "orderHint": "0.05", "parent": { "id": "a8ffbf68-e7fd-4860-96d5-40deb9032836", "typeId": "category" }, "slug": { "en-US": "oled-tvs" }, "version": 1, "versionModifiedAt": "2024-06-02T18:00:22.926Z" }, { "ancestors": [{ "id": "a8ffbf68-e7fd-4860-96d5-40deb9032836", "typeId": "category" }], "assets": [], "createdAt": "2024-06-02T19:21:02.652Z", "createdBy": { "isPlatformClient": true, "user": { "id": "fdc5d6a4-eed4-4db5-8990-061679ba94c2", "typeId": "user" } }, "id": "0fd5260d-11a8-490b-b543-6da919547c61", "lastMessageSequenceNumber": 1, "lastModifiedAt": "2024-06-02T19:21:02.652Z", "lastModifiedBy": { "isPlatformClient": true, "user": { "id": "fdc5d6a4-eed4-4db5-8990-061679ba94c2", "typeId": "user" } }, "name": { "en-US": "QLED TVs" }, "orderHint": "0.05", "parent": { "id": "a8ffbf68-e7fd-4860-96d5-40deb9032836", "typeId": "category" }, "slug": { "en-US": "qled-tvs" }, "version": 1, "versionModifiedAt": "2024-06-02T19:21:02.652Z" }], "total": 4 }
+  );
 });

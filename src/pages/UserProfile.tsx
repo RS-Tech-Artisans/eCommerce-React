@@ -7,10 +7,10 @@ import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
 
 export default function UserProfile() {
-
   const [userData, setData] = useState<Customer>();
   const [newFieldBilling, setNewFieldBilling] = useState(<></>);
   const [newFieldShipping, setNewFieldShipping] = useState(<></>);
+  const [updateResult, setUpdateResult] = useState(false);
 
   useEffect(() => {
     const getCustomerData = async () => {
@@ -27,7 +27,6 @@ export default function UserProfile() {
   }, []);
 
   const [flagEditData, setFlagEditData] = useState(false);
-  const body: HTMLBodyElement | null = document.querySelector('body');
 
   return (
     <>
@@ -35,9 +34,24 @@ export default function UserProfile() {
         className="user-profile_edit-data"
         onClick={() => {
           setFlagEditData(true);
-          if (body)
-            body.style.background =
-              'linear-gradient(0.25turn, #ffffff, rgb(4 35 8))';
+
+          const sectionInformation: HTMLBodyElement | null =
+            document.querySelector('.user-profile_information');
+          const sectionDefault: HTMLBodyElement | null = document.querySelector(
+            '.user-profile_default-addresses'
+          );
+          const sectionSaved: HTMLBodyElement | null = document.querySelector(
+            '.user-profile_saved-addresses'
+          );
+
+          if (sectionInformation && sectionDefault && sectionSaved) {
+            sectionInformation.style.background =
+              'linear-gradient(0.25turn, rgb(174 174 174 / 48%), rgb(10 8 7 / 78%))';
+            sectionDefault.style.background =
+              'linear-gradient(0.25turn, rgb(174 174 174 / 48%), rgb(10 8 7 / 78%))';
+            sectionSaved.style.background =
+              'linear-gradient(0.25turn, rgb(174 174 174 / 48%), rgb(10 8 7 / 78%))';
+          }
         }}
         disabled={flagEditData && true}
       >
@@ -90,15 +104,19 @@ export default function UserProfile() {
             {newFieldBilling}
             {userData?.defaultBillingAddressId &&
               UsersProfileAdresses(userData, 1, flagEditData)}
-            {!userData?.defaultBillingAddressId && flagEditData && <button
-              onClick={() => {
-                setNewFieldBilling(EmptyUsersProfileAdresses());
-                const button: HTMLElement | null = document.querySelector('.billing-default-addresses button');
-                if (button != null) button.style.display = "none";
-              }}
-            >+ add address</button>
-            }
-         
+            {!userData?.defaultBillingAddressId && flagEditData && (
+              <button
+                onClick={() => {
+                  setNewFieldBilling(EmptyUsersProfileAdresses());
+                  const button: HTMLElement | null = document.querySelector(
+                    '.billing-default-addresses button'
+                  );
+                  if (button != null) button.style.display = 'none';
+                }}
+              >
+                + add address
+              </button>
+            )}
           </div>
 
           <div className="shipping-default-addresses">
@@ -106,14 +124,19 @@ export default function UserProfile() {
             {newFieldShipping}
             {userData?.defaultShippingAddressId &&
               UsersProfileAdresses(userData, 0, flagEditData)}
-            {!userData?.defaultShippingAddressId && flagEditData && <button
-              onClick={() => {
-                setNewFieldShipping(EmptyUsersProfileAdresses());
-                const button: HTMLElement | null = document.querySelector('.shipping-default-addresses button');
-                if (button != null) button.style.display = "none";
-              }}
-            >+ add address</button>
-            }
+            {!userData?.defaultShippingAddressId && flagEditData && (
+              <button
+                onClick={() => {
+                  setNewFieldShipping(EmptyUsersProfileAdresses());
+                  const button: HTMLElement | null = document.querySelector(
+                    '.shipping-default-addresses button'
+                  );
+                  if (button != null) button.style.display = 'none';
+                }}
+              >
+                + add address
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -137,14 +160,35 @@ export default function UserProfile() {
         className="user-profile_save-data"
         onClick={() => {
           setFlagEditData(false);
-          if (body)
-            body.style.background =
+          setUpdateResult(true);
+          const sectionInformation: HTMLBodyElement | null =
+            document.querySelector('.user-profile_information');
+          const sectionDefault: HTMLBodyElement | null = document.querySelector(
+            '.user-profile_default-addresses'
+          );
+          const sectionSaved: HTMLBodyElement | null = document.querySelector(
+            '.user-profile_saved-addresses'
+          );
+
+          if (sectionInformation && sectionDefault && sectionSaved) {
+            sectionInformation.style.background =
               'linear-gradient(0.25turn, #b9f3ff, #181b35)';
+            sectionDefault.style.background =
+              'linear-gradient(0.25turn, #b9f3ff, #181b35)';
+            sectionSaved.style.background =
+              'linear-gradient(0.25turn, #b9f3ff, #181b35)';
+          }
         }}
         disabled={!flagEditData && true}
       >
         Save data
       </button>
+      <div style={{ color: 'green', textAlign: 'center' }}>
+        {updateResult && <p>Data updated successfully!</p>}
+      </div>
+      <div style={{ color: 'red', textAlign: 'center' }}>
+        {flagEditData && !updateResult && <p>Error: Data update failed!</p>}
+      </div>
     </>
   );
 }
