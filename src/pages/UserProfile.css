@@ -1,4 +1,3 @@
-
 .user-profile_information,
 .user-profile_default-addresses,
 .user-profile_saved-addresses {
@@ -142,7 +141,7 @@ label {
 }
 
 .user-profile_edit-data {
-  width: 20%;
+  width: 100%;
   height: 35px;
   background: #ffffff5e;
   border: none;
@@ -150,7 +149,7 @@ label {
   border-radius: 40px;
   font-size: 16px;
   font-weight: 700;
-  margin: 10px 0 0 20px;
+  margin-top: 10px;
   text-align: center;
 }
 
