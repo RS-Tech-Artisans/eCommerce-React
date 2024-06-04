@@ -24,8 +24,20 @@ export default function UserProfile() {
   }, []);
   //just downloaded the test data to check on the profile page
 
+
+  const [flagEditData, setFlagEditData] = useState(false);
+  const body:HTMLBodyElement | null = document.querySelector("body");
+
   return (
     <>
+    <button className="user-profile_edit-data"
+      onClick={() => {
+        setFlagEditData(true);
+        if (body) body.style.background = "linear-gradient(0.25turn, #ffffff, #252632)";
+      }}
+      disabled = {flagEditData &&
+        true}
+      >Edit data</button>
       <h1>User profile</h1>
       <div className="user-profile_information">
         <h2>User Information</h2>
@@ -38,6 +50,9 @@ export default function UserProfile() {
               type="text"
               autoComplete="off"
               defaultValue={userData?.firstName || ''}
+              disabled = {!flagEditData &&
+                true}
+              
             />
           </div>
           <div>
@@ -48,6 +63,8 @@ export default function UserProfile() {
               type="text"
               autoComplete="off"
               defaultValue={userData?.lastName || ''}
+              disabled = {!flagEditData &&
+                true}
             />
           </div>
           <div>
@@ -58,6 +75,8 @@ export default function UserProfile() {
               type="text"
               autoComplete="off"
               defaultValue={userData?.dateOfBirth || ''}
+              disabled = {!flagEditData &&
+                true}
             />
           </div>
         </div>
@@ -68,11 +87,13 @@ export default function UserProfile() {
           <div className="billing-default-addresses">
             <p>Billing addresses (default)</p>
             {userData?.defaultBillingAddressId &&
-              inputsBoxAdresses(userData, 1)}
+              inputsBoxAdresses(userData, 1, flagEditData)}
             {!userData?.defaultBillingAddressId && (
               <>
                 <span>Enter Billing addresses information:</span>
-                <button>Click</button>
+                <button
+                    disabled = {!flagEditData &&
+                      true}>Click</button>
               </>
             )}
           </div>
@@ -80,11 +101,13 @@ export default function UserProfile() {
           <div className="shipping-default-addresses">
             <p>Shipping addresses (default)</p>
             {userData?.defaultShippingAddressId &&
-              inputsBoxAdresses(userData, 0)}
+              inputsBoxAdresses(userData, 0, flagEditData)}
             {!userData?.defaultShippingAddressId && (
               <>
                 <span>Enter Shipping addresses information:</span>
-                <button>Click</button>
+                <button
+                    disabled = {!flagEditData &&
+                      true}>Click</button>
               </>
             )}
           </div>
@@ -95,15 +118,24 @@ export default function UserProfile() {
         <div className="container-addresses">
           <div className="billing-addresses">
             <p>Billing addresses</p>
-            {userData?.billingAddressIds && inputsBoxAdresses(userData, 1)}
+            {userData?.billingAddressIds && inputsBoxAdresses(userData, 1, flagEditData)}
           </div>
 
           <div className="shipping-addresses">
             <p>Shipping addresses</p>
-            {userData?.shippingAddressIds && inputsBoxAdresses(userData, 0)}
+            {userData?.shippingAddressIds && inputsBoxAdresses(userData, 0, flagEditData)}
           </div>
         </div>
       </div>
+      <button className="user-profile_save-data"
+      onClick={() => {
+        setFlagEditData(false);
+        if (body) body.style.background = "linear-gradient(0.25turn, #b9f3ff, #181b35)";
+      }}
+      
+      disabled = {!flagEditData &&
+        true}
+      >Save data</button>
     </>
   );
 }

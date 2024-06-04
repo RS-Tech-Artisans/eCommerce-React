@@ -1,3 +1,4 @@
+
 .user-profile_information,
 .user-profile_default-addresses,
 .user-profile_saved-addresses {
@@ -132,4 +133,55 @@ label {
 .shipping-default-addresses button:hover,
 .billing-default-addresses button:hover {
   background: #dbf9ff;
+}
+.shipping-default-addresses button:disabled,
+.billing-default-addresses button:disabled {
+  background: #b1b1b1;
+  color: #8c8c8c;
+  cursor: default;
+}
+
+.user-profile_edit-data {
+  width: 20%;
+  height: 35px;
+  background: #ffffff5e;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 10px 0 0 20px;
+  text-align: center;
+}
+
+.user-profile_edit-data:hover {
+  background: #dbf9ff;
+}
+
+.user-profile_edit-data:disabled {
+  background: #b1b1b1;
+  color: #8c8c8c;
+  cursor: default;
+}
+
+.user-profile_save-data {
+  width: 100%;
+  height: 35px;
+  background: #ffffff5e;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.user-profile_save-data:hover {
+  background: #dbf9ff;
+}
+
+.user-profile_save-data:disabled {
+  background: #b1b1b1;
+  color: #8c8c8c;
+  cursor: default;
 }

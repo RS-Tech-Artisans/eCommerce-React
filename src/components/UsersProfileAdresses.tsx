@@ -1,9 +1,6 @@
-import { Customer } from '@commercetools/platform-sdk';
+import { Customer } from "@commercetools/platform-sdk";
 
-export default function UsersProfileAdresses(
-  userData: Customer | undefined,
-  ind: number
-) {
+export default function UsersProfileAdresses(userData: Customer | undefined, ind: number, flagEditData: boolean) {
   return (
     <>
       <div>
@@ -14,6 +11,8 @@ export default function UsersProfileAdresses(
           type="text"
           autoComplete="off"
           defaultValue={userData?.addresses[ind]?.streetName}
+          disabled = {!flagEditData &&
+            true}
         />
       </div>
       <div>
@@ -24,6 +23,8 @@ export default function UsersProfileAdresses(
           type="text"
           autoComplete="off"
           defaultValue={userData?.addresses[ind]?.city}
+          disabled = {!flagEditData &&
+            true}
         />
       </div>
       <div>
@@ -33,7 +34,9 @@ export default function UsersProfileAdresses(
           name="default-postal-code"
           type="text"
           autoComplete="off"
-          defaultValue={userData?.addresses[ind]?.postalCode}
+          defaultValue= {userData?.addresses[ind]?.postalCode}
+          disabled = {!flagEditData &&
+            true}
         />
       </div>
       <div>
@@ -43,7 +46,9 @@ export default function UsersProfileAdresses(
           name="default-country"
           type="text"
           autoComplete="off"
-          defaultValue={userData?.addresses[ind]?.country + 'A'}
+          value={userData?.addresses[ind]?.country + "A"}
+          disabled = {!flagEditData &&
+            true}
         />
       </div>
     </>
