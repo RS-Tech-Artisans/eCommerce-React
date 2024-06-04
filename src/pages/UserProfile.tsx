@@ -1,14 +1,17 @@
 import './Pages.css';
 import './UserProfile.css';
-import UsersProfileAdresses from '../components/UsersProfileAdresses';
+import { UsersProfileAdresses } from '../components/UsersProfileAdresses';
+import { EmptyUsersProfileAdresses } from '../components/UsersProfileAdresses';
 import { fetchCustomerData } from '../utils/api/getCustomer';
 import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
 
 export default function UserProfile() {
-  const inputsBoxAdresses = UsersProfileAdresses;
+
   const [userData, setData] = useState<Customer>();
-  //just downloaded the test data to check on the profile page
+  const [newFieldBilling, setNewFieldBilling] = useState(<></>);
+  const [newFieldShipping, setNewFieldShipping] = useState(<></>);
+
   useEffect(() => {
     const getCustomerData = async () => {
       try {
@@ -22,10 +25,24 @@ export default function UserProfile() {
 
     getCustomerData();
   }, []);
-  //just downloaded the test data to check on the profile page
+
+  const [flagEditData, setFlagEditData] = useState(false);
+  const body: HTMLBodyElement | null = document.querySelector('body');
 
   return (
     <>
+      <button
+        className="user-profile_edit-data"
+        onClick={() => {
+          setFlagEditData(true);
+          if (body)
+            body.style.background =
+              'linear-gradient(0.25turn, #ffffff, rgb(4 35 8))';
+        }}
+        disabled={flagEditData && true}
+      >
+        Edit data
+      </button>
       <h1>User profile</h1>
       <div className="user-profile_information">
         <h2>User Information</h2>
@@ -38,6 +55,7 @@ export default function UserProfile() {
               type="text"
               autoComplete="off"
               defaultValue={userData?.firstName || ''}
+              disabled={!flagEditData && true}
             />
           </div>
           <div>
@@ -48,6 +66,7 @@ export default function UserProfile() {
               type="text"
               autoComplete="off"
               defaultValue={userData?.lastName || ''}
+              disabled={!flagEditData && true}
             />
           </div>
           <div>
@@ -58,6 +77,7 @@ export default function UserProfile() {
               type="text"
               autoComplete="off"
               defaultValue={userData?.dateOfBirth || ''}
+              disabled={!flagEditData && true}
             />
           </div>
         </div>
@@ -67,26 +87,33 @@ export default function UserProfile() {
         <div className="container-default-addresses">
           <div className="billing-default-addresses">
             <p>Billing addresses (default)</p>
+            {newFieldBilling}
             {userData?.defaultBillingAddressId &&
-              inputsBoxAdresses(userData, 1)}
-            {!userData?.defaultBillingAddressId && (
-              <>
-                <span>Enter Billing addresses information:</span>
-                <button>Click</button>
-              </>
-            )}
+              UsersProfileAdresses(userData, 1, flagEditData)}
+            {!userData?.defaultBillingAddressId && flagEditData && <button
+              onClick={() => {
+                setNewFieldBilling(EmptyUsersProfileAdresses());
+                const button: HTMLElement | null = document.querySelector('.billing-default-addresses button');
+                if (button != null) button.style.display = "none";
+              }}
+            >+ add address</button>
+            }
+         
           </div>
 
           <div className="shipping-default-addresses">
             <p>Shipping addresses (default)</p>
+            {newFieldShipping}
             {userData?.defaultShippingAddressId &&
-              inputsBoxAdresses(userData, 0)}
-            {!userData?.defaultShippingAddressId && (
-              <>
-                <span>Enter Shipping addresses information:</span>
-                <button>Click</button>
-              </>
-            )}
+              UsersProfileAdresses(userData, 0, flagEditData)}
+            {!userData?.defaultShippingAddressId && flagEditData && <button
+              onClick={() => {
+                setNewFieldShipping(EmptyUsersProfileAdresses());
+                const button: HTMLElement | null = document.querySelector('.shipping-default-addresses button');
+                if (button != null) button.style.display = "none";
+              }}
+            >+ add address</button>
+            }
           </div>
         </div>
       </div>
@@ -95,15 +122,29 @@ export default function UserProfile() {
         <div className="container-addresses">
           <div className="billing-addresses">
             <p>Billing addresses</p>
-            {userData?.billingAddressIds && inputsBoxAdresses(userData, 1)}
+            {userData?.billingAddressIds &&
+              UsersProfileAdresses(userData, 1, flagEditData)}
           </div>
 
           <div className="shipping-addresses">
             <p>Shipping addresses</p>
-            {userData?.shippingAddressIds && inputsBoxAdresses(userData, 0)}
+            {userData?.shippingAddressIds &&
+              UsersProfileAdresses(userData, 0, flagEditData)}
           </div>
         </div>
       </div>
+      <button
+        className="user-profile_save-data"
+        onClick={() => {
+          setFlagEditData(false);
+          if (body)
+            body.style.background =
+              'linear-gradient(0.25turn, #b9f3ff, #181b35)';
+        }}
+        disabled={!flagEditData && true}
+      >
+        Save data
+      </button>
     </>
   );
 }
