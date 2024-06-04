@@ -5,9 +5,14 @@
   gap: 10px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 580px) {
   .navbar {
-    gap: 2px;
-    font-size: 20px;
+    font-size: 16px;
+    padding: 0;
+    gap: 1px;
+  }
+
+  button.btn-dark.btn-lg.btn.btn-primary {
+    padding: 0;
   }
 }
