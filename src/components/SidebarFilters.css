@@ -1,0 +1,15 @@
+.category-link {
+  color: black;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.category-link a:hover {
+  text-decoration: dashed;
+}
+
+@media (max-width: 700px) {
+  .filter-categories {
+    display: none;
+  }
+}

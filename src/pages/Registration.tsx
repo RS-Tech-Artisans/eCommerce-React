@@ -16,6 +16,7 @@ import './Registration.css';
 import './Pages.css';
 import { useRegistration } from '../utils/Registration';
 import { useLogin } from '../utils/Login';
+import { useSession } from '../utils/SessionContext';
 
 type RestBlurHandlerRegistrProps = [
   React.Dispatch<React.SetStateAction<boolean>>,
@@ -51,8 +52,10 @@ export default function Registration() {
     [countryBilling, setCountryBilling] = useState(''),
     [postalCodeBilling, setPostalCodeBilling] = useState('');
 
-  const [defaultAdress, setDefaultAdress] = useState<boolean>(false);
-  const [billingAdress, setBillingAdress] = useState<boolean>(false);
+  const [defaultAddress, setDefaultAddress] = useState<boolean>(false);
+  const [billingAddress, setBillingAddress] = useState<boolean>(false);
+  const [defaultBillingAddress, setDefaultBillingAddress] =
+    useState<boolean>(false);
 
   const [emailErr, setEmailErr] = useState('Please fill out this field'),
     [passwordErr, setPasswordErr] = useState('Please fill out this field'),
@@ -117,6 +120,7 @@ export default function Registration() {
   ];
 
   const { error, registrationResult, handleRegistration } = useRegistration();
+  const { token } = useSession();
 
   useEffect(() => {
     const hasError =
@@ -132,7 +136,8 @@ export default function Registration() {
       streetErrBilling ||
       cityErrBilling ||
       countryErrBilling ||
-      postalCodeErrBilling;
+      postalCodeErrBilling ||
+      token;
 
     setFormValid(!hasError);
   }, [
@@ -149,6 +154,41 @@ export default function Registration() {
     cityErrBilling,
     countryErrBilling,
     postalCodeErrBilling,
+    token,
+  ]);
+
+  useEffect(() => {
+    if (billingAddress) {
+      StreetValidation(
+        street,
+        streetBilling,
+        setStreetBilling,
+        setStreetErrBilling
+      );
+      CityValidation(city, cityBilling, setCityBilling, setCityErrBilling);
+      CountryValidation(
+        country,
+        countryBilling,
+        setCountryBilling,
+        setCountryErrBilling
+      );
+      PostalCodeValidation(
+        postalCode,
+        postalCodeBilling,
+        setPostalCodeBilling,
+        setPostalCodeErrBilling
+      );
+    }
+  }, [
+    billingAddress,
+    street,
+    city,
+    country,
+    postalCode,
+    cityBilling,
+    countryBilling,
+    postalCodeBilling,
+    streetBilling,
   ]);
 
   return (
@@ -409,7 +449,7 @@ export default function Registration() {
               id="country"
             >
               <option value=""></option>
-              <option value="USA">USA</option>
+              <option value="US">USA</option>
             </select>
           </div>
           {countryFill && countryErr && (
@@ -418,14 +458,14 @@ export default function Registration() {
         </div>
         <div style={{ display: 'flex' }}>
           <div className="registration-form_checkbox">
-            <label htmlFor="default-address">Default address</label>
+            <label htmlFor="default-address">Default shipping address</label>
             <input
               id="default-address"
               type="checkbox"
               name="default-address"
-              checked={defaultAdress}
+              checked={defaultAddress}
               onChange={(): void => {
-                setDefaultAdress(!defaultAdress);
+                setDefaultAddress(!defaultAddress);
               }}
             />
           </div>
@@ -435,9 +475,9 @@ export default function Registration() {
               id="billing-address"
               type="checkbox"
               name="billing-address"
-              checked={billingAdress}
+              checked={billingAddress}
               onChange={(): void => {
-                setBillingAdress(!billingAdress);
+                setBillingAddress(!billingAddress);
               }}
             />
           </div>
@@ -461,18 +501,18 @@ export default function Registration() {
               onBlur={(e) => {
                 if (e.target instanceof HTMLInputElement) {
                   BlurHandlerRegistr(
-                    `${e.target.name}forBillingAdress`,
+                    `${e.target.name}forBillingAddress`,
                     ...restBlurHandlerRegistr
                   );
                 }
               }}
-              value={billingAdress ? street : streetBilling}
+              value={billingAddress ? street : streetBilling}
               name="street-billing"
               type="text"
               autoComplete="off"
             />
           </div>
-          {streetFillBilling && streetErrBilling && !billingAdress && (
+          {streetFillBilling && streetErrBilling && !billingAddress && (
             <div style={{ color: 'red' }}>{streetErrBilling}</div>
           )}
           <div>
@@ -492,18 +532,18 @@ export default function Registration() {
               onBlur={(e) => {
                 if (e.target instanceof HTMLInputElement) {
                   BlurHandlerRegistr(
-                    `${e.target.name}forBillingAdress`,
+                    `${e.target.name}forBillingAddress`,
                     ...restBlurHandlerRegistr
                   );
                 }
               }}
-              value={billingAdress ? city : cityBilling}
+              value={billingAddress ? city : cityBilling}
               name="city"
               type="text"
               autoComplete="off"
             />
           </div>
-          {cityFillBilling && cityErrBilling && !billingAdress && (
+          {cityFillBilling && cityErrBilling && !billingAddress && (
             <div style={{ color: 'red' }}>{cityErrBilling}</div>
           )}
           <div>
@@ -522,19 +562,19 @@ export default function Registration() {
               onBlur={(e) => {
                 if (e.target instanceof HTMLInputElement) {
                   BlurHandlerRegistr(
-                    `${e.target.name}forBillingAdress`,
+                    `${e.target.name}forBillingAddress`,
                     ...restBlurHandlerRegistr
                   );
                 }
               }}
-              value={billingAdress ? postalCode : postalCodeBilling}
+              value={billingAddress ? postalCode : postalCodeBilling}
               name="postal-code"
               id="postal-code-billing"
               autoComplete="off"
               required
             />
           </div>
-          {postalCodeFillBilling && postalCodeErrBilling && !billingAdress && (
+          {postalCodeFillBilling && postalCodeErrBilling && !billingAddress && (
             <div style={{ color: 'red' }}>{postalCodeErrBilling}</div>
           )}
           <div>
@@ -553,22 +593,39 @@ export default function Registration() {
               onBlur={(e) => {
                 if (e.target instanceof HTMLSelectElement) {
                   BlurHandlerRegistr(
-                    `${e.target.name}forBillingAdress`,
+                    `${e.target.name}forBillingAddress`,
                     ...restBlurHandlerRegistr
                   );
                 }
               }}
-              value={billingAdress ? country : countryBilling}
+              value={billingAddress ? country : countryBilling}
               name="country"
               id="country-billing"
             >
               <option value=""></option>
-              <option value="USA">USA</option>
+              <option value="US">USA</option>
             </select>
           </div>
-          {countryFillBilling && countryErrBilling && !billingAdress && (
+          {countryFillBilling && countryErrBilling && !billingAddress && (
             <div style={{ color: 'red' }}>{countryErrBilling}</div>
           )}
+
+          <div style={{ display: 'flex' }}>
+            <div className="registration-form_checkbox">
+              <label htmlFor="default-billing-address">
+                Default billing address
+              </label>
+              <input
+                id="default-billing-address"
+                type="checkbox"
+                name="default-billing-address"
+                checked={defaultBillingAddress}
+                onChange={(): void => {
+                  setDefaultBillingAddress(!defaultBillingAddress);
+                }}
+              />
+            </div>
+          </div>
         </div>
         <div>
           <button
@@ -582,23 +639,41 @@ export default function Registration() {
                 street,
                 city,
                 postalCode,
-                'US'
+                country,
+                defaultAddress,
+                defaultBillingAddress,
+                streetBilling,
+                cityBilling,
+                postalCodeBilling,
+                countryBilling
               );
 
-              handleLogin(email, password);
+              setTimeout(() => {
+                handleLogin(email, password);
+              }, 1000);
             }}
             disabled={!formValid}
             type="submit"
           >
             Registration
           </button>
+
+          <div>
+            Email Is Already Registered? Try{' '}
+            <a
+              href="/login"
+              style={{ textDecoration: 'underline', fontWeight: 'bold' }}
+            >
+              Login
+            </a>
+          </div>
         </div>
 
         <div style={{ color: 'green' }}>
-          {registrationResult && !error && <p>Registration successful!</p>}
+          {registrationResult && !error && <h2>Registration successful!</h2>}
         </div>
         <div style={{ color: 'red' }}>
-          {error && <p>Error: {error.message}</p>}
+          {error && <h2>Error: try again later</h2>}
         </div>
       </form>
     </>

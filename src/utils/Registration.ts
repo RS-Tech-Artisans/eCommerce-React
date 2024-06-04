@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import {
   ClientResponse,
-  //CustomerDraft,
   CustomerSignInResult,
 } from '@commercetools/platform-sdk';
-import { apiRoot } from './getProjectInfo';
 import { useNavigate } from 'react-router-dom';
-
-interface MyApiError {
-  message: string;
-}
+import { MyApiError } from './Interfaces';
+import { apiRoot } from './api/BuildClient';
 
 export const useRegistration = () => {
   const [registrationResult, setRegistrationResult] =
@@ -26,12 +22,17 @@ export const useRegistration = () => {
     street: string,
     city: string,
     postalCode: string,
-    country: string
+    country: string,
+    defaultAddress: boolean,
+    defaultBillingAddress: boolean,
+    streetBilling: string,
+    cityBilling: string,
+    postalCodeBilling: string,
+    countryBilling: string
   ) => {
     try {
       const result: ClientResponse<CustomerSignInResult> = await apiRoot
-        .me()
-        .signup()
+        .customers()
         .post({
           body: {
             email,
@@ -46,8 +47,16 @@ export const useRegistration = () => {
                 streetName: street,
                 postalCode,
               },
+              {
+                country: countryBilling,
+                city: cityBilling,
+                streetName: streetBilling,
+                postalCode: postalCodeBilling,
+              },
             ],
-            defaultShippingAddress: 0 || undefined,
+            defaultShippingAddress: defaultAddress ? 0 : undefined,
+            defaultBillingAddress: defaultBillingAddress ? 1 : undefined,
+            billingAddresses: [1],
           },
         })
         .execute();
@@ -55,7 +64,7 @@ export const useRegistration = () => {
       console.log(result);
       setError(null);
       setTimeout(() => {
-        navigate('/main');
+        navigate('/');
       }, 3000);
     } catch (caughtError) {
       console.log(caughtError);

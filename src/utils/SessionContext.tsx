@@ -19,7 +19,7 @@ export const SessionProvider: FC<PropsWithChildren> = ({ children }) => {
   const [token, setToken] = useState<Token>(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
+    const storedToken = localStorage.getItem('refresh_token');
     setToken(storedToken);
   }, []);
 
