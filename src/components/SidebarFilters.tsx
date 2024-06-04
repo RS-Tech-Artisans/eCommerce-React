@@ -29,6 +29,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   handleResetFilters,
   setSortFilter,
   categories,
+  setCategoryFilter,
 }) => {
   const getCategoryPath = (category: Category) => {
     if (category.parent) {
@@ -62,6 +63,10 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
     setSortFilter(sortAttribute);
   };
 
+  const categoryFilter = (sortAttribute: string | null) => {
+    setCategoryFilter(sortAttribute);
+  };
+
   return (
     <div className="sidebar-filters">
       <Form className="filters">
@@ -70,7 +75,11 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
           <ul className="category-list">
             {categories.map((category: Category) => (
               <li key={category.id} className="category-item">
-                <Link to={getCategoryPath(category)} className="category-link">
+                <Link
+                  to={getCategoryPath(category)}
+                  className="category-link"
+                  onClick={() => categoryFilter(category.id)}
+                >
                   {category.name['en-US'] || 'Unnamed Category'}
                 </Link>
               </li>

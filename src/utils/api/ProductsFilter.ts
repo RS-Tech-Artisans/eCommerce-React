@@ -11,6 +11,7 @@ export const getFiltredProductsFromAPI = (
   displayFilter: string | null,
   sizeFilter: string | null,
   sortFilter: string | null,
+  categoryID: string | null,
   limit = DEFAULT_LIMIT,
   offset = DEFAULT_OFFSET
 ): Promise<ProductProjectionPagedSearchResponse> => {
@@ -30,9 +31,12 @@ export const getFiltredProductsFromAPI = (
   if (sizeFilter) {
     filterArr.push(`variants.attributes.size: "${sizeFilter}"`);
   }
-
   if (sortFilter) {
     sortArr.push(`${sortFilter}`);
+  }
+
+  if (categoryID) {
+    filterArr.push(`categories.id:"${categoryID}"`);
   }
 
   return apiRoot

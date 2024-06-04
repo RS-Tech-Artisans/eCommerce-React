@@ -53,6 +53,7 @@ export interface ProductAttributes {
 export interface ProductGridProps {
   products: ProductInfo[];
   setProducts: React.Dispatch<React.SetStateAction<ProductInfo[]>>;
+  categoryID: string | undefined;
 }
 
 export interface MyApiError {
@@ -76,4 +77,5 @@ export interface SidebarFiltersProps {
   setSortFilter: (value: string | null) => void;
   handleResetFilters: () => void;
   categories: Category[];
+  setCategoryFilter: (value: string | null) => void;
 }
