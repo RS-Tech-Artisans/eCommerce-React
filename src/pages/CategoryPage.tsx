@@ -7,7 +7,7 @@ const CategoryPage: React.FC = () => {
   const [categoryid, setID] = useState<string>();
 
   useEffect(() => {
-    let category = location.pathname.split('/').pop();
+    const category = location.pathname.split('/').pop();
 
     setID(category);
   }, [location]);
