@@ -65,17 +65,18 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   return (
     <div className="sidebar-filters">
       <Form className="filters">
-        <h3 className="filter-header">Categories</h3>
-        <ul className="category-list">
-          {categories.map((category: Category) => (
-            <li key={category.id} className="category-item">
-              <Link to={getCategoryPath(category)} className="category-link">
-                {category.name['en-US'] || 'Unnamed Category'}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
+        <div className="filter-categories">
+          <h3 className="filter-header">Categories</h3>
+          <ul className="category-list">
+            {categories.map((category: Category) => (
+              <li key={category.id} className="category-item">
+                <Link to={getCategoryPath(category)} className="category-link">
+                  {category.name['en-US'] || 'Unnamed Category'}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
         <InputGroup className="search-input-group">
           <InputGroup.Text>
             <BsSearch />

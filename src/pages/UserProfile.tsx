@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
 
 export default function UserProfile() {
-
   const [userData, setData] = useState<Customer>();
   const [newFieldBilling, setNewFieldBilling] = useState(<></>);
   const [newFieldShipping, setNewFieldShipping] = useState(<></>);
@@ -90,15 +89,19 @@ export default function UserProfile() {
             {newFieldBilling}
             {userData?.defaultBillingAddressId &&
               UsersProfileAdresses(userData, 1, flagEditData)}
-            {!userData?.defaultBillingAddressId && flagEditData && <button
-              onClick={() => {
-                setNewFieldBilling(EmptyUsersProfileAdresses());
-                const button: HTMLElement | null = document.querySelector('.billing-default-addresses button');
-                if (button != null) button.style.display = "none";
-              }}
-            >+ add address</button>
-            }
-         
+            {!userData?.defaultBillingAddressId && flagEditData && (
+              <button
+                onClick={() => {
+                  setNewFieldBilling(EmptyUsersProfileAdresses());
+                  const button: HTMLElement | null = document.querySelector(
+                    '.billing-default-addresses button'
+                  );
+                  if (button != null) button.style.display = 'none';
+                }}
+              >
+                + add address
+              </button>
+            )}
           </div>
 
           <div className="shipping-default-addresses">
@@ -106,14 +109,19 @@ export default function UserProfile() {
             {newFieldShipping}
             {userData?.defaultShippingAddressId &&
               UsersProfileAdresses(userData, 0, flagEditData)}
-            {!userData?.defaultShippingAddressId && flagEditData && <button
-              onClick={() => {
-                setNewFieldShipping(EmptyUsersProfileAdresses());
-                const button: HTMLElement | null = document.querySelector('.shipping-default-addresses button');
-                if (button != null) button.style.display = "none";
-              }}
-            >+ add address</button>
-            }
+            {!userData?.defaultShippingAddressId && flagEditData && (
+              <button
+                onClick={() => {
+                  setNewFieldShipping(EmptyUsersProfileAdresses());
+                  const button: HTMLElement | null = document.querySelector(
+                    '.shipping-default-addresses button'
+                  );
+                  if (button != null) button.style.display = 'none';
+                }}
+              >
+                + add address
+              </button>
+            )}
           </div>
         </div>
       </div>
