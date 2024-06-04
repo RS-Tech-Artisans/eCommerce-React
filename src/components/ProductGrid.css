@@ -75,17 +75,17 @@
     height: 30px;
   }
 
-  .custom-dropdown.dropdown{
+  .custom-dropdown.dropdown {
     width: auto;
     padding: 0;
   }
 
-   .reset-filters-button.btn.btn-secondary{
+  .reset-filters-button.btn.btn-secondary {
     height: 40px;
     padding: 5px;
-   }
+  }
 
-    .price-filter-input-group.input-group{
+  .price-filter-input-group.input-group {
     height: 30px;
-   }
+  }
 }
