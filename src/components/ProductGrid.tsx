@@ -11,6 +11,8 @@ import { filterProducts } from './PriceFilter';
 import { getBrandsFromAPI } from '../utils/api/getBrands';
 import { getSizesFromAPI } from '../utils/api/getSizes';
 import { getDisplaysFromAPI } from '../utils/api/getDisplays';
+import { getCategoriesFromAPI } from '../utils/api/getCategories';
+import { Category } from '@commercetools/platform-sdk';
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   const [search, setSearch] = useState('');
@@ -28,11 +30,20 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     minPrice: '',
     maxPrice: '',
   });
-
-  //const colors = ['Grey', 'Black', 'White'];
-  //const sizes = ['Small', 'Big'];
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const fetchedCategories = await getCategoriesFromAPI();
+        console.log('!!! fetchedCategories ', fetchedCategories);
+        setCategories(fetchedCategories.results);
+      } catch (error) {
+        console.error('Error fetching Categories:', error);
+      }
+    };
+    getCategories();
+
     const fetchBrands = async () => {
       try {
         const fetchedBrands = await getBrandsFromAPI();
@@ -134,6 +145,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         setPriceFilter={setPriceFilter}
         setSortFilter={setSortFilter}
         handleResetFilters={handleResetFilters}
+        categories={categories}
       />
       <div className="product-grid">
         {filteredProducts.length > 0 ? (

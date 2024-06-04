@@ -1,4 +1,5 @@
 import React from 'react';
+import './SidebarFilters.css';
 import {
   Form,
   InputGroup,
@@ -8,6 +9,8 @@ import {
 } from 'react-bootstrap';
 import { BsSearch } from 'react-icons/bs';
 import { SidebarFiltersProps } from '../utils/Interfaces';
+import { Category } from '@commercetools/platform-sdk';
+import { Link } from 'react-router-dom';
 
 const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   search,
@@ -25,7 +28,16 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   setPriceFilter,
   handleResetFilters,
   setSortFilter,
+  categories,
 }) => {
+  const getCategoryPath = (category: Category) => {
+    if (category.parent) {
+      return `/category/${category.parent.id}/${category.id}`;
+    } else {
+      return `/category/${category.id}`;
+    }
+  };
+
   const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPriceFilter({ ...priceFilter, minPrice: e.target.value });
   };
@@ -53,6 +65,17 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   return (
     <div className="sidebar-filters">
       <Form className="filters">
+        <h3 className="filter-header">Categories</h3>
+        <ul className="category-list">
+          {categories.map((category: Category) => (
+            <li key={category.id} className="category-item">
+              <Link to={getCategoryPath(category)} className="category-link">
+                {category.name['en-US'] || 'Unnamed Category'}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
         <InputGroup className="search-input-group">
           <InputGroup.Text>
             <BsSearch />
@@ -76,7 +99,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
           </Form.Select>
         </div>
 
-        <h4 className="filter-header">Filter by Price</h4>
+        <h3 className="filter-header">Filter by Price</h3>
         <InputGroup className="price-filter-input-group">
           <Form.Control
             type="number"
@@ -91,7 +114,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
             onChange={handleMaxPriceChange}
           />
         </InputGroup>
-        <h4 className="filter-header">Filter by Brand</h4>
+        <h3 className="filter-header">Filter by Brand</h3>
         <DropdownButton
           id="brand-filter-dropdown"
           title={brandFilter ? brandFilter : 'Select Brand'}
@@ -108,7 +131,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
             </Dropdown.Item>
           ))}
         </DropdownButton>
-        <h4 className="filter-header">Filter by Display Technology</h4>
+        <h3 className="filter-header">Filter by Display Technology</h3>
         <DropdownButton
           id="filter-dropdown"
           title={displayFilter ? displayFilter : 'Select Display'}
@@ -124,7 +147,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
             </Dropdown.Item>
           ))}
         </DropdownButton>
-        <h4 className="filter-header">Filter by Size</h4>
+        <h3 className="filter-header">Filter by Size</h3>
         <DropdownButton
           id="size-filter-dropdown"
           title={sizeFilter ? sizeFilter : 'Select Size'}

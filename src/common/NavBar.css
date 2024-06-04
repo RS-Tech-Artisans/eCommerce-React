@@ -4,6 +4,10 @@
   font-size: 25px;
   gap: 10px;
 }
+.navbar a {
+  color: #ffffff;
+  text-decoration: none;
+}
 
 @media (max-width: 580px) {
   .navbar {
