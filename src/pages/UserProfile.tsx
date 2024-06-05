@@ -5,8 +5,12 @@ import { EmptyUsersProfileAdresses } from '../components/UsersProfileAdresses';
 import { fetchCustomerData } from '../utils/api/getCustomer';
 import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
+import { useSession } from '../utils/SessionContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserProfile() {
+  const { token } = useSession();
+  const navigate = useNavigate();
   const [userData, setData] = useState<Customer>();
   const [newFieldBilling, setNewFieldBilling] = useState(<></>);
   const [newFieldShipping, setNewFieldShipping] = useState(<></>);
@@ -25,6 +29,12 @@ export default function UserProfile() {
 
     getCustomerData();
   }, []);
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/');
+    }
+  }, [token, navigate]);
 
   const [flagEditData, setFlagEditData] = useState(false);
 
