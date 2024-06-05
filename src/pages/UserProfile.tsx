@@ -11,6 +11,8 @@ import { FaLock, FaUnlock } from 'react-icons/fa';
 import { UsersProfileAdresses } from '../components/UsersProfileAdresses';
 import { EmptyUsersProfileAdresses } from '../components/UsersProfileAdresses';
 import { fetchCustomerData } from '../utils/api/getCustomer';
+import { useLogin } from '../utils/Login';
+//import { ChangePassword } from '../components/ChangePassword';
 import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
 
@@ -37,15 +39,23 @@ export default function UserProfile() {
     [birthdate, setBirthdate] = useState('');
 
   const [emailErr, setEmailErr] = useState(''),
-    [passwordErr, setPasswordErr] = useState(''),
-    [nameUserErr, setNameUserErr] = useState(''),
-    [lastNameUserErr, setLastNameUserErr] = useState(
-      ''
+    [passwordErr] = useState(
+      'Please enter the current password'
     ),
+    [newPasswordErr, setNewPasswordErr] = useState(
+      'Please fill out this field'
+    ),
+    [passwordСonfirmErr] = useState(
+      'Password does not match'
+    ),
+    [nameUserErr, setNameUserErr] = useState(''),
+    [lastNameUserErr, setLastNameUserErr] = useState(''),
     [birthdateErr, setBirthdateErr] = useState('');
 
   const [emailFill, setEmailFill] = useState(false),
     [passwordFill, setPasswordFill] = useState(false),
+    [newPasswordFill, setNewPasswordFill] = useState(false),
+    [passwordСonfirmFill, setPasswordСonfirmFill] = useState(false),
     [nameUserFill, setNameUserFill] = useState(false),
     [lastNameUserFill, setLastNameUserFill] = useState(false),
     [birthdateFill, setBirthdateFill] = useState(false);
@@ -55,7 +65,7 @@ export default function UserProfile() {
     setLastNameUserFill,
     setBirthdateFill,
   ];
-
+  const { errors, handleLogin } = useLogin();
   const [formValid, setFormValid] = useState(true);
 
   const [passInputClasses, setPassInputClasses] =
@@ -67,10 +77,23 @@ export default function UserProfile() {
 
   useEffect(() => {
     const hasError =
-      emailErr || passwordErr || nameUserErr || lastNameUserErr || birthdateErr;
-
+      emailErr ||
+      passwordErr ||
+      newPasswordErr ||
+      passwordСonfirmErr ||
+      nameUserErr ||
+      lastNameUserErr ||
+      birthdateErr;
     setFormValid(!hasError);
-  }, [emailErr, passwordErr, nameUserErr, lastNameUserErr, birthdateErr]);
+  }, [
+    emailErr,
+    passwordErr,
+    newPasswordErr,
+    passwordСonfirmErr,
+    nameUserErr,
+    lastNameUserErr,
+    birthdateErr,
+  ]);
 
   useEffect(() => {
     const getCustomerData = async () => {
@@ -117,7 +140,165 @@ export default function UserProfile() {
       >
         Edit data
       </button>
+      <button
+        className="user-profile_change-password"
+        onClick={() => {
+          const form: HTMLElement | null = document.querySelector(
+            '.form-change-password_wrapper'
+          );
+          if (form !== null) form.style.display = 'block';
+        }}
+      >
+        Change Password
+      </button>
       <h1>User profile</h1>
+      <div className="form-change-password_wrapper">
+        <form className="user-profile_form-change-password">
+          <div>
+            <label htmlFor="current-password">Current password: </label>
+            <input
+              className={passInputClasses}
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  console.log(passwordFill);
+                  //console.log(userData?.password)
+                  //setPasswordFill(userData?.password !== e.target.value);
+                }
+              }}
+              onBlur={(e) => {
+                if (
+                  e.target instanceof HTMLInputElement &&
+                  userData !== undefined
+                ) {
+                  handleLogin(userData.email, e.target.value);
+                  BlurHandler(e.target.name, setEmailFill, setPasswordFill);
+                }
+              }}
+              id="information-password"
+              name="password"
+              type={type}
+              autoComplete="off"
+            />
+            <div style={{ color: 'red' }}>{errors && <p>{passwordErr}</p>}</div>
+
+            <span
+              onClick={() =>
+                TogglePassInput(
+                  type,
+                  setType,
+                  setToggleIcon,
+                  iconActive,
+                  setPassInputClasses,
+                  setToggleIconClasses,
+                  iconPassive
+                )
+              }
+              className={`toggle ${toggleIconClasses}`}
+            ></span>
+          </div>
+          <div>
+            <label htmlFor="new-password">New password: </label>
+            <input
+              className={passInputClasses}
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  PasswordValidation(
+                    e.target.value,
+                    password,
+                    setPassword,
+                    setNewPasswordErr
+                  );
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  BlurHandler(e.target.name, setEmailFill, setNewPasswordFill);
+                }
+              }}
+              id="new-password"
+              name="password"
+              type={type}
+              autoComplete="off"
+              required
+            />
+            <span
+              onClick={() =>
+                TogglePassInput(
+                  type,
+                  setType,
+                  setToggleIcon,
+                  iconActive,
+                  setPassInputClasses,
+                  setToggleIconClasses,
+                  iconPassive
+                )
+              }
+              className={`toggle ${toggleIconClasses}`}
+            ></span>
+            {newPasswordFill && newPasswordErr && (
+              <div style={{ color: 'red' }}>{newPasswordErr}</div>
+            )}
+          </div>
+          <div>
+            <label htmlFor="confirm-new-password">Confirm New password: </label>
+            <input
+              className={passInputClasses}
+              onInput={(e) => {
+                if (e.target instanceof HTMLInputElement) {
+                  const valuePass: HTMLInputElement | null =
+                    document.querySelector('#new-password');
+                  setPasswordСonfirmFill(valuePass?.value !== e.target.value);
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target instanceof HTMLInputElement && !e.target.value) {
+                  BlurHandler(
+                    e.target.name,
+                    setEmailFill,
+                    setPasswordСonfirmFill
+                  );
+                }
+              }}
+              id="confirm-new-password"
+              name="password"
+              type={type}
+              autoComplete="off"
+            />
+            <span
+              onClick={() =>
+                TogglePassInput(
+                  type,
+                  setType,
+                  setToggleIcon,
+                  iconActive,
+                  setPassInputClasses,
+                  setToggleIconClasses,
+                  iconPassive
+                )
+              }
+              className={`toggle ${toggleIconClasses}`}
+            >
+              <p className="turn-visibility-pass">
+                Turn on visibility {toggleIcon}
+              </p>
+            </span>
+            {passwordСonfirmFill && passwordСonfirmErr && (
+              <div style={{ color: 'red' }}>{passwordСonfirmErr}</div>
+            )}
+          </div>
+          <button>Save</button>
+          <button
+            onClick={() => {
+              const form: HTMLElement | null = document.querySelector(
+                '.form-change-password_wrapper'
+              );
+              if (form !== null) form.style.display = 'none';
+            }}
+          >
+            Cancel
+          </button>
+        </form>
+      </div>
       <div className="user-profile_information">
         <h2>User Information</h2>
         <div className="information-input">
@@ -125,10 +306,8 @@ export default function UserProfile() {
             <label htmlFor="information-email">Email: </label>
             <input
               onInput={(e) => {
-              
-                if (
-                  e.target instanceof HTMLInputElement) {
-                    setEmailFill(Boolean(email));
+                if (e.target instanceof HTMLInputElement) {
+                  setEmailFill(Boolean(email));
                   EmailValidationRegistr(
                     e.target.value,
                     email,
@@ -149,58 +328,11 @@ export default function UserProfile() {
               defaultValue={userData?.email || ''}
               disabled={!flagEditData && true}
             />
-                 {emailFill && emailErr && (
-            <div style={{ color: 'red' }}>{emailErr}</div>
-          )}
+            {emailFill && emailErr && (
+              <div style={{ color: 'red' }}>{emailErr}</div>
+            )}
           </div>
-     
-          <div>
-            <label htmlFor="information-password">Password: </label>
-            <input
-              className={passInputClasses}
-              onInput={(e) => {
-                if (e.target instanceof HTMLInputElement) {
-                  setPasswordFill(Boolean(password));
-                  PasswordValidation(
-                    e.target.value,
-                    password,
-                    setPassword,
-                    setPasswordErr
-                  );
-                }
-              }}
-              onBlur={(e) => {
-                if (e.target instanceof HTMLInputElement && !e.target.value) {
-                  BlurHandler(e.target.name, setEmailFill, setPasswordFill);
-                }
-              }}
-              id="information-password"
-              name="password"
-              type={type}
-              defaultValue={userData?.password || ''}
-              disabled={!flagEditData && true}
-            />
-             <span
-            onClick={() =>
-              TogglePassInput(
-                type,
-                setType,
-                setToggleIcon,
-                iconActive,
-                setPassInputClasses,
-                setToggleIconClasses,
-                iconPassive
-              )
-            }
-            className={`toggle ${toggleIconClasses}`}
-          >
-            {toggleIcon}
-          </span>
-          {passwordFill && passwordErr && (
-            <div style={{ color: 'red' }}>{passwordErr}</div>
-          )}
-          </div>
-    
+
           <div>
             <label htmlFor="information-first-name">First name: </label>
             <input
@@ -217,10 +349,7 @@ export default function UserProfile() {
               }}
               onBlur={(e) => {
                 if (e.target instanceof HTMLInputElement && !e.target.value) {
-                  BlurHandlerUser(
-                    e.target.name,
-                    ...restBlurHandlerUser
-                  );
+                  BlurHandlerUser(e.target.name, ...restBlurHandlerUser);
                 }
               }}
               id="information-first-name"
@@ -230,11 +359,11 @@ export default function UserProfile() {
               defaultValue={userData?.firstName || ''}
               disabled={!flagEditData && true}
             />
-              {nameUserFill && nameUserErr && (
-            <div style={{ color: 'red' }}>{nameUserErr}</div>
-          )}
+            {nameUserFill && nameUserErr && (
+              <div style={{ color: 'red' }}>{nameUserErr}</div>
+            )}
           </div>
-        
+
           <div>
             <label htmlFor="information-last-name">Last name: </label>
             <input
@@ -251,10 +380,7 @@ export default function UserProfile() {
               }}
               onBlur={(e) => {
                 if (e.target instanceof HTMLInputElement && !e.target.value) {
-                  BlurHandlerUser(
-                    e.target.name,
-                    ...restBlurHandlerUser
-                  );
+                  BlurHandlerUser(e.target.name, ...restBlurHandlerUser);
                 }
               }}
               id="information-last-name"
@@ -264,11 +390,11 @@ export default function UserProfile() {
               defaultValue={userData?.lastName || ''}
               disabled={!flagEditData && true}
             />
-             {lastNameUserFill && lastNameUserErr && (
-            <div style={{ color: 'red' }}>{lastNameUserErr}</div>
-          )}
+            {lastNameUserFill && lastNameUserErr && (
+              <div style={{ color: 'red' }}>{lastNameUserErr}</div>
+            )}
           </div>
-         
+
           <div>
             <label htmlFor="information-birth">User&apos;s birth: </label>
             <input
@@ -285,10 +411,7 @@ export default function UserProfile() {
               }}
               onBlur={(e) => {
                 if (e.target instanceof HTMLInputElement && !e.target.value) {
-                  BlurHandlerUser(
-                    e.target.name,
-                    ...restBlurHandlerUser
-                  );
+                  BlurHandlerUser(e.target.name, ...restBlurHandlerUser);
                 }
               }}
               id="information-birth"
@@ -298,10 +421,9 @@ export default function UserProfile() {
               disabled={!flagEditData && true}
             />
             {birthdateFill && birthdateErr && (
-            <div style={{ color: 'red' }}>{birthdateErr}</div>
-          )}
+              <div style={{ color: 'red' }}>{birthdateErr}</div>
+            )}
           </div>
-          
         </div>
       </div>
       <div className="user-profile_default-addresses">
@@ -311,11 +433,18 @@ export default function UserProfile() {
             <p>Billing addresses (default)</p>
             {newFieldBilling}
             {userData?.defaultBillingAddressId &&
-              UsersProfileAdresses(userData, 1, flagEditData, 'defaultBillingAddress')}
+              UsersProfileAdresses(
+                userData,
+                1,
+                flagEditData,
+                'defaultBillingAddress'
+              )}
             {!userData?.defaultBillingAddressId && flagEditData && (
               <button
                 onClick={() => {
-                  setNewFieldBilling(EmptyUsersProfileAdresses('newDefaultBillingAddress'));
+                  setNewFieldBilling(
+                    EmptyUsersProfileAdresses('newDefaultBillingAddress')
+                  );
                   const button: HTMLElement | null = document.querySelector(
                     '.billing-default-addresses button'
                   );
@@ -331,11 +460,18 @@ export default function UserProfile() {
             <p>Shipping addresses (default)</p>
             {newFieldShipping}
             {userData?.defaultShippingAddressId &&
-              UsersProfileAdresses(userData, 0, flagEditData, 'defaultShippingAddress')}
+              UsersProfileAdresses(
+                userData,
+                0,
+                flagEditData,
+                'defaultShippingAddress'
+              )}
             {!userData?.defaultShippingAddressId && flagEditData && (
               <button
                 onClick={() => {
-                  setNewFieldShipping(EmptyUsersProfileAdresses('newDefaultShippingAddress'));
+                  setNewFieldShipping(
+                    EmptyUsersProfileAdresses('newDefaultShippingAddress')
+                  );
                   const button: HTMLElement | null = document.querySelector(
                     '.shipping-default-addresses button'
                   );
@@ -360,7 +496,12 @@ export default function UserProfile() {
           <div className="shipping-addresses">
             <p>Shipping addresses</p>
             {userData?.shippingAddressIds &&
-              UsersProfileAdresses(userData, 0, flagEditData, 'shippingAddress')}
+              UsersProfileAdresses(
+                userData,
+                0,
+                flagEditData,
+                'shippingAddress'
+              )}
           </div>
         </div>
       </div>
