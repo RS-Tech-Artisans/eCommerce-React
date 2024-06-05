@@ -224,7 +224,7 @@ label {
 */
 .form-change-password_wrapper::before {
   position: absolute;
-  content: '' ;
+  content: '';
   background: #000;
   position: fixed;
   left: 0;
@@ -235,11 +235,10 @@ label {
   z-index: 9999;
 }
 
-.form-change-password_wrapper{
+.form-change-password_wrapper {
   display: none;
-  opacity: 1; 
+  opacity: 1;
 }
-
 
 .user-profile_form-change-password {
   display: flex;
@@ -251,7 +250,7 @@ label {
   margin-left: -275px;
   margin-top: -191px;
   z-index: 99999;
-  opacity: 1; 
+  opacity: 1;
   width: 550px;
   height: auto;
   border: 2px solid rgba(255, 255, 255, 0.2);
@@ -279,7 +278,6 @@ label {
   margin-top: 10px;
   text-align: center;
 }
-
 
 .user-profile_form-change-password button:hover {
   background: #dbf9ff;

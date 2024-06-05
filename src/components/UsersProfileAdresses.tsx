@@ -9,9 +9,9 @@ const UsersProfileAdresses = (
   return (
     <>
       <div>
-        <label htmlFor={id + "Street"}>Street: </label>
+        <label htmlFor={id + 'Street'}>Street: </label>
         <input
-          id={id + "Street"}
+          id={id + 'Street'}
           name="default-street"
           type="text"
           autoComplete="off"
@@ -20,9 +20,9 @@ const UsersProfileAdresses = (
         />
       </div>
       <div>
-        <label htmlFor={id + "City"}>City: </label>
+        <label htmlFor={id + 'City'}>City: </label>
         <input
-          id={id + "City"}
+          id={id + 'City'}
           name="default-city"
           type="text"
           autoComplete="off"
@@ -31,9 +31,9 @@ const UsersProfileAdresses = (
         />
       </div>
       <div>
-        <label htmlFor={id + "postalCode"}>Postal code: </label>
+        <label htmlFor={id + 'postalCode'}>Postal code: </label>
         <input
-          id={id + "postalCode"}
+          id={id + 'postalCode'}
           name="default-postal-code"
           type="text"
           autoComplete="off"
@@ -42,9 +42,9 @@ const UsersProfileAdresses = (
         />
       </div>
       <div>
-        <label htmlFor={id + "Country"}>Country: </label>
+        <label htmlFor={id + 'Country'}>Country: </label>
         <input
-          id={id + "Country"}
+          id={id + 'Country'}
           name="default-country"
           type="text"
           autoComplete="off"

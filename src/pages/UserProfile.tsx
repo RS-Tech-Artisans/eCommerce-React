@@ -39,15 +39,11 @@ export default function UserProfile() {
     [birthdate, setBirthdate] = useState('');
 
   const [emailErr, setEmailErr] = useState(''),
-    [passwordErr] = useState(
-      'Please enter the current password'
-    ),
+    [passwordErr] = useState('Please enter the current password'),
     [newPasswordErr, setNewPasswordErr] = useState(
       'Please fill out this field'
     ),
-    [passwordСonfirmErr] = useState(
-      'Password does not match'
-    ),
+    [passwordСonfirmErr] = useState('Password does not match'),
     [nameUserErr, setNameUserErr] = useState(''),
     [lastNameUserErr, setLastNameUserErr] = useState(''),
     [birthdateErr, setBirthdateErr] = useState('');
@@ -65,7 +61,7 @@ export default function UserProfile() {
     setLastNameUserFill,
     setBirthdateFill,
   ];
-  const { errors, handleLogin } = useLogin();
+  const { error, handleLogin } = useLogin();
   const [formValid, setFormValid] = useState(true);
 
   const [passInputClasses, setPassInputClasses] =
@@ -101,8 +97,8 @@ export default function UserProfile() {
         const data = await fetchCustomerData();
         console.log('Customer data:', data);
         setData(data);
-      } catch (error) {
-        console.error('Error fetching customer data:', error);
+      } catch (err) {
+        console.error('Error fetching customer data:', err);
       }
     };
 
@@ -179,7 +175,7 @@ export default function UserProfile() {
               type={type}
               autoComplete="off"
             />
-            <div style={{ color: 'red' }}>{errors && <p>{passwordErr}</p>}</div>
+            <div style={{ color: 'red' }}>{error && <p>{passwordErr}</p>}</div>
 
             <span
               onClick={() =>
