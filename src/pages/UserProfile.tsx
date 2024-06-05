@@ -11,10 +11,9 @@ import { FaLock, FaUnlock } from 'react-icons/fa';
 import { UsersProfileAdresses } from '../components/UsersProfileAdresses';
 import { EmptyUsersProfileAdresses } from '../components/UsersProfileAdresses';
 import { fetchCustomerData } from '../utils/api/getCustomer';
-import { useLogin } from '../utils/Login';
-//import { ChangePassword } from '../components/ChangePassword';
 import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
+import { UpdatePassword } from '../utils/api/setPassword';
 
 type RestBlurHandlerUserProps = [
   React.Dispatch<React.SetStateAction<boolean>>,
@@ -61,7 +60,6 @@ export default function UserProfile() {
     setLastNameUserFill,
     setBirthdateFill,
   ];
-  const { error, handleLogin } = useLogin();
   const [formValid, setFormValid] = useState(true);
 
   const [passInputClasses, setPassInputClasses] =
@@ -166,8 +164,8 @@ export default function UserProfile() {
                   e.target instanceof HTMLInputElement &&
                   userData !== undefined
                 ) {
-                  handleLogin(userData.email, e.target.value);
-                  BlurHandler(e.target.name, setEmailFill, setPasswordFill);
+               
+                  //BlurHandler(e.target.name, setEmailFill, setPasswordFill);
                 }
               }}
               id="information-password"
@@ -175,7 +173,7 @@ export default function UserProfile() {
               type={type}
               autoComplete="off"
             />
-            <div style={{ color: 'red' }}>{error && <p>{passwordErr}</p>}</div>
+            <div style={{ color: 'red' }}>{<p>{passwordErr}</p>}</div>
 
             <span
               onClick={() =>
@@ -282,9 +280,15 @@ export default function UserProfile() {
               <div style={{ color: 'red' }}>{passwordСonfirmErr}</div>
             )}
           </div>
-          <button>Save</button>
+          <button
+            type="button"
+            onClick={() => {
+              UpdatePassword(2, '123456Zz', '12345Xx');
+            }}
+          >Save</button>
           <button
             onClick={() => {
+              UpdatePassword(1, '123456Zz', '12345Xx');
               const form: HTMLElement | null = document.querySelector(
                 '.form-change-password_wrapper'
               );
