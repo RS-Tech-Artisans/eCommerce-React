@@ -5,11 +5,10 @@ import { EmptyUsersProfileAdresses } from '../components/UsersProfileAdresses';
 import { fetchCustomerData } from '../utils/api/getCustomer';
 import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
-import { useSession } from '../utils/SessionContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function UserProfile() {
-  const { token } = useSession();
+  // const { token:token } = useSession();
   const navigate = useNavigate();
   const [userData, setData] = useState<Customer>();
   const [newFieldBilling, setNewFieldBilling] = useState(<></>);
@@ -17,24 +16,22 @@ export default function UserProfile() {
   const [updateResult, setUpdateResult] = useState(false);
 
   useEffect(() => {
-    const getCustomerData = async () => {
-      try {
-        const data = await fetchCustomerData();
-        console.log('Customer data:', data);
-        setData(data);
-      } catch (error) {
-        console.error('Error fetching customer data:', error);
-      }
-    };
-
-    getCustomerData();
-  }, []);
-
-  useEffect(() => {
-    if (!token) {
+    const storedToken = localStorage.getItem('refresh_token');
+    if (!storedToken) {
       navigate('/');
+    } else {
+      const getCustomerData = async () => {
+        try {
+          const data = await fetchCustomerData();
+          console.log('Customer data:', data);
+          setData(data);
+        } catch (error) {
+          console.error('Error fetching customer data:', error);
+        }
+      };
+      getCustomerData();
     }
-  }, [token, navigate]);
+  }, [navigate]);
 
   const [flagEditData, setFlagEditData] = useState(false);
 
