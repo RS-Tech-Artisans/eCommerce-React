@@ -119,10 +119,17 @@ export default function UserProfile() {
   const [flagEditData, setFlagEditData] = useState(false);
 
   const handleUpdatePassword = async () => {
-    const currentPassword = document.querySelector<HTMLInputElement>('#information-password');
-    const newPassword = document.querySelector<HTMLInputElement>('#new-password');
+    const currentPassword = document.querySelector<HTMLInputElement>(
+      '#information-password'
+    );
+    const newPassword =
+      document.querySelector<HTMLInputElement>('#new-password');
     if (currentPassword && userData && newPassword) {
-      await UpdatePassword(userData.version, currentPassword.value, newPassword.value);
+      await UpdatePassword(
+        userData.version,
+        currentPassword.value,
+        newPassword.value
+      );
       if (!errorUpdatePassword) {
         setupdatePasswordResult('Successful update!');
         setTimeout(() => {
@@ -135,7 +142,7 @@ export default function UserProfile() {
       }
     }
   };
-  
+
   return (
     <>
       <button
@@ -186,18 +193,18 @@ export default function UserProfile() {
               onInput={(e) => {
                 if (e.target instanceof HTMLInputElement) {
                   //const currentPassword: HTMLInputElement | null =
-                    //document.querySelector('#information-password');
+                  //document.querySelector('#information-password');
                   //const newPassword: HTMLInputElement | null =
-                    //document.querySelector('#new-password');
+                  //document.querySelector('#new-password');
                   // if (
                   //   currentPassword !== null &&
                   //   newPassword !== null
                   // )
-                    // UpdatePassword(
-                    //   userData.version,
-                    //   currentPassword.value,
-                    //   newPassword.value
-                    // );
+                  // UpdatePassword(
+                  //   userData.version,
+                  //   currentPassword.value,
+                  //   newPassword.value
+                  // );
                 }
               }}
               id="information-password"
@@ -313,9 +320,7 @@ export default function UserProfile() {
               <div style={{ color: 'red' }}>{passwordСonfirmErr}</div>
             )}
           </div>
-          <button
-            type="button"
-            onClick={handleUpdatePassword}>
+          <button type="button" onClick={handleUpdatePassword}>
             Save
           </button>
           <button
@@ -564,9 +569,7 @@ export default function UserProfile() {
               'linear-gradient(0.25turn, #b9f3ff, #181b35)';
           }
         }}
-
         disabled={formValid || !flagEditData}
-
         type="submit"
       >
         Save data

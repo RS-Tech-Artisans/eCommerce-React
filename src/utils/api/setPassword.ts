@@ -7,7 +7,8 @@ import { useState } from 'react';
 export const useUpdateCurrentPassword = () => {
   const [enterPasswordResult, setEnterPasswordResult] =
     useState<ClientResponse<Customer> | null>(null);
-  const [errorUpdatePassword, seterrorUpdatePassword] = useState<MyApiError | null>(null);
+  const [errorUpdatePassword, seterrorUpdatePassword] =
+    useState<MyApiError | null>(null);
 
   const UpdatePassword = async (
     version: number,
