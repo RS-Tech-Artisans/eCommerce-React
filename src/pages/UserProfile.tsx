@@ -320,7 +320,9 @@ export default function UserProfile() {
               <div style={{ color: 'red' }}>{passwordСonfirmErr}</div>
             )}
           </div>
-          <button type="button" onClick={handleUpdatePassword}>
+          <button
+            type="button"
+            onClick={handleUpdatePassword}>
             Save
           </button>
           <button
@@ -569,7 +571,9 @@ export default function UserProfile() {
               'linear-gradient(0.25turn, #b9f3ff, #181b35)';
           }
         }}
+
         disabled={formValid || !flagEditData}
+
         type="submit"
       >
         Save data
