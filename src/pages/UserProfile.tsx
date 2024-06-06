@@ -315,8 +315,7 @@ export default function UserProfile() {
           </div>
           <button
             type="button"
-            onClick={handleUpdatePassword}
-          >
+            onClick={handleUpdatePassword}>
             Save
           </button>
           <button
@@ -546,7 +545,6 @@ export default function UserProfile() {
       <button
         className="user-profile_save-data"
         onClick={() => {
-          setFlagEditData(false);
           setUpdateResult(true);
           const sectionInformation: HTMLBodyElement | null =
             document.querySelector('.user-profile_information');
@@ -566,8 +564,9 @@ export default function UserProfile() {
               'linear-gradient(0.25turn, #b9f3ff, #181b35)';
           }
         }}
+
         disabled={formValid || !flagEditData}
-      
+
         type="submit"
       >
         Save data
