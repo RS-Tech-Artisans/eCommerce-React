@@ -98,7 +98,9 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
               setSearch(e.target.value);
               console.log(`search is ${search.length}`);
 
-              if(search.length >= 2){getSearchFromAPI(e.target.value, 0)};
+              if (search.length >= 2) {
+                getSearchFromAPI(e.target.value, 0);
+              }
             }}
           />
         </InputGroup>
