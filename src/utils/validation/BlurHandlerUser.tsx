@@ -9,7 +9,7 @@ const BlurHandlerUser: BlurHandlerUserProps = (
   name,
   setNameUserFill,
   setLastNameUserFill,
-  setBirthdateFill,
+  setBirthdateFill
 ) => {
   let flag = false;
   switch (name) {

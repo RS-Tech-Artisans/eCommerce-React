@@ -23,8 +23,7 @@ type RestBlurHandlerUserProps = [
 ];
 
 export default function UserProfile() {
-  const { errorUpdatePassword, UpdatePassword } =
-    useUpdateCurrentPassword();
+  const { errorUpdatePassword, UpdatePassword } = useUpdateCurrentPassword();
   const [updatePasswordResult, setupdatePasswordResult] = useState('');
   const { handleLogout } = useLogin();
   const iconPassive = <FaLock />;
@@ -177,7 +176,6 @@ export default function UserProfile() {
                     );
                 }
               }}
-
               id="information-password"
               name="password"
               type={type}
@@ -311,13 +309,17 @@ export default function UserProfile() {
               if (!errorUpdatePassword) {
                 setTimeout(() => {
                   handleLogout();
-                }, 2000)}
-              if(errorUpdatePassword) setPasswordFill(true);
-              if(!errorUpdatePassword) setupdatePasswordResult('Successful update!');
-              if(!errorUpdatePassword) setPasswordFill(false);
-              if(!errorUpdatePassword) setPasswordErr('');
+                }, 2000);
+              }
+              if (errorUpdatePassword) setPasswordFill(true);
+              if (!errorUpdatePassword)
+                setupdatePasswordResult('Successful update!');
+              if (!errorUpdatePassword) setPasswordFill(false);
+              if (!errorUpdatePassword) setPasswordErr('');
             }}
-          >Save</button>
+          >
+            Save
+          </button>
           <button
             onClick={() => {
               const form: HTMLElement | null = document.querySelector(
@@ -325,7 +327,9 @@ export default function UserProfile() {
               );
               if (form !== null) form.style.display = 'none';
             }}
-          >Cancel</button>
+          >
+            Cancel
+          </button>
 
           {updatePasswordResult && (
             <div style={{ color: 'green', alignSelf: 'center' }}>
@@ -569,9 +573,6 @@ export default function UserProfile() {
       </button>
       <div style={{ color: 'green', textAlign: 'center' }}>
         {updateResult && <p>Data updated successfully!</p>}
-      </div>
-      <div style={{ color: 'red', textAlign: 'center' }}>
-        {flagEditData && !updateResult && <p>Error: Data update failed!</p>}
       </div>
     </>
   );
