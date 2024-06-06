@@ -118,6 +118,24 @@ export default function UserProfile() {
 
   const [flagEditData, setFlagEditData] = useState(false);
 
+  const handleUpdatePassword = async () => {
+    const currentPassword = document.querySelector<HTMLInputElement>('#information-password');
+    const newPassword = document.querySelector<HTMLInputElement>('#new-password');
+    if (currentPassword && userData && newPassword) {
+      await UpdatePassword(userData.version, currentPassword.value, newPassword.value);
+      if (!errorUpdatePassword) {
+        setupdatePasswordResult('Successful update!');
+        setTimeout(() => {
+          handleLogout();
+          location.reload();
+        }, 2000);
+      } else {
+        setPasswordErr('Error updating password');
+        setPasswordFill(true);
+      }
+    }
+  };
+  
   return (
     <>
       <button
@@ -162,25 +180,24 @@ export default function UserProfile() {
       <div className="form-change-password_wrapper">
         <form className="user-profile_form-change-password">
           <div>
-            <label htmlFor="current-password">Current password: </label>
+            <label htmlFor="information-password">Current password: </label>
             <input
               className={passInputClasses}
               onInput={(e) => {
                 if (e.target instanceof HTMLInputElement) {
-                  const currentPassword: HTMLInputElement | null =
-                    document.querySelector('#information-password');
-                  const newPassword: HTMLInputElement | null =
-                    document.querySelector('#new-password');
-                  if (
-                    currentPassword !== null &&
-                    userData !== undefined &&
-                    newPassword !== null
-                  )
-                    UpdatePassword(
-                      userData.version,
-                      currentPassword.value,
-                      newPassword.value
-                    );
+                  //const currentPassword: HTMLInputElement | null =
+                    //document.querySelector('#information-password');
+                  //const newPassword: HTMLInputElement | null =
+                    //document.querySelector('#new-password');
+                  // if (
+                  //   currentPassword !== null &&
+                  //   newPassword !== null
+                  // )
+                    // UpdatePassword(
+                    //   userData.version,
+                    //   currentPassword.value,
+                    //   newPassword.value
+                    // );
                 }
               }}
               id="information-password"
@@ -226,7 +243,7 @@ export default function UserProfile() {
                 }
               }}
               id="new-password"
-              name="password"
+              name="new-password"
               type={type}
               autoComplete="off"
               required
@@ -298,35 +315,7 @@ export default function UserProfile() {
           </div>
           <button
             type="button"
-            onClick={async () => {
-        
-              const currentPassword: HTMLInputElement | null =
-                document.querySelector('#information-password');
-              const newPassword: HTMLInputElement | null =
-                document.querySelector('#new-password');
-              if (
-                currentPassword !== null &&
-                userData !== undefined &&
-                newPassword !== null
-              )
-                await UpdatePassword(
-                  userData.version,
-                  currentPassword.value,
-                  newPassword.value
-                );
-
-              if (!errorUpdatePassword) {
-                setTimeout(() => {
-                  handleLogout();
-                  location.reload();
-                }, 2000);
-              }
-              if (errorUpdatePassword) setPasswordFill(true);
-              if (!errorUpdatePassword)
-                setupdatePasswordResult('Successful update!');
-              if (!errorUpdatePassword) setPasswordFill(false);
-              if (!errorUpdatePassword) setPasswordErr('');
-            }}
+            onClick={handleUpdatePassword}
           >
             Save
           </button>
@@ -557,6 +546,7 @@ export default function UserProfile() {
       <button
         className="user-profile_save-data"
         onClick={() => {
+          setFlagEditData(false);
           setUpdateResult(true);
           const sectionInformation: HTMLBodyElement | null =
             document.querySelector('.user-profile_information');
@@ -576,7 +566,8 @@ export default function UserProfile() {
               'linear-gradient(0.25turn, #b9f3ff, #181b35)';
           }
         }}
-        disabled={!formValid || !flagEditData}
+        disabled={formValid || !flagEditData}
+      
         type="submit"
       >
         Save data
