@@ -299,7 +299,6 @@ export default function UserProfile() {
           <button
             type="button"
             onClick={async () => {
-        
               const currentPassword: HTMLInputElement | null =
                 document.querySelector('#information-password');
               const newPassword: HTMLInputElement | null =
