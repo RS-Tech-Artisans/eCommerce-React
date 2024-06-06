@@ -15,7 +15,6 @@ export const getSearchFromAPI = async (text: string, fuzzyLevelValue: number = 0
         },
       })
       .execute();
-      console.log(`respoooooonse ${response}`);
   } catch (error) {
     console.error('Error fetching displaytechnology:', error);
     return [];

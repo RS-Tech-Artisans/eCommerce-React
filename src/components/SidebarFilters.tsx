@@ -94,7 +94,12 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
           <Form.Control
             value={search}
             placeholder="Search"
-            onChange={(e) => {setSearch(e.target.value); getSearchFromAPI(e.target.value, 0)}}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              console.log(`search is ${search.length}`);
+
+              if(search.length >= 2){getSearchFromAPI(e.target.value, 0)};
+            }}
           />
         </InputGroup>
 
