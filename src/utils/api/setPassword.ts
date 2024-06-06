@@ -14,7 +14,6 @@ export const useUpdateCurrentPassword = () => {
     currentPassword: string,
     newPassword: string
   ) => {
-    console.log('currentPassword', currentPassword)
     try {
       const response: ClientResponse<Customer> = await apiRoot
         .me()

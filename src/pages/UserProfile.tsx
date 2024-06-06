@@ -13,6 +13,7 @@ import { EmptyUsersProfileAdresses } from '../components/UsersProfileAdresses';
 import { fetchCustomerData } from '../utils/api/getCustomer';
 import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
+import { useNavigate } from 'react-router-dom';
 import { useUpdateCurrentPassword } from '../utils/api/setPassword';
 import { useLogin } from '../utils/Login';
 
@@ -23,11 +24,13 @@ type RestBlurHandlerUserProps = [
 ];
 
 export default function UserProfile() {
+  const navigate = useNavigate();
   const { errorUpdatePassword, UpdatePassword } = useUpdateCurrentPassword();
   const [updatePasswordResult, setupdatePasswordResult] = useState('');
   const { handleLogout } = useLogin();
   const iconPassive = <FaLock />;
   const iconActive = <FaUnlock />;
+
   const [userData, setData] = useState<Customer>();
   const [newFieldBilling, setNewFieldBilling] = useState(<></>);
   const [newFieldShipping, setNewFieldShipping] = useState(<></>);
@@ -96,18 +99,22 @@ export default function UserProfile() {
   ]);
 
   useEffect(() => {
-    const getCustomerData = async () => {
-      try {
-        const data = await fetchCustomerData();
-        console.log('Customer data:', data);
-        setData(data);
-      } catch (err) {
-        console.error('Error fetching customer data:', err);
-      }
-    };
-
-    getCustomerData();
-  }, []);
+    const storedToken = localStorage.getItem('refresh_token');
+    if (!storedToken) {
+      navigate('/');
+    } else {
+      const getCustomerData = async () => {
+        try {
+          const data = await fetchCustomerData();
+          console.log('Customer data:', data);
+          setData(data);
+        } catch (error) {
+          console.error('Error fetching customer data:', error);
+        }
+      };
+      getCustomerData();
+    }
+  }, [navigate]);
 
   const [flagEditData, setFlagEditData] = useState(false);
 
@@ -291,7 +298,8 @@ export default function UserProfile() {
           </div>
           <button
             type="button"
-            onClick={() => {
+            onClick={async () => {
+        
               const currentPassword: HTMLInputElement | null =
                 document.querySelector('#information-password');
               const newPassword: HTMLInputElement | null =
@@ -301,14 +309,16 @@ export default function UserProfile() {
                 userData !== undefined &&
                 newPassword !== null
               )
-                UpdatePassword(
+                await UpdatePassword(
                   userData.version,
                   currentPassword.value,
                   newPassword.value
                 );
+
               if (!errorUpdatePassword) {
                 setTimeout(() => {
                   handleLogout();
+                  location.reload();
                 }, 2000);
               }
               if (errorUpdatePassword) setPasswordFill(true);
