@@ -11,6 +11,7 @@ import { BsSearch } from 'react-icons/bs';
 import { SidebarFiltersProps } from '../utils/Interfaces';
 import { Category } from '@commercetools/platform-sdk';
 import { Link } from 'react-router-dom';
+import { getSearchFromAPI } from '../utils/api/getSearch';
 
 const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   search,
@@ -93,7 +94,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
           <Form.Control
             value={search}
             placeholder="Search"
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {setSearch(e.target.value); getSearchFromAPI(e.target.value, 0)}}
           />
         </InputGroup>
 
