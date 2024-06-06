@@ -1,31 +1,45 @@
 import { apiRoot } from './BuildClient';
 import { Customer } from '@commercetools/platform-sdk';
 import { ClientResponse } from '@commercetools/platform-sdk';
+import { MyApiError } from '../Interfaces';
+import { useState } from 'react';
 
-export const UpdatePassword = async ( version: number,
-  currentPassword:string,
-  newPassword:string) => {
-  const key = ['Qk8M_V7Off3i_-5_5zOAg-NFiU_WtAhlocLj9xozXOA'];
-  try {
-    const response: ClientResponse<Customer> = await apiRoot.me().password().post(
-      {
-        body: {
-          version,
-          currentPassword,
-          newPassword
-        },         
-        headers: {key},
-      }
-    ).execute()
+export const useUpdateCurrentPassword = () => {
+  const [enterPasswordResult, setEnterPasswordResult] =
+    useState<ClientResponse<Customer> | null>(null);
+  const [errorUpdatePassword, seterrorUpdatePassword] = useState<MyApiError | null>(null);
 
-    if (!response.body) {
-      console.error(response);
-      console.error(Error);
+  const UpdatePassword = async (
+    version: number,
+    currentPassword: string,
+    newPassword: string
+  ) => {
+    console.log('currentPassword', currentPassword)
+    try {
+      const response: ClientResponse<Customer> = await apiRoot
+        .me()
+        .password()
+        .post({
+          body: {
+            version,
+            currentPassword,
+            newPassword,
+          },
+        })
+        .execute();
+
+      setEnterPasswordResult(response);
+      seterrorUpdatePassword(null);
+      console.log(enterPasswordResult);
+    } catch (caughtError) {
+      console.log(caughtError);
+      seterrorUpdatePassword(caughtError as MyApiError);
+      setEnterPasswordResult(null);
     }
+  };
 
-    return response.body;
-  } catch (error) {
-    console.error('Failed to fetch data:', error);
-    throw error;
-  }
+  return {
+    errorUpdatePassword,
+    UpdatePassword,
+  };
 };

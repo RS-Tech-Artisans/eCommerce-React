@@ -13,7 +13,8 @@ import { EmptyUsersProfileAdresses } from '../components/UsersProfileAdresses';
 import { fetchCustomerData } from '../utils/api/getCustomer';
 import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
-import { UpdatePassword } from '../utils/api/setPassword';
+import { useUpdateCurrentPassword } from '../utils/api/setPassword';
+import { useLogin } from '../utils/Login';
 
 type RestBlurHandlerUserProps = [
   React.Dispatch<React.SetStateAction<boolean>>,
@@ -22,6 +23,10 @@ type RestBlurHandlerUserProps = [
 ];
 
 export default function UserProfile() {
+  const { errorUpdatePassword, UpdatePassword } =
+    useUpdateCurrentPassword();
+  const [updatePasswordResult, setupdatePasswordResult] = useState('');
+  const { handleLogout } = useLogin();
   const iconPassive = <FaLock />;
   const iconActive = <FaUnlock />;
   const [userData, setData] = useState<Customer>();
@@ -38,7 +43,9 @@ export default function UserProfile() {
     [birthdate, setBirthdate] = useState('');
 
   const [emailErr, setEmailErr] = useState(''),
-    [passwordErr] = useState('Please enter the current password'),
+    [passwordErr, setPasswordErr] = useState(
+      'Please enter the current password'
+    ),
     [newPasswordErr, setNewPasswordErr] = useState(
       'Please fill out this field'
     ),
@@ -154,27 +161,28 @@ export default function UserProfile() {
               className={passInputClasses}
               onInput={(e) => {
                 if (e.target instanceof HTMLInputElement) {
-                  console.log(passwordFill);
-                  //console.log(userData?.password)
-                  //setPasswordFill(userData?.password !== e.target.value);
+                  const currentPassword: HTMLInputElement | null =
+                    document.querySelector('#information-password');
+                  const newPassword: HTMLInputElement | null =
+                    document.querySelector('#new-password');
+                  if (
+                    currentPassword !== null &&
+                    userData !== undefined &&
+                    newPassword !== null
+                  )
+                    UpdatePassword(
+                      userData.version,
+                      currentPassword.value,
+                      newPassword.value
+                    );
                 }
               }}
-              onBlur={(e) => {
-                if (
-                  e.target instanceof HTMLInputElement &&
-                  userData !== undefined
-                ) {
-               
-                  //BlurHandler(e.target.name, setEmailFill, setPasswordFill);
-                }
-              }}
+
               id="information-password"
               name="password"
               type={type}
               autoComplete="off"
             />
-            <div style={{ color: 'red' }}>{<p>{passwordErr}</p>}</div>
-
             <span
               onClick={() =>
                 TogglePassInput(
@@ -189,6 +197,9 @@ export default function UserProfile() {
               }
               className={`toggle ${toggleIconClasses}`}
             ></span>
+            {errorUpdatePassword && passwordErr && passwordFill && (
+              <div style={{ color: 'red' }}>{passwordErr}</div>
+            )}
           </div>
           <div>
             <label htmlFor="new-password">New password: </label>
@@ -283,20 +294,44 @@ export default function UserProfile() {
           <button
             type="button"
             onClick={() => {
-              UpdatePassword(2, '123456Zz', '12345Xx');
+              const currentPassword: HTMLInputElement | null =
+                document.querySelector('#information-password');
+              const newPassword: HTMLInputElement | null =
+                document.querySelector('#new-password');
+              if (
+                currentPassword !== null &&
+                userData !== undefined &&
+                newPassword !== null
+              )
+                UpdatePassword(
+                  userData.version,
+                  currentPassword.value,
+                  newPassword.value
+                );
+              if (!errorUpdatePassword) {
+                setTimeout(() => {
+                  handleLogout();
+                }, 2000)}
+              if(errorUpdatePassword) setPasswordFill(true);
+              if(!errorUpdatePassword) setupdatePasswordResult('Successful update!');
+              if(!errorUpdatePassword) setPasswordFill(false);
+              if(!errorUpdatePassword) setPasswordErr('');
             }}
           >Save</button>
           <button
             onClick={() => {
-              UpdatePassword(1, '123456Zz', '12345Xx');
               const form: HTMLElement | null = document.querySelector(
                 '.form-change-password_wrapper'
               );
               if (form !== null) form.style.display = 'none';
             }}
-          >
-            Cancel
-          </button>
+          >Cancel</button>
+
+          {updatePasswordResult && (
+            <div style={{ color: 'green', alignSelf: 'center' }}>
+              {updatePasswordResult}
+            </div>
+          )}
         </form>
       </div>
       <div className="user-profile_information">
