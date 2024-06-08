@@ -10,6 +10,7 @@ import { SessionProvider } from './utils/SessionContext';
 import ProductDetail from './components/ProductDetail';
 import CategoryPage from './pages/CategoryPage';
 import { Main } from './pages/Main';
+import About from './pages/About';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
+            <Route path="about" element={<About />} />
             <Route index element={<Main />} />
             <Route path="catalog" element={<Catalog />} />
             <Route path="login" element={<Login />} />
