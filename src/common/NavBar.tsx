@@ -20,10 +20,10 @@ function NavBar() {
             <CgProfile />
           </Link>
         )}
-        {token && <LogoutButton />}
         <Link to="/basket">
           <SlBasket />
         </Link>
+        {token && <LogoutButton />}
       </Navbar>
     </div>
   );
