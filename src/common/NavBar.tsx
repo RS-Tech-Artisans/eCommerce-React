@@ -4,6 +4,7 @@ import './NavBar.css';
 import { useSession } from '../utils/SessionContext';
 import { CgProfile } from 'react-icons/cg';
 import LogoutButton from './LogoutButton';
+import { SlBasket } from 'react-icons/sl';
 
 function NavBar() {
   const { token: token } = useSession();
@@ -19,6 +20,9 @@ function NavBar() {
             <CgProfile />
           </Link>
         )}
+        <Link to="/basket">
+          <SlBasket />
+        </Link>
         {token && <LogoutButton />}
       </Navbar>
     </div>
