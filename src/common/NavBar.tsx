@@ -11,6 +11,9 @@ function NavBar() {
   return (
     <div>
       <Navbar expand="lg" className="bg-dark justify-content-end">
+        <Link className="about-us" to="/about">
+          About Us
+        </Link>
         <Link to="/"> Main </Link>
         <Link to="/catalog"> Catalog </Link>
         <Link to="/login"> Login </Link>
