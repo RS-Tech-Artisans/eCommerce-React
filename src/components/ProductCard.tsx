@@ -2,6 +2,7 @@ import React from 'react';
 import './ProductCard.css';
 import { ProductCardProps } from '../utils/Interfaces';
 import { Link } from 'react-router-dom';
+// import { Accordion } from 'react-bootstrap';
 
 export const formatPrice = (price: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
@@ -31,6 +32,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </Link>
 
       <div className="product-content">
+        {/* <Accordion defaultActiveKey={id} flush>
+          <h3>{name}</h3>
+          <Accordion.Item eventKey={id} className='collapsed'>
+            <Accordion.Header>Description</Accordion.Header>
+            <Accordion.Body>
+              <p>{description}</p>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion> */}
         <div className="product-details">
           <h3>{name}</h3>
           <p>{description}</p>

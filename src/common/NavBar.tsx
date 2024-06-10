@@ -5,6 +5,7 @@ import { useSession } from '../utils/SessionContext';
 import { CgProfile } from 'react-icons/cg';
 import LogoutButton from './LogoutButton';
 import { SlBasket } from 'react-icons/sl';
+import { FaUsersGear } from "react-icons/fa6";
 
 function NavBar() {
   const { token: token } = useSession();
@@ -12,7 +13,7 @@ function NavBar() {
     <div>
       <Navbar expand="lg" className="bg-dark justify-content-end">
         <Link className="about-us" to="/about">
-          About Us
+          <FaUsersGear /> About Us
         </Link>
         <Link to="/"> Main </Link>
         <Link to="/catalog"> Catalog </Link>
