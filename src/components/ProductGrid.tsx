@@ -33,6 +33,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   });
   const [categories, setCategories] = useState<Category[]>([]);
 
+  const [loadedLimitProductsCount, setLoadedProductsCount] = useState(0);
+  const COUNT_PRODUCT = 4;
+
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -75,6 +78,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     fetchDisplays();
   }, []);
 
+  const loadMoreProducts = () => {
+    setLoadedProductsCount(loadedLimitProductsCount + COUNT_PRODUCT);
+  };
+
   const fetchFilteredProducts = async () => {
     try {
       const minPriceInCents =
@@ -92,7 +99,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         displayFilter || '',
         sizeFilter || '',
         sortFilter || '',
-        categoryId || ''
+        categoryId || '',
+        loadedLimitProductsCount + COUNT_PRODUCT
       );
       const productInfoArray = mapProducts(filteredResponse.results);
       setProducts(productInfoArray);
@@ -110,6 +118,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     sizeFilter,
     sortFilter,
     categoryId,
+    loadedLimitProductsCount,
   ]);
 
   const handleResetFilters = () => {
@@ -129,6 +138,15 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
       priceFilter.maxPrice
     );
   }, [search, products, priceFilter]);
+
+  window.addEventListener('scroll', () => {
+    const bottom =
+      Math.ceil(window.innerHeight + window.scrollY) >=
+      document.documentElement.scrollHeight;
+    if (bottom && filteredProducts.length > loadedLimitProductsCount) {
+      loadMoreProducts();
+    }
+  });
 
   return (
     <div className="product-grid-container">
