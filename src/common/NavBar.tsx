@@ -5,9 +5,28 @@ import { useSession } from '../utils/SessionContext';
 import { CgProfile } from 'react-icons/cg';
 import LogoutButton from './LogoutButton';
 import { SlBasket } from 'react-icons/sl';
+import { useState, useEffect } from 'react';
 
 function NavBar() {
-  const { token: token } = useSession();
+  const { token } = useSession();
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    setCartCount(cart.length);
+
+    const handleStorageChange = () => {
+      const updatedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+      setCartCount(updatedCart.length);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   return (
     <div>
       <Navbar expand="lg" className="bg-dark justify-content-end">
@@ -23,8 +42,9 @@ function NavBar() {
             <CgProfile />
           </Link>
         )}
-        <Link to="/basket">
+        <Link to="/basket" className="basket-link">
           <SlBasket />
+          {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
         </Link>
         {token && <LogoutButton />}
       </Navbar>
