@@ -1,7 +1,7 @@
 import { ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
 import { apiRoot } from './BuildClient';
 
-const DEFAULT_LIMIT = 500;
+//const DEFAULT_LIMIT = 0;
 const DEFAULT_OFFSET = 0;
 
 export const getFiltredProductsFromAPI = (
@@ -12,8 +12,9 @@ export const getFiltredProductsFromAPI = (
   sizeFilter: string | null,
   sortFilter: string | null,
   categoryID: string | null,
-  limit = DEFAULT_LIMIT,
-  offset = DEFAULT_OFFSET
+  loadedLimitProductsCount: number
+  //limit = DEFAULT_LIMIT
+  //offset = DEFAULT_OFFSET
 ): Promise<ProductProjectionPagedSearchResponse> => {
   const filterArr: string[] = [];
   const sortArr: string[] = [];
@@ -46,8 +47,8 @@ export const getFiltredProductsFromAPI = (
       queryArgs: {
         filter: filterArr,
         sort: sortArr,
-        limit,
-        offset,
+        limit: loadedLimitProductsCount,
+        offset: DEFAULT_OFFSET,
       },
     })
     .execute()
