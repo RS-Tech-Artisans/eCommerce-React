@@ -8,16 +8,19 @@ const CategoryPage: React.FC = () => {
 
   useEffect(() => {
     const category = location.pathname.split('/').pop();
-
     setID(category);
-  }, [location]);
+  }, [location.pathname]);
+
+  if (!categoryid) {
+    return null; // Or a loading spinner or message if you prefer
+  }
 
   return (
     <div className="catalog">
       <ProductGrid
         products={products}
         setProducts={setProducts}
-        categoryID={categoryid}
+        catID={categoryid}
       />
     </div>
   );

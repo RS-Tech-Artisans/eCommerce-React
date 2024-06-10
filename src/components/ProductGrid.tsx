@@ -14,7 +14,11 @@ import { getDisplaysFromAPI } from '../utils/api/getDisplays';
 import { getCategoriesFromAPI } from '../utils/api/getCategories';
 import { Category } from '@commercetools/platform-sdk';
 
-const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
+const ProductGrid: React.FC<ProductGridProps> = ({
+  products,
+  setProducts,
+  catID,
+}) => {
   const [search, setSearch] = useState('');
   const [brandFilter, setBrandFilter] = useState<string | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
@@ -23,7 +27,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   const [displayFilter, setDisplayFilter] = useState<string | null>(null);
   const [sizeFilter, setSizeFilter] = useState<string | null>(null);
   const [sortFilter, setSortFilter] = useState<string | null>(null);
-  const [categoryId, setCategoryFilter] = useState<string | null>(null);
+  const [categoryId, setCategoryFilter] = useState<string | undefined>(catID);
   const [priceFilter, setPriceFilter] = useState<{
     minPrice: string;
     maxPrice: string;
@@ -92,6 +96,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         priceFilter.maxPrice === ''
           ? 999999 * 100
           : parseFloat(priceFilter.maxPrice) * 100;
+
       const filteredResponse = await getFiltredProductsFromAPI(
         minPriceInCents,
         maxPriceInCents,
