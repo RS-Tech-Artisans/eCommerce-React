@@ -64,7 +64,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
     setSortFilter(sortAttribute);
   };
 
-  const categoryFilter = (sortAttribute: string | null) => {
+  const categoryFilter = (sortAttribute: string | undefined) => {
     setCategoryFilter(sortAttribute);
   };
 

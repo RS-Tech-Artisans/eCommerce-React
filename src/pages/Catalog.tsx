@@ -29,7 +29,7 @@ const Catalog: React.FC = () => {
       <ProductGrid
         products={products}
         setProducts={setProducts}
-        categoryID={undefined}
+        catID={undefined}
       />
     </div>
   );
