@@ -20,6 +20,8 @@ const ProductDetail: React.FC = () => {
   const [attributes, setAttributes] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
 
+  const [isInCart, setIsInCart] = useState(false);
+
   useEffect(() => {
     const getProductData = async () => {
       if (id) {
@@ -36,6 +38,9 @@ const ProductDetail: React.FC = () => {
           setAttributes(atributesArray || []);
           setProduct(productDetail[0]);
           setImages(images1 || []);
+
+          const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+          setIsInCart(cart.some((item: { id: string }) => item.id === id));
         } catch (error) {
           console.error('Error fetching product details:', error);
         }
@@ -43,6 +48,18 @@ const ProductDetail: React.FC = () => {
     };
     getProductData();
   }, [id]);
+
+  const addToCart = () => {
+    if (product) {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const updatedCart = [
+        ...cart,
+        { id: product.id, name: product.name, price: product.price },
+      ];
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      setIsInCart(true);
+    }
+  };
 
   const formatPrice = (
     priceObject: { centAmount: number; currencyCode: string } | undefined
@@ -118,6 +135,13 @@ const ProductDetail: React.FC = () => {
                     <div>{formatPrice(product.price?.value)}</div>
                   )}
                 </div>
+                <button
+                  onClick={addToCart}
+                  className="add-to-cart-button"
+                  disabled={isInCart}
+                >
+                  {isInCart ? 'In Cart' : 'Add to Cart'} 🛒
+                </button>
               </div>
             </div>
             <div>
