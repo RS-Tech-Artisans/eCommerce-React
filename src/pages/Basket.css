@@ -1,12 +1,7 @@
 .basket-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  padding: 20px;
 }
 
 .empty-cart-message {
   text-align: center;
-  font-size: 1.5em;
-  margin-bottom: 10px;
 }

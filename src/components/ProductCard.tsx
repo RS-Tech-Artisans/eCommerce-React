@@ -21,7 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const discountedPrice = price.discounted?.value.centAmount;
   const currency = price.value.currencyCode;
 
-  const [isInCart, setIsInCart] = useState(false);
+  const [isInCart, setIsInCart] = useState<boolean>(false);
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');

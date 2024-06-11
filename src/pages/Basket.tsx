@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Basket.css';
+import ClearCartButton from '../common/ClearCartButton';
 
 const Basket: React.FC = () => {
-  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  const isEmptyCart = cart.length === 0;
+  const [cartExists, setCartExists] = useState<boolean>(false);
+
+  useEffect(() => {
+    const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    setCartExists(savedCart.length > 0);
+  }, []);
+
+  const clearCart = () => {
+    localStorage.removeItem('cart');
+    setCartExists(false);
+  };
 
   return (
     <div className="basket-container">
-      {isEmptyCart ? (
+      {!cartExists ? (
         <div className="empty-cart-message">
           <p>Your shopping cart is empty. Start shopping now!</p>
           <p>
@@ -16,7 +26,12 @@ const Basket: React.FC = () => {
           </p>
         </div>
       ) : (
-        <h1>Basket</h1>
+        <>
+          <h1>Basket</h1>
+          <div className="shopping-cart">
+            <ClearCartButton onClearCart={clearCart} />
+          </div>
+        </>
       )}
     </div>
   );
