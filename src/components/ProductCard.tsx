@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ProductCard.css';
 import { ProductCardProps } from '../utils/Interfaces';
 import { Link } from 'react-router-dom';
+import { useCart } from '../utils/CartContext';
 
 export const formatPrice = (price: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
@@ -20,8 +21,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const originalPrice = price.value.centAmount;
   const discountedPrice = price.discounted?.value.centAmount;
   const currency = price.value.currencyCode;
-
   const [isInCart, setIsInCart] = useState<boolean>(false);
+  const { setCart } = useCart();
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -33,6 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     const updatedCart = [...cart, { id, name, price }];
     localStorage.setItem('cart', JSON.stringify(updatedCart));
     setIsInCart(true);
+    setCart(updatedCart);
   };
 
   return (

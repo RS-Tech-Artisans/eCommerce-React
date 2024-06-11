@@ -13,14 +13,15 @@ import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import React from 'react';
 import './ProductDetail.css';
+import { useCart } from '../utils/CartContext';
 
 const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [attributes, setAttributes] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
-
   const [isInCart, setIsInCart] = useState(false);
+  const { setCart } = useCart();
 
   useEffect(() => {
     const getProductData = async () => {
@@ -58,6 +59,7 @@ const ProductDetail: React.FC = () => {
       ];
       localStorage.setItem('cart', JSON.stringify(updatedCart));
       setIsInCart(true);
+      setCart(updatedCart);
     }
   };
 
