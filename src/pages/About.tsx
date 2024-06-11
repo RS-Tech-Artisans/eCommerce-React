@@ -1,6 +1,6 @@
-import { Container } from "react-bootstrap"
-import { FaGithub } from "react-icons/fa";
-import { FaLaptop } from "react-icons/fa";
+import { Container } from 'react-bootstrap';
+import { FaGithub } from 'react-icons/fa';
+import { FaLaptop } from 'react-icons/fa';
 // import autor1 from '../assets/Pavel.jpeg';
 
 interface AboutData {
@@ -21,8 +21,9 @@ const dataAboutUs: AboutData[] = [
     role: 'Team lead, scratch master and just developer',
     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&s',
     about:
-      'I am began my career as a bank programmer, then transitioned into game development and website creation. Along the way, worked on search engine optimization (SEO). Currently, I am a student learning frontend development',
-    contribution: 'Organized the teams workflow, assisted with complex issues, maintained repository cleanliness, and addressed problems and questions during cross-check reviews, handled integration with commercetools, project setup, catalog management, issue fixing post cross-checks, proposed implementation solutions for the team, and aimed to provide an understanding of real-world project work'
+      'He began his career as a bank programmer, then transitioned into game development and website creation. Along the way, he worked on search engine optimization (SEO). Currently, he is a student learning frontend development.',
+    contribution:
+      'He organized the teams workflow, assisted with complex issues, maintained repository cleanliness, and addressed problems and questions during cross-check reviews. He handled integration with commercetools, project setup, catalog management, issue fixing post cross-checks, proposed implementation solutions for the team, and aimed to provide an understanding of real-world project work',
   },
   {
     name: 'Vladyslava',
@@ -32,7 +33,7 @@ const dataAboutUs: AboutData[] = [
     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&s',
     about:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel iusto, aut quos sed nesciunt labore blanditiis aspernatur alias est non inventore velit, praesentium, laboriosam quas autem dicta sint ex itaque!',
-    contribution: ''
+    contribution: '',
   },
   {
     name: 'Veronika',
@@ -42,7 +43,7 @@ const dataAboutUs: AboutData[] = [
     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&s',
     about:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel iusto, aut quos sed nesciunt labore blanditiis aspernatur alias est non inventore velit, praesentium, laboriosam quas autem dicta sint ex itaque!',
-    contribution: ''
+    contribution: '',
   },
 ];
 
@@ -52,7 +53,14 @@ export default function About() {
       <h1>About Us</h1>
       <Container>
         {dataAboutUs.map((el) => (
-          <div className="d-flex shadow-lg m-5 p-2 rounded" key={el.name} style={{background: "linear-gradient(0.25turn, #181b35, #b9f3ff)", color: "#000"}}>
+          <div
+            className="d-flex shadow-lg m-5 p-2 rounded"
+            key={el.name}
+            style={{
+              background: 'linear-gradient(0.25turn, #181b35, #b9f3ff)',
+              color: '#000',
+            }}
+          >
             <div>
               <img src={el.img} alt="foto" />
             </div>
@@ -60,16 +68,24 @@ export default function About() {
               <div className="d-flex">
                 <h2 className="mr-5">{el.name}</h2>
                 <div>
-                  <a href={el.linkToGit}  style={{fontSize: '25px', color: "black"}}>
+                  <a
+                    href={el.linkToGit}
+                    style={{ fontSize: '25px', color: 'black' }}
+                  >
                     <FaGithub />
                     <span>{el.gitName}</span>
                   </a>
                 </div>
               </div>
-              <h3><span className="fw-bold">Role:</span> {el.role} <FaLaptop />
+              <h3>
+                <span className="fw-bold">Role:</span> {el.role} <FaLaptop />
               </h3>
-              <p><span className="fw-bold">About:</span> {el.about}</p>
-              <p><span className="fw-bold">Contribution:</span> {el.contribution}</p>
+              <p>
+                <span className="fw-bold">About:</span> {el.about}
+              </p>
+              <p>
+                <span className="fw-bold">Contribution:</span> {el.contribution}
+              </p>
             </div>
           </div>
         ))}

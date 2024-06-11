@@ -5,7 +5,7 @@ import { useSession } from '../utils/SessionContext';
 import { CgProfile } from 'react-icons/cg';
 import LogoutButton from './LogoutButton';
 import { SlBasket } from 'react-icons/sl';
-import { FaUsersGear } from "react-icons/fa6";
+import { FaUsersGear } from 'react-icons/fa6';
 
 function NavBar() {
   const { token: token } = useSession();
