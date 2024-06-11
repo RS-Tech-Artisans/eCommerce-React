@@ -1,8 +1,10 @@
 import React from 'react';
 import './ClearCartButton.css';
 import { ClearCartButtonProps } from '../utils/Interfaces';
+import { useCart } from '../utils/CartContext';
 
 const ClearCartButton: React.FC<ClearCartButtonProps> = ({ onClearCart }) => {
+  const { setCart } = useCart();
   const handleClick = () => {
     if (
       window.confirm(
@@ -10,6 +12,8 @@ const ClearCartButton: React.FC<ClearCartButtonProps> = ({ onClearCart }) => {
       )
     ) {
       onClearCart();
+
+      setCart([]);
     }
   };
 

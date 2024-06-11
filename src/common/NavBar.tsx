@@ -5,27 +5,19 @@ import { useSession } from '../utils/SessionContext';
 import { CgProfile } from 'react-icons/cg';
 import LogoutButton from './LogoutButton';
 import { SlBasket } from 'react-icons/sl';
-import { useState, useEffect } from 'react';
+import { useCart } from '../utils/CartContext';
+import { useEffect, useState } from 'react';
 
 function NavBar() {
   const { token } = useSession();
-  const [cartCount, setCartCount] = useState(0);
+  const { cart } = useCart();
+  const [cartCount, setCartCount] = useState<number>(0);
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    setCartCount(cart.length);
-
-    const handleStorageChange = () => {
-      const updatedCart = JSON.parse(localStorage.getItem('cart') || '[]');
-      setCartCount(updatedCart.length);
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, []);
+    if (cart) {
+      setCartCount(cart.length);
+    }
+  }, [cart]);
 
   return (
     <div>
