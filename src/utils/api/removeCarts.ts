@@ -6,16 +6,16 @@ import {
 import { apiRoot } from './BuildClient';
 
 export const removeCartData = async (
-  token: string | null,
-  idCart: string | undefined
+  token: string | null
+  //idCart: string | undefined
 ) => {
   if (!token) {
     console.log('removeCartData !token');
     try {
-      if (!idCart) {
-        console.error('need to add idCard for removeCartData');
-        return null;
-      }
+      //   if (!idCart) {
+      //     console.error('need to add idCard for removeCartData');
+      //     return null;
+      //   }
 
       const cartResponse = await apiRoot
         .me()
@@ -26,6 +26,7 @@ export const removeCartData = async (
 
       //const lineItems = cartResponse.body.lineItems;
       const lineItems = cartResponse.body.results[0].lineItems;
+      const idCart = cartResponse.body.results[0].id;
 
       const removeActions: CartUpdateAction[] = lineItems.map((item) => ({
         action: 'removeLineItem',
@@ -54,10 +55,10 @@ export const removeCartData = async (
   } else {
     console.log('removeCartData with token', token);
     try {
-      if (!idCart) {
-        console.error('need to add idCard for removeCartData');
-        return null;
-      }
+      //   if (!idCart) {
+      //     console.error('need to add idCard for removeCartData');
+      //     return null;
+      //   }
 
       const responseWithToken: ClientResponse<Cart> = await apiRoot
         .me()
@@ -70,6 +71,7 @@ export const removeCartData = async (
       }
 
       const lineItems = responseWithToken.body.lineItems;
+      const idCart = responseWithToken.body.id;
 
       const removeActions: CartUpdateAction[] = lineItems.map((item) => ({
         action: 'removeLineItem',

@@ -10,7 +10,7 @@ import ClearCartButton from '../common/ClearCartButton';
 
 const Basket: React.FC = () => {
   const [cartItems, setCartItems] = useState<Cart | null>(null);
-  const [cartId, setCartId] = useState<string>();
+  //const [cartId, setCartId] = useState<string>();
   const { token } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -20,7 +20,7 @@ const Basket: React.FC = () => {
       const response: Cart = await fetchGetCartData(token);
       console.log('get response fetchGetCartData', response);
       console.log('response.lineItems.length', response.lineItems.length);
-      setCartId(response.id);
+      //setCartId(response.id);
       if (response) {
         if (response.lineItems.length === 0) {
           await addProduct(
@@ -46,20 +46,33 @@ const Basket: React.FC = () => {
   };
 
   useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem('cartitems') || '{}');
-    console.log('savedCart: ', savedCart, typeof savedCart);
-    if (savedCart && Object.keys(savedCart).length > 0) {
-      setCartItems(savedCart);
-      setIsLoading(false);
-    } else {
-      fetchCartFromApi();
-    }
+    // const savedCart = JSON.parse(localStorage.getItem('cartitems') || '{}');
+    // console.log('savedCart: ', savedCart, typeof savedCart);
+    // if (savedCart && Object.keys(savedCart).length > 0) {
+    //   setCartItems(savedCart);
+    //   setIsLoading(false);
+    // } else {
+    //   fetchCartFromApi();
+    // }
     //setCartExists(savedCart.length > 0);
+    // loadCardId();
+
+    localStorage.removeItem('cartitems'); // clear because we every time made new anonym user
+    fetchCartFromApi();
   }, [token]);
+
+  // const loadCardId = () => {
+  //   const cartDataString: string | null = localStorage.getItem('cartitems');
+  //   if (cartDataString) {
+  //     const cartData = JSON.parse(cartDataString);
+  //     if (cartData) setCartId(cartData.id);
+  //     console.log("cartData.id", cartData.id);
+  //   }
+  // }
 
   const clearCart = async () => {
     try {
-      const resultRemoveCartData = await removeCartData(token, cartId);
+      const resultRemoveCartData = await removeCartData(token);
       if (resultRemoveCartData) {
         localStorage.removeItem('cartitems');
         setCartItems(null);
