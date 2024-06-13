@@ -4,11 +4,15 @@ import './Basket.css';
 import ClearCartButton from '../common/ClearCartButton';
 import { useSession } from '../utils/SessionContext';
 import { checkExistCart } from '../utils/api/checkExistCart';
+import { creatCartData } from '../utils/api/creatCart';
+import { Cart } from '@commercetools/platform-sdk';
 
 const Basket: React.FC = () => {
   const { token } = useSession();
   const [cartExists, setCartExists] = useState<boolean>(false);
   const [checkCartApiResult, setCheckCartApiResult] = useState<void>();
+  const [creatNewCart, setCreatNewCart] = useState<Cart>();
+
 
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -19,6 +23,20 @@ const Basket: React.FC = () => {
     localStorage.removeItem('cart');
     setCartExists(false);
   };
+
+
+  useEffect(() => {
+    const creatCart = async () => {
+      try {
+        const response: Cart = await creatCartData(token);
+        if (response) setCreatNewCart(response);
+      } catch (error) {
+        console.error('Error sending cart data:', error);
+      }
+    };
+
+    creatCart();
+  }, []);
 
   useEffect(() => {
     const checkCart = async () => {
@@ -34,7 +52,7 @@ const Basket: React.FC = () => {
   }, []);
 
   return (
-    <div className="basket-container">     
+    <div className="basket-container">
       {!cartExists ? (
         <div className="empty-cart-message">
           <p>Your shopping cart is empty. Start shopping now!</p>
@@ -45,7 +63,8 @@ const Basket: React.FC = () => {
       ) : (
         <>
           <h1>Basket</h1>
-          <div>CHECK EXIST CART:{JSON.stringify(checkCartApiResult)}</div>
+          <div>Creat Cart Id === {creatNewCart?.id}</div>
+          <div>Check exist Cart === {JSON.stringify(checkCartApiResult) === '{}' && 'SUCCESSFUL CART CHECK RESULT'}</div>
           <div className="shopping-cart">
             <ClearCartButton onClearCart={clearCart} />
           </div>
