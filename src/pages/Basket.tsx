@@ -32,9 +32,9 @@ const Basket: React.FC = () => {
       }
 
       const response2: Cart = await fetchGetCartData(token);
-      localStorage.setItem('cart', JSON.stringify(response2));
+      localStorage.setItem('cartitems', JSON.stringify(response2));
 
-      // const savedCart = JSON.parse(localStorage.getItem('cart') || '{}');
+      // const savedCart = JSON.parse(localStorage.getItem('cartitems') || '{}');
       // setCartItems(savedCart);
       setCartItems(response2);
 
@@ -46,7 +46,7 @@ const Basket: React.FC = () => {
   };
 
   useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem('cart') || '{}');
+    const savedCart = JSON.parse(localStorage.getItem('cartitems') || '{}');
     console.log('savedCart: ', savedCart, typeof savedCart);
     if (savedCart && Object.keys(savedCart).length > 0) {
       setCartItems(savedCart);
@@ -61,7 +61,7 @@ const Basket: React.FC = () => {
     try {
       const resultRemoveCartData = await removeCartData(token, cartId);
       if (resultRemoveCartData) {
-        localStorage.removeItem('cart');
+        localStorage.removeItem('cartitems');
         setCartItems(null);
         setIsLoading(false);
       }
