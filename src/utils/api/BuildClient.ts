@@ -1,4 +1,5 @@
 import {
+  AnonymousAuthMiddlewareOptions,
   AuthMiddlewareOptions,
   ClientBuilder,
   HttpMiddlewareOptions,
@@ -54,10 +55,21 @@ const createClient = (token: string | null) => {
       host: 'https://api.us-central1.gcp.commercetools.com',
       fetch,
     };
+    const anonymousAuthMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
+      host: 'https://auth.us-central1.gcp.commercetools.com',
+      projectKey: 'my-company',
+      credentials: {
+        clientId: 'RlxVza_Z9B7Fm83frzN4ks58',
+        clientSecret: 'A1PzY6KA6kCT0VwHhKzyQhoiToAqIWDa',
+      },
+      scopes: ['manage_project:my-company'],
+      fetch,
+    };
     ctpClient = new ClientBuilder()
       .withClientCredentialsFlow(authMiddlewareOptions)
       .withHttpMiddleware(httpMiddlewareOptions)
       .withLoggerMiddleware()
+      .withAnonymousSessionFlow(anonymousAuthMiddlewareOptions)
       .build();
   }
 
