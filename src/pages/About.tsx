@@ -2,7 +2,7 @@ import './About.css';
 import { Container } from 'react-bootstrap';
 import { FaGithub } from 'react-icons/fa';
 import { FaLaptop } from 'react-icons/fa';
-// import autor1 from '../assets/Pavel.jpeg';
+import autor1 from '../assets/Pavel.jpeg';
 
 interface AboutData {
   name: string;
@@ -20,7 +20,7 @@ const dataAboutUs: AboutData[] = [
     gitName: 'guz86',
     linkToGit: 'https://github.com/guz86',
     role: 'Team lead, scratch master and just developer',
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&s',
+    img: autor1,
     about:
       'He began his career as a bank programmer, then transitioned into game development and website creation. Along the way, he worked on search engine optimization (SEO). Currently, he is a student learning frontend development.',
     contribution:
@@ -33,8 +33,8 @@ const dataAboutUs: AboutData[] = [
     role: 'team-member',
     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&s',
     about:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel iusto, aut quos sed nesciunt labore blanditiis aspernatur alias est non inventore velit, praesentium, laboriosam quas autem dicta sint ex itaque!',
-    contribution: '',
+      'I am self-taught programmer from scratch, before i had beginning for my learning, i had working like self-employer in textile-workshop field, early i had worked in a bank in the department "quality manager of customer"',
+    contribution: 'actively participated in the site development process, worked with the products detail page,worked on the navigation bar and page routing, participated in installing the package for this project',
   },
   {
     name: 'Veronika',
@@ -43,8 +43,8 @@ const dataAboutUs: AboutData[] = [
     role: 'team-member',
     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&s',
     about:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel iusto, aut quos sed nesciunt labore blanditiis aspernatur alias est non inventore velit, praesentium, laboriosam quas autem dicta sint ex itaque!',
-    contribution: '',
+      'Lorem......................',
+    contribution: 'actively participated in the site development process,made a great contribution to the implementation login page and registration page, writed and covered code tests on Jest',
   },
 ];
 
@@ -53,6 +53,7 @@ export default function About() {
     <>
       <h1>About Us</h1>
       <Container>
+        <h2>This team consists of people who are seriously pursuing their goal, and ready to go to the end. Excellent teamwork, the concept that everyone is responsible for the result of this work, refining the creation of this site</h2>
         {dataAboutUs.map((el) => (
           <div
             className="d-flex shadow-lg m-5 p-2 rounded"
@@ -91,9 +92,9 @@ export default function About() {
           </div>
         ))}
         <a
-        href="https://rs.school/courses/javascript-ru"
-        target="_blank"
-        rel="noopener noreferrer"
+          href="https://rs.school/courses/javascript-ru"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <div className="about-logo"></div>
         </a>
