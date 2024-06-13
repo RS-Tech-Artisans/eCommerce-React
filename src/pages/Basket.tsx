@@ -5,6 +5,7 @@ import ClearCartButton from '../common/ClearCartButton';
 import { useSession } from '../utils/SessionContext';
 import { checkExistCart } from '../utils/api/checkExistCart';
 import { creatCartData } from '../utils/api/creatCart';
+import { updateCartData } from '../utils/api/updateCart';
 import { Cart } from '@commercetools/platform-sdk';
 
 const Basket: React.FC = () => {
@@ -12,7 +13,7 @@ const Basket: React.FC = () => {
   const [cartExists, setCartExists] = useState<boolean>(false);
   const [checkCartApiResult, setCheckCartApiResult] = useState<void>();
   const [creatNewCart, setCreatNewCart] = useState<Cart>();
-
+  const [updateCart, setUpdateCart] = useState<Cart>();
 
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -23,7 +24,6 @@ const Basket: React.FC = () => {
     localStorage.removeItem('cart');
     setCartExists(false);
   };
-
 
   useEffect(() => {
     const creatCart = async () => {
@@ -51,6 +51,24 @@ const Basket: React.FC = () => {
     checkCart();
   }, []);
 
+
+  useEffect(() => {
+    const updateCartItems = async () => {
+      try {
+        const response: Cart = await updateCartData(token, '7d8a4e2b-8418-48f5-ba83-b6afa0818363');
+        if (response) setUpdateCart(response);
+      } catch (error) {
+        console.error('Error updating cart data:', error);
+      }
+    };
+
+    updateCartItems();
+
+  }, []);
+
+
+
+
   return (
     <div className="basket-container">
       {!cartExists ? (
@@ -64,7 +82,12 @@ const Basket: React.FC = () => {
         <>
           <h1>Basket</h1>
           <div>Creat Cart Id === {creatNewCart?.id}</div>
-          <div>Check exist Cart === {JSON.stringify(checkCartApiResult) === '{}' && 'SUCCESSFUL CART CHECK RESULT'}</div>
+          <div>
+            Check exist Cart ==={' '}
+            {JSON.stringify(checkCartApiResult) === '{}' &&
+              'SUCCESSFUL CART CHECK RESULT'}
+          </div>
+          <div>Update Cart Id === {JSON.stringify(updateCart)}</div>
           <div className="shopping-cart">
             <ClearCartButton onClearCart={clearCart} />
           </div>
