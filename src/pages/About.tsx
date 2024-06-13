@@ -1,3 +1,4 @@
+import './About.css';
 import { Container } from 'react-bootstrap';
 import { FaGithub } from 'react-icons/fa';
 import { FaLaptop } from 'react-icons/fa';
@@ -89,6 +90,13 @@ export default function About() {
             </div>
           </div>
         ))}
+        <a
+        href="https://rs.school/courses/javascript-ru"
+        target="_blank"
+        rel="noopener noreferrer"
+        >
+          <div className="about-logo"></div>
+        </a>
       </Container>
     </>
   );

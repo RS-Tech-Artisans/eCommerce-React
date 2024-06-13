@@ -14,7 +14,11 @@ import { getDisplaysFromAPI } from '../utils/api/getDisplays';
 import { getCategoriesFromAPI } from '../utils/api/getCategories';
 import { Category } from '@commercetools/platform-sdk';
 
-const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
+const ProductGrid: React.FC<ProductGridProps> = ({
+  products,
+  setProducts,
+  catID,
+}) => {
   const [search, setSearch] = useState('');
   const [brandFilter, setBrandFilter] = useState<string | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
@@ -23,7 +27,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   const [displayFilter, setDisplayFilter] = useState<string | null>(null);
   const [sizeFilter, setSizeFilter] = useState<string | null>(null);
   const [sortFilter, setSortFilter] = useState<string | null>(null);
-  const [categoryId, setCategoryFilter] = useState<string | null>(null);
+  const [categoryId, setCategoryFilter] = useState<string | undefined>(catID);
   const [priceFilter, setPriceFilter] = useState<{
     minPrice: string;
     maxPrice: string;
@@ -32,6 +36,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     maxPrice: '',
   });
   const [categories, setCategories] = useState<Category[]>([]);
+
+  const [loadedLimitProductsCount, setLoadedProductsCount] = useState(0);
+  const COUNT_PRODUCT = 4;
 
   useEffect(() => {
     const getCategories = async () => {
@@ -75,6 +82,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     fetchDisplays();
   }, []);
 
+  const loadMoreProducts = () => {
+    setLoadedProductsCount(loadedLimitProductsCount + COUNT_PRODUCT);
+  };
+
   const fetchFilteredProducts = async () => {
     try {
       const minPriceInCents =
@@ -85,6 +96,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         priceFilter.maxPrice === ''
           ? 999999 * 100
           : parseFloat(priceFilter.maxPrice) * 100;
+
       const filteredResponse = await getFiltredProductsFromAPI(
         minPriceInCents,
         maxPriceInCents,
@@ -92,7 +104,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         displayFilter || '',
         sizeFilter || '',
         sortFilter || '',
-        categoryId || ''
+        categoryId || '',
+        loadedLimitProductsCount + COUNT_PRODUCT
       );
       const productInfoArray = mapProducts(filteredResponse.results);
       setProducts(productInfoArray);
@@ -110,6 +123,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
     sizeFilter,
     sortFilter,
     categoryId,
+    loadedLimitProductsCount,
   ]);
 
   const handleResetFilters = () => {
@@ -129,6 +143,15 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
       priceFilter.maxPrice
     );
   }, [search, products, priceFilter]);
+
+  window.addEventListener('scroll', () => {
+    const bottom =
+      Math.ceil(window.innerHeight + window.scrollY) >=
+      document.documentElement.scrollHeight;
+    if (bottom && filteredProducts.length > loadedLimitProductsCount) {
+      loadMoreProducts();
+    }
+  });
 
   return (
     <div className="product-grid-container">

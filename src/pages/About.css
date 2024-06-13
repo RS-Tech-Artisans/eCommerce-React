@@ -1,0 +1,12 @@
+.about-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.about-logo {
+  width: 200px;
+  height: 75px;
+  display: block;
+  margin: 0 auto;
+  background-image: url('../assets/rs-school-logo.svg');
+}
