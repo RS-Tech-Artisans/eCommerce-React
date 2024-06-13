@@ -31,6 +31,7 @@ export const useLogin = () => {
         })
         .execute();
 
+      localStorage.removeItem('cart'); // clear we can get data from anonum
       const apiPasswordRoot = createApiPasswordRoot(email, password);
 
       await apiPasswordRoot.me().get().execute();
@@ -52,6 +53,7 @@ export const useLogin = () => {
     setLoginResult(null);
     setToken(null);
     clearTokenCache();
+    localStorage.removeItem('cart'); // clear we can get data from user
     navigate('/login');
   };
 
