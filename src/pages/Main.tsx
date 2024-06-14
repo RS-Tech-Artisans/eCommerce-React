@@ -1,8 +1,5 @@
-import './Main.css'
+import './Main.css';
 
 export const Main = () => {
-  return (
-    <div className='main-container'>
-    </div>
-  );
+  return <div className="main-container"></div>;
 };
