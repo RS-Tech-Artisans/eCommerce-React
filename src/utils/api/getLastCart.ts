@@ -6,7 +6,6 @@ export const fetchGetCartData = async (token: string | null) => {
   if (!token) {
     console.log('fetchGetCartData we dont have token');
     try {
-      console.log('anonim me carts');
       const response = await apiRoot.me().carts().get().execute();
 
       if (!response.body.results[0]) {
