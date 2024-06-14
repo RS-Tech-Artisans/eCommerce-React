@@ -35,16 +35,11 @@ export const useLogin = () => {
       const apiPasswordRoot = createApiPasswordRoot(email, password);
 
       await apiPasswordRoot.me().get().execute();
-
-      console.log('email ', email);
-      console.log('password ', password);
       setLoginResult(result);
-
       setError(null);
       setToken(localStorage.getItem('refresh_token'));
       updateClient();
     } catch (caughtError) {
-      console.log(caughtError);
       setError(caughtError as MyApiError);
     }
   };

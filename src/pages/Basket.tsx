@@ -137,10 +137,12 @@ const Basket: React.FC = () => {
                 <div className="product-details">
                   <div className="product-name">
                     <h3>
-                      {' '}
-                      <a href={`/catalog/product/${itemProduct.productId}`}>
+                      <Link
+                        to={`/catalog/product/${itemProduct.productId}`}
+                        className="view-details-basket"
+                      >
                         {itemProduct.name['en-US']}
-                      </a>
+                      </Link>
                     </h3>
                   </div>
                   <div className="product-price">

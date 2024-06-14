@@ -54,6 +54,7 @@ const ProductDetail: React.FC = () => {
             (item: { productId: string }) => item.productId === id
           );
           if (foundItem) {
+            console.log(foundItem.id, '         foundItem.id');
             setIdCart(foundItem.id);
             setIsInCart(true);
           } else {
