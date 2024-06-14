@@ -14,6 +14,10 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import React from 'react';
 import './ProductDetail.css';
 import { useCart } from '../utils/CartContext';
+import { useSession } from '../utils/SessionContext';
+import { removeProductFromCart } from '../utils/api/removeProductFromCart';
+import { Cart } from '@commercetools/platform-sdk';
+import { fetchGetCartData } from '../utils/api/getLastCart';
 
 const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
@@ -22,6 +26,8 @@ const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [isInCart, setIsInCart] = useState(false);
   const { setCart } = useCart();
+  const { token } = useSession();
+  const [IdCart, setIdCart] = useState<string>('');
 
   useEffect(() => {
     const getProductData = async () => {
@@ -40,8 +46,19 @@ const ProductDetail: React.FC = () => {
           setProduct(productDetail[0]);
           setImages(images1 || []);
 
-          const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-          setIsInCart(cart.some((item: { id: string }) => item.id === id));
+          const cartData = JSON.parse(
+            localStorage.getItem('cartitems') || '{}'
+          );
+          const lineItems = cartData.lineItems || [];
+          const foundItem = lineItems.find(
+            (item: { productId: string }) => item.productId === id
+          );
+          if (foundItem) {
+            setIdCart(foundItem.id);
+            setIsInCart(true);
+          } else {
+            setIsInCart(false);
+          }
         } catch (error) {
           console.error('Error fetching product details:', error);
         }
@@ -79,6 +96,19 @@ const ProductDetail: React.FC = () => {
   const discountedPrice = product?.price?.discounted?.value.centAmount;
   const typeAttribute: string[] = ['Brand: ', 'Size: ', 'Display: '];
 
+  const removeProduct = async (idProduct: string) => {
+    try {
+      await removeProductFromCart(token, idProduct);
+      //await fetchUpdatedCartData();
+      //cart update
+      const updatedCart: Cart = await fetchGetCartData(token);
+      localStorage.setItem('cartitems', JSON.stringify(updatedCart));
+      setIsInCart(false);
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+    }
+  };
+
   return (
     <>
       <Container
@@ -104,7 +134,12 @@ const ProductDetail: React.FC = () => {
                     }))}
                   />
                 ) : (
-                  <img src={product.imageUrl} alt="" width={400} height={400} />
+                  <img
+                    src={product.imageUrl}
+                    alt="image"
+                    width={400}
+                    height={400}
+                  />
                 )}
               </div>
               <div>
@@ -137,13 +172,23 @@ const ProductDetail: React.FC = () => {
                     <div>{formatPrice(product.price?.value)}</div>
                   )}
                 </div>
-                <button
-                  onClick={addToCart}
-                  className="add-to-cart-button"
-                  disabled={isInCart}
-                >
-                  {isInCart ? 'In Cart' : 'Add to Cart'} 🛒
-                </button>
+                <div className="button-container">
+                  <button
+                    onClick={addToCart}
+                    className="add-to-cart-button"
+                    disabled={isInCart}
+                  >
+                    {isInCart ? 'In Cart' : 'Add to Cart'} 🛒
+                  </button>
+                  {isInCart && (
+                    <button
+                      className="remove-from-cart"
+                      onClick={() => removeProduct(IdCart!)}
+                    >
+                      Remove from Cart
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
             <div>
