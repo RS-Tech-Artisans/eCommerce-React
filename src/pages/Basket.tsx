@@ -5,8 +5,9 @@ import { useSession } from '../utils/SessionContext';
 import { Cart } from '@commercetools/platform-sdk';
 import { fetchGetCartData } from '../utils/api/getLastCart';
 import { addProduct } from '../utils/api/addProduct';
-import { removeCartData } from '../utils/api/removeCarts';
+import { removeCartData } from '../utils/api/removeCartData';
 import ClearCartButton from '../common/ClearCartButton';
+import { removeProductFromCart } from '../utils/api/removeProductFromCart';
 
 const Basket: React.FC = () => {
   const [cartItems, setCartItems] = useState<Cart | null>(null);
@@ -23,6 +24,7 @@ const Basket: React.FC = () => {
       //setCartId(response.id);
       if (response) {
         if (response.lineItems.length === 0) {
+          // we need to be carefull if we clear all product we autocreate new items all time
           await addProduct(
             response.id,
             response.version,
@@ -53,6 +55,18 @@ const Basket: React.FC = () => {
     } catch (error) {
       console.error('Error fetching cart data:', error);
       setIsLoading(false);
+    }
+  };
+
+  const fetchUpdatedCartData = async () => {
+    try {
+      const updatedCart: Cart = await fetchGetCartData(token);
+      localStorage.setItem('cartitems', JSON.stringify(updatedCart));
+      setCartItems(updatedCart);
+
+      if (updatedCart.lineItems.length === 0) setCartItems(null);
+    } catch (error) {
+      console.error('Error fetching updated cart data:', error);
     }
   };
 
@@ -91,6 +105,15 @@ const Basket: React.FC = () => {
       }
     } catch (error) {
       console.error('Error fetching cart data:', error);
+    }
+  };
+
+  const removeProduct = async (id: string) => {
+    try {
+      await removeProductFromCart(token, id);
+      await fetchUpdatedCartData();
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
     }
   };
 
@@ -140,6 +163,14 @@ const Basket: React.FC = () => {
                       </span>
                     )}
                   </div>
+                  <div className="product-actions">
+                    <button
+                      className="remove-from-cart-button"
+                      onClick={() => removeProduct(itemProduct.id)}
+                    >
+                      Remove from Cart
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -180,7 +211,10 @@ const Basket: React.FC = () => {
         <div className="empty-cart-message">
           <p>Your shopping cart is empty. Start shopping now!</p>
           <p>
-            Go to <Link to="/catalog">Product Catalog</Link>
+            Go to{' '}
+            <Link to="/catalog" className="btn btn-primary">
+              Product Catalog
+            </Link>
           </p>
         </div>
       ) : (
