@@ -30,15 +30,17 @@ const Basket: React.FC = () => {
             response.version,
             '02a7b7d0-8e7b-4841-9171-986d1ff8df93'
           );
-          await addProduct(
-            response.id,
-            response.version + 3, // we change verion our cart
-            '6ebeb15e-2bc9-4343-aef7-56cfc57c8470'
-          );
+          await new Promise((resolve) => setTimeout(resolve, 1000));
 
           await addProduct(
             response.id,
-            response.version + 6,
+            response.version + 4, // we change verion our cart
+            '6ebeb15e-2bc9-4343-aef7-56cfc57c8470'
+          );
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await addProduct(
+            response.id,
+            response.version + 8,
             'd92c62c2-deef-439b-8cf8-940511c02bcb'
           );
         }
@@ -163,7 +165,7 @@ const Basket: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  <div className="product-actions">
+                  <div>
                     <button
                       className="remove-from-cart-button"
                       onClick={() => removeProduct(itemProduct.id)}
