@@ -79,3 +79,7 @@ export interface SidebarFiltersProps {
   categories: Category[];
   setCategoryFilter: (value: string | undefined) => void;
 }
+
+export interface ClearCartButtonProps {
+  onClearCart: () => void;
+}

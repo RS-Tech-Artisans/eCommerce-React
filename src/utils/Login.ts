@@ -6,7 +6,7 @@ import { clearTokenCache } from './tokenStore';
 import { useSession } from './SessionContext';
 import { MyApiError } from './Interfaces';
 import { createApiPasswordRoot } from './api/apiPasswordRoot';
-import { updateClient } from './api/BuildClient';
+import { apiRoot, updateClient } from './api/BuildClient';
 
 export const useLogin = () => {
   const { setToken } = useSession();
@@ -17,20 +17,29 @@ export const useLogin = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (email: string, password: string) => {
+    console.log(email, password);
     try {
-      const apiPasswordRoot = createApiPasswordRoot(email, password);
-      const result: ClientResponse<CustomerSignInResult> = await apiPasswordRoot
+      const result: ClientResponse<CustomerSignInResult> = await apiRoot
         .me()
         .login()
         .post({
-          body: { email, password },
+          body: {
+            email,
+            password,
+            activeCartSignInMode: 'MergeWithExistingCustomerCart',
+          },
         })
         .execute();
 
+      localStorage.removeItem('cartitems'); // clear we can get data from anonum
+      const apiPasswordRoot = createApiPasswordRoot(email, password);
+
+      await apiPasswordRoot.me().get().execute();
+
       console.log('email ', email);
       console.log('password ', password);
-
       setLoginResult(result);
+
       setError(null);
       setToken(localStorage.getItem('refresh_token'));
       updateClient();
@@ -44,6 +53,7 @@ export const useLogin = () => {
     setLoginResult(null);
     setToken(null);
     clearTokenCache();
+    localStorage.removeItem('cartitems'); // clear we can get data from user
     navigate('/login');
   };
 

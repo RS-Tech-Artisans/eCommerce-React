@@ -1,0 +1,12 @@
+.btn-danger {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.btn-danger:hover {
+  background-color: #ff3333;
+}
