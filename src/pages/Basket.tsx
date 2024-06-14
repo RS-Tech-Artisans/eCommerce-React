@@ -28,6 +28,17 @@ const Basket: React.FC = () => {
             response.version,
             '02a7b7d0-8e7b-4841-9171-986d1ff8df93'
           );
+          await addProduct(
+            response.id,
+            response.version + 3, // we change verion our cart
+            '6ebeb15e-2bc9-4343-aef7-56cfc57c8470'
+          );
+
+          await addProduct(
+            response.id,
+            response.version + 6,
+            'd92c62c2-deef-439b-8cf8-940511c02bcb'
+          );
         }
       }
 
@@ -85,18 +96,77 @@ const Basket: React.FC = () => {
 
   const renderCartItem = (item: Cart) => {
     return (
-      <ul>
-        <li>version: {item.version} </li>
-        <li> anonymousId: {item.anonymousId} </li>
-        <li> customerId: {item.customerId} </li>
-        <li> id: {item.id}</li>
-        <li>
-          {' '}
-          totalPrice: {item.totalPrice?.centAmount / 100}{' '}
-          {item.totalPrice?.currencyCode} {item.cartState}{' '}
-        </li>
-        {<li> lineItems.length: {item.lineItems.length}</li>}
-      </ul>
+      <>
+        <div className="cart">
+          <div className="cart-items">
+            {item.lineItems.map((itemProduct) => (
+              <div key={itemProduct.productId} className="cart-item">
+                {itemProduct.variant?.images?.[0]?.url && (
+                  <img
+                    src={itemProduct.variant.images[0].url}
+                    width="200px"
+                    alt={itemProduct.name['en-US']}
+                    className="product-image"
+                  />
+                )}
+                <div className="product-details">
+                  <div className="product-name">
+                    <h3>
+                      {' '}
+                      <a href={`/catalog/product/${itemProduct.productId}`}>
+                        {itemProduct.name['en-US']}
+                      </a>
+                    </h3>
+                  </div>
+                  <div className="product-price">
+                    {itemProduct.price.discounted ? (
+                      <>
+                        <span className="original-price">
+                          $
+                          {(itemProduct.price.value.centAmount / 100).toFixed(
+                            2
+                          )}
+                        </span>
+                        <span className="discounted-price">
+                          $
+                          {(
+                            itemProduct.price.discounted.value.centAmount / 100
+                          ).toFixed(2)}
+                        </span>
+                      </>
+                    ) : (
+                      <span>
+                        ${(itemProduct.price.value.centAmount / 100).toFixed(2)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="total-price">
+            Total Price: ${(item.totalPrice?.centAmount / 100).toFixed(2)}
+          </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        for debug !!! Delete after
+        <ul>
+          <li>version: {item.version} </li>
+          <li> anonymousId: {item.anonymousId} </li>
+          <li> customerId: {item.customerId} </li>
+          <li> id: {item.id}</li>
+          <li>
+            {item.totalPrice?.currencyCode} {item.cartState}{' '}
+          </li>
+          {<li> lineItems.length: {item.lineItems.length}</li>}
+        </ul>
+      </>
     );
   };
 
@@ -116,9 +186,7 @@ const Basket: React.FC = () => {
       ) : (
         <>
           <h1>Basket</h1>
-          <div>
-            <ul>{renderCartItem(cartItems)}</ul>
-          </div>
+          <div>{renderCartItem(cartItems)}</div>
           <div className="shopping-cart">
             {<ClearCartButton onClearCart={clearCart} />}
           </div>
