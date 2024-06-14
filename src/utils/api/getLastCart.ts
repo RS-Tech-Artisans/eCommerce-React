@@ -4,7 +4,7 @@ import { addCart } from './addCartForAnonim';
 
 export const fetchGetCartData = async (token: string | null) => {
   if (!token) {
-    console.error('fetchGetCartData we dont have token');
+    console.log('fetchGetCartData we dont have token');
     try {
       const response = await apiRoot.me().carts().get().execute();
 
