@@ -1,0 +1,19 @@
+.main-container {
+  height: 100vh;
+  display: 'flex';
+  flex-direction: 'column';
+  justify-content: 'center';
+  align-items: 'center';
+  align-content: 'center';
+  color: rgb(111 231 255);
+  background: no-repeat url(../assets/bg-image.jpg);
+  background-position: center;
+}
+
+body {
+  padding-bottom: 0;
+}
+
+.main-container {
+  background-color: #797064;
+}
