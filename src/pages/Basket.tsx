@@ -34,13 +34,13 @@ const Basket: React.FC = () => {
 
           await addProduct(
             response.id,
-            response.version + 4, // we change verion our cart
+            response.version + 3, // we change verion our cart
             '6ebeb15e-2bc9-4343-aef7-56cfc57c8470'
           );
           await new Promise((resolve) => setTimeout(resolve, 1000));
           await addProduct(
             response.id,
-            response.version + 8,
+            response.version + 6,
             'd92c62c2-deef-439b-8cf8-940511c02bcb'
           );
         }
