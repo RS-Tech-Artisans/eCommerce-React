@@ -11,7 +11,10 @@ export const Main = () => {
         color: 'rgb(111 231 255)',
       }}
     >
-      <h2 style={{marginTop: '20px'}}>Use this PromoCode: RSS-2024, for getting -20% discount on all cart price</h2>
+      <h2 style={{ marginTop: '20px' }}>
+        Use this PromoCode: RSS-2024, for getting -20% discount on all cart
+        price
+      </h2>
     </div>
   );
 };

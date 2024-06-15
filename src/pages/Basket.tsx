@@ -17,10 +17,7 @@ const Basket: React.FC = () => {
   //const [cartId, setCartId] = useState<string>();
   const { token } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [successPromo, setSuccessPromo] = useState(false);
   const [promoCode, setPromoCode] = useState('');
-  const [promoErrMessage, setPromoErrMessage] = useState('');
-  //const [originalPrice, setOriginalPrice] = useState('');
   const [showMessage, setShowMessage] = useState<{
     type: 'success' | 'error' | null;
     text: string | null;
@@ -113,20 +110,15 @@ const Basket: React.FC = () => {
     if (promoCode && cartItems) {
       try {
         await getDiscountAPI(promoCode, cartItems);
-        await fetchUpdatedCartData();
-        setSuccessPromo(true);
-        setTimeout(() => {
-          setSuccessPromo(false);
+        setShowMessage({ type: 'error', text: 'Your promocode was successfully applied' });
+        setTimeout(async () => {
+          await fetchUpdatedCartData();
+          setShowMessage({ type: null, text: null });
         }, 2000);
-      } catch (e) {
-        if (e instanceof Error) {
-          setPromoErrMessage(e.message);
-        } else {
-          setPromoErrMessage('An unknown error occurred.');
-          setSuccessPromo(false);
-        }
+      } catch (error) {
+        setShowMessage({ type: 'error', text: `The promotional code ${promoCode} is not valid.` });
         setTimeout(() => {
-          setPromoErrMessage('');
+          setShowMessage({ type: null, text: null })
         }, 2000);
       }
     }
@@ -290,10 +282,11 @@ const Basket: React.FC = () => {
               <Button type="submit" className="bg-dark">
                 Apply
               </Button>
-              {successPromo && (
-                <p className="promocode_success">promocode was successefully applying!</p>
+              {showMessage.type && (
+                <p>
+                  {showMessage.text}
+                </p>
               )}
-              {promoErrMessage && <p>{promoErrMessage}</p>}
             </form>
             <p className="total-price">
               Total Price with promocode: $
