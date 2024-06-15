@@ -18,6 +18,7 @@ const Basket: React.FC = () => {
   const { token } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [promoCode, setPromoCode] = useState('');
+  const [successPromo, setSuccessPromo] =useState(false)
   const [showMessage, setShowMessage] = useState<{
     type: 'success' | 'error' | null;
     text: string | null;
@@ -110,15 +111,23 @@ const Basket: React.FC = () => {
     if (promoCode && cartItems) {
       try {
         await getDiscountAPI(promoCode, cartItems);
-        setShowMessage({ type: 'error', text: 'Your promocode was successfully applied' });
+        setSuccessPromo(true);
+        setShowMessage({
+          type: 'success',
+          text: 'Your promocode was successfully applied',
+        });
         setTimeout(async () => {
           await fetchUpdatedCartData();
           setShowMessage({ type: null, text: null });
         }, 2000);
       } catch (error) {
-        setShowMessage({ type: 'error', text: `The promotional code ${promoCode} is not valid.` });
+        setSuccessPromo(false)
+        setShowMessage({
+          type: 'error',
+          text: `The promotional code ${promoCode} is not valid.`,
+        });
         setTimeout(() => {
-          setShowMessage({ type: null, text: null })
+          setShowMessage({ type: null, text: null });
         }, 2000);
       }
     }
@@ -282,11 +291,7 @@ const Basket: React.FC = () => {
               <Button type="submit" className="bg-dark">
                 Apply
               </Button>
-              {showMessage.type && (
-                <p>
-                  {showMessage.text}
-                </p>
-              )}
+              {successPromo && <p>{showMessage.text}</p>}
             </form>
             <p className="total-price">
               Total Price with promocode: $
