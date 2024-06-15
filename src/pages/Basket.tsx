@@ -10,6 +10,7 @@ import ClearCartButton from '../common/ClearCartButton';
 import { getDiscountAPI } from '../utils/api/getDiscountApi';
 import { removeProductFromCart } from '../utils/api/removeProductFromCart';
 import { Button } from 'react-bootstrap';
+import { updateQuantityItem } from '../utils/api/updateQuantityItem';
 
 const Basket: React.FC = () => {
   const [cartItems, setCartItems] = useState<Cart | null>(null);
@@ -20,6 +21,10 @@ const Basket: React.FC = () => {
   const [promoCode, setPromoCode] = useState('');
   const [promoErrMessage, setPromoErrMessage] = useState('');
   //const [originalPrice, setOriginalPrice] = useState('');
+  const [showMessage, setShowMessage] = useState<{
+    type: 'success' | 'error' | null;
+    text: string | null;
+  }>({ type: null, text: null });
 
   const fetchCartFromApi = async () => {
     console.log('fetchCartFromApi');
@@ -36,12 +41,14 @@ const Basket: React.FC = () => {
             response.version,
             '02a7b7d0-8e7b-4841-9171-986d1ff8df93'
           );
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
           await addProduct(
             response.id,
             response.version + 3, // we change verion our cart
             '6ebeb15e-2bc9-4343-aef7-56cfc57c8470'
           );
-
+          await new Promise((resolve) => setTimeout(resolve, 1000));
           await addProduct(
             response.id,
             response.version + 6,
@@ -141,6 +148,30 @@ const Basket: React.FC = () => {
   const removeProduct = async (id: string) => {
     try {
       await removeProductFromCart(token, id);
+      setShowMessage({ type: 'success', text: 'Successfully deleted!' });
+      setTimeout(async () => {
+        setShowMessage({ type: null, text: null });
+        await fetchUpdatedCartData();
+      }, 1000);
+    } catch (error) {
+      setShowMessage({ type: 'error', text: 'Failed to remove item.' });
+      setTimeout(() => setShowMessage({ type: null, text: null }), 3000);
+      console.error('Error removing item from cart:', error);
+    }
+  };
+
+  const handleMinus = async (id: string, count: number) => {
+    try {
+      await updateQuantityItem(token, id, count);
+      await fetchUpdatedCartData();
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+    }
+  };
+
+  const handlePlus = async (id: string, count: number) => {
+    try {
+      await updateQuantityItem(token, id, count);
       await fetchUpdatedCartData();
     } catch (error) {
       console.error('Error removing item from cart:', error);
@@ -165,10 +196,12 @@ const Basket: React.FC = () => {
                 <div className="product-details">
                   <div className="product-name">
                     <h3>
-                      {' '}
-                      <a href={`/catalog/product/${itemProduct.productId}`}>
+                      <Link
+                        to={`/catalog/product/${itemProduct.productId}`}
+                        className="view-details-basket"
+                      >
                         {itemProduct.name['en-US']}
-                      </a>
+                      </Link>
                     </h3>
                   </div>
                   <div className="product-price">
@@ -193,13 +226,49 @@ const Basket: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  <div className="product-actions">
+                  <div className="control-buttons">
                     <button
                       className="remove-from-cart-button"
                       onClick={() => removeProduct(itemProduct.id)}
                     >
                       Remove from Cart
                     </button>
+                    <div className="cart-buttons">
+                      <button
+                        className="cart-button"
+                        onClick={() =>
+                          handleMinus(itemProduct.id, itemProduct.quantity - 1)
+                        }
+                      >
+                        -
+                      </button>
+                      <div className="item-count">
+                        <input
+                          type="text"
+                          id={itemProduct.id + 'input-block'}
+                          className="count-input-block"
+                          autoComplete="off"
+                          value={itemProduct.quantity}
+                          readOnly
+                        ></input>
+                      </div>
+                      <button
+                        className="cart-button"
+                        onClick={() =>
+                          handlePlus(itemProduct.id, itemProduct.quantity + 1)
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    {showMessage.type && (
+                      <div
+                        className={`toast ${showMessage.type === 'success' ? 'show' : ''}`}
+                      >
+                        {showMessage.text}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
