@@ -8,6 +8,7 @@ import { addProduct } from '../utils/api/addProduct';
 import { removeCartData } from '../utils/api/removeCartData';
 import ClearCartButton from '../common/ClearCartButton';
 import { removeProductFromCart } from '../utils/api/removeProductFromCart';
+import { updateQuantityItem } from '../utils/api/updateQuantityItem';
 
 const Basket: React.FC = () => {
   const [cartItems, setCartItems] = useState<Cart | null>(null);
@@ -119,6 +120,24 @@ const Basket: React.FC = () => {
     }
   };
 
+  const handleMinus = async (id: string, count: number) => {
+    try {
+      await updateQuantityItem(token, id, count);
+      await fetchUpdatedCartData();
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+    }
+  };
+
+  const handlePlus = async (id: string, count: number) => {
+    try {
+      await updateQuantityItem(token, id, count);
+      await fetchUpdatedCartData();
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+    }
+  };
+
   const renderCartItem = (item: Cart) => {
     return (
       <>
@@ -167,13 +186,41 @@ const Basket: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  <div>
+                  <div className="control-buttons">
                     <button
                       className="remove-from-cart-button"
                       onClick={() => removeProduct(itemProduct.id)}
                     >
                       Remove from Cart
                     </button>
+                    <div className="cart-buttons">
+                      <button
+                        className="cart-button"
+                        onClick={() =>
+                          handleMinus(itemProduct.id, itemProduct.quantity - 1)
+                        }
+                      >
+                        -
+                      </button>
+                      <div className="item-count">
+                        <input
+                          type="text"
+                          id={itemProduct.id + 'input-block'}
+                          className="count-input-block"
+                          autoComplete="off"
+                          value={itemProduct.quantity}
+                          readOnly
+                        ></input>
+                      </div>
+                      <button
+                        className="cart-button"
+                        onClick={() =>
+                          handlePlus(itemProduct.id, itemProduct.quantity + 1)
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

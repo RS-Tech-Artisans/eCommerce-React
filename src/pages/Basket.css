@@ -115,6 +115,51 @@
 .view-details-basket {
 }
 
+.item-count {
+  display: flex;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  color: #333;
+}
+
+.item-count input {
+  padding: 5px 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 60px;
+  text-align: center;
+  background-color: #fff;
+  color: #000;
+  transition: border-color 0.3s;
+}
+
+.item-count input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.control-buttons {
+  display: flex;
+  align-items: center;
+}
+.cart-buttons {
+  display: flex;
+  padding-left: 20px;
+}
+
+.cart-button {
+  background-color: transparent;
+  border: none;
+  padding: 5px 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+  margin: 0 5px;
+  color: #212529;
+}
+
 @media (max-width: 970px) {
   .cart-item {
     flex-direction: column;
