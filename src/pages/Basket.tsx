@@ -25,7 +25,6 @@ const Basket: React.FC = () => {
   }>({ type: null, text: null });
   const promoCodesList = usePromoCodes();
 
-
   const fetchCartFromApi = async () => {
     console.log('fetchCartFromApi');
     try {

@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
-import { apiRoot } from "./BuildClient";
-
+import { useEffect, useState } from 'react';
+import { apiRoot } from './BuildClient';
 
 export async function getPromocodes() {
   try {
     const response = await apiRoot.discountCodes().get().execute();
-    const codes = response.body.results.map(item => item.code);
+    const codes = response.body.results.map((item) => item.code);
     return codes;
   } catch (error) {
-    console.log("err", error);
+    console.log('err', error);
     throw error;
   }
 }
@@ -22,7 +21,7 @@ export function usePromoCodes() {
         const codes = await getPromocodes();
         setPromoCodesList(codes);
       } catch (error) {
-        console.error("Failed to fetch promo codes:", error);
+        console.error('Failed to fetch promo codes:', error);
       }
     };
 
