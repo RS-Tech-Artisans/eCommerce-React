@@ -11,6 +11,7 @@ import { getDiscountAPI } from '../utils/api/getDiscountApi';
 import { removeProductFromCart } from '../utils/api/removeProductFromCart';
 import { Button } from 'react-bootstrap';
 import { updateQuantityItem } from '../utils/api/updateQuantityItem';
+import { usePromoCodes } from '../utils/api/getPromoCodes';
 
 const Basket: React.FC = () => {
   const [cartItems, setCartItems] = useState<Cart | null>(null);
@@ -18,13 +19,11 @@ const Basket: React.FC = () => {
   const { token } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [promoCode, setPromoCode] = useState('');
-  const [successPromo, setSuccessPromo] = useState(false);
   const [showMessage, setShowMessage] = useState<{
     type: 'success' | 'error' | null;
     text: string | null;
   }>({ type: null, text: null });
-  const promo: string = "RSS-2024";
-  const promo1: string = "QLED";
+  const promoCodesList = usePromoCodes();
 
 
   const fetchCartFromApi = async () => {
@@ -111,11 +110,21 @@ const Basket: React.FC = () => {
 
   const applyPromoCode = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!promoCode) {
+      setShowMessage({
+        type: 'error',
+        text: 'Please enter a promotional code.',
+      });
+      setTimeout(() => {
+        setShowMessage({ type: null, text: null });
+      }, 2000);
+      return;
+    }
+
     if (promoCode && cartItems) {
-      if (promoCode === promo || promoCode === promo1) {
+      if (promoCodesList.includes(promoCode)) {
         try {
           await getDiscountAPI(promoCode, cartItems);
-          setSuccessPromo(true);
           setShowMessage({
             type: 'success',
             text: 'Your promocode was successfully applied',
@@ -125,7 +134,6 @@ const Basket: React.FC = () => {
             setShowMessage({ type: null, text: null });
           }, 2000);
         } catch (error) {
-          setSuccessPromo(false);
           setShowMessage({
             type: 'error',
             text: `The promotional code ${promoCode} is not valid.`,
@@ -134,6 +142,14 @@ const Basket: React.FC = () => {
             setShowMessage({ type: null, text: null });
           }, 2000);
         }
+      } else {
+        setShowMessage({
+          type: 'error',
+          text: `The promotional code ${promoCode} is not valid.`,
+        });
+        setTimeout(() => {
+          setShowMessage({ type: null, text: null });
+        }, 2000);
       }
     }
   };
@@ -285,10 +301,7 @@ const Basket: React.FC = () => {
           </div>
           <div className="discount-container">
             <form onSubmit={applyPromoCode} className="discount-form">
-              <label
-                htmlFor="promocode"
-                className='label-promocode'
-              >
+              <label htmlFor="promocode" className="label-promocode">
                 PROMOCODE:
               </label>
               <input
