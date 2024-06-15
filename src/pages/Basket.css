@@ -186,6 +186,11 @@
     fadeOut 2.5s forwards;
 }
 
+.label-promocode {
+  font-weight: 600;
+  font-size: 25px;
+}
+
 @keyframes slideIn {
   from {
     transform: translateX(100%);
@@ -215,6 +220,14 @@
   .cart {
     padding: 15px;
     margin: 0px 15%;
+  }
+}
+
+@media (max-width: 800px) {
+  .discount-form {
+    flex-direction: column;
+    height: 150px;
+    justify-content: space-between;
   }
 }
 

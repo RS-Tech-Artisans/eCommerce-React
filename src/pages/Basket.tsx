@@ -18,11 +18,14 @@ const Basket: React.FC = () => {
   const { token } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [promoCode, setPromoCode] = useState('');
-  const [successPromo, setSuccessPromo] =useState(false)
+  const [successPromo, setSuccessPromo] = useState(false);
   const [showMessage, setShowMessage] = useState<{
     type: 'success' | 'error' | null;
     text: string | null;
   }>({ type: null, text: null });
+  const promo: string = "RSS-2024";
+  const promo1: string = "QLED";
+
 
   const fetchCartFromApi = async () => {
     console.log('fetchCartFromApi');
@@ -109,26 +112,28 @@ const Basket: React.FC = () => {
   const applyPromoCode = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (promoCode && cartItems) {
-      try {
-        await getDiscountAPI(promoCode, cartItems);
-        setSuccessPromo(true);
-        setShowMessage({
-          type: 'success',
-          text: 'Your promocode was successfully applied',
-        });
-        setTimeout(async () => {
-          await fetchUpdatedCartData();
-          setShowMessage({ type: null, text: null });
-        }, 2000);
-      } catch (error) {
-        setSuccessPromo(false)
-        setShowMessage({
-          type: 'error',
-          text: `The promotional code ${promoCode} is not valid.`,
-        });
-        setTimeout(() => {
-          setShowMessage({ type: null, text: null });
-        }, 2000);
+      if (promoCode === promo || promoCode === promo1) {
+        try {
+          await getDiscountAPI(promoCode, cartItems);
+          setSuccessPromo(true);
+          setShowMessage({
+            type: 'success',
+            text: 'Your promocode was successfully applied',
+          });
+          setTimeout(async () => {
+            await fetchUpdatedCartData();
+            setShowMessage({ type: null, text: null });
+          }, 2000);
+        } catch (error) {
+          setSuccessPromo(false);
+          setShowMessage({
+            type: 'error',
+            text: `The promotional code ${promoCode} is not valid.`,
+          });
+          setTimeout(() => {
+            setShowMessage({ type: null, text: null });
+          }, 2000);
+        }
       }
     }
   };
@@ -280,7 +285,12 @@ const Basket: React.FC = () => {
           </div>
           <div className="discount-container">
             <form onSubmit={applyPromoCode} className="discount-form">
-              <label htmlFor="promocode">Type your promocode:</label>
+              <label
+                htmlFor="promocode"
+                className='label-promocode'
+              >
+                PROMOCODE:
+              </label>
               <input
                 type="text"
                 id="promocode"
@@ -291,7 +301,13 @@ const Basket: React.FC = () => {
               <Button type="submit" className="bg-dark">
                 Apply
               </Button>
-              {successPromo && <p>{showMessage.text}</p>}
+              {showMessage.type && (
+                <div
+                  className={`toast ${showMessage.type === 'success' ? 'show' : ''}`}
+                >
+                  {showMessage.text}
+                </div>
+              )}
             </form>
             <p className="total-price">
               Total Price with promocode: $
