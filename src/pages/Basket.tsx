@@ -15,6 +15,10 @@ const Basket: React.FC = () => {
   //const [cartId, setCartId] = useState<string>();
   const { token } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [showMessage, setShowMessage] = useState<{
+    type: 'success' | 'error' | null;
+    text: string | null;
+  }>({ type: null, text: null });
 
   const fetchCartFromApi = async () => {
     console.log('fetchCartFromApi');
@@ -114,8 +118,14 @@ const Basket: React.FC = () => {
   const removeProduct = async (id: string) => {
     try {
       await removeProductFromCart(token, id);
-      await fetchUpdatedCartData();
+      setShowMessage({ type: 'success', text: 'Successfully deleted!' });
+      setTimeout(async () => {
+        setShowMessage({ type: null, text: null });
+        await fetchUpdatedCartData();
+      }, 1000);
     } catch (error) {
+      setShowMessage({ type: 'error', text: 'Failed to remove item.' });
+      setTimeout(() => setShowMessage({ type: null, text: null }), 3000);
       console.error('Error removing item from cart:', error);
     }
   };
@@ -221,6 +231,14 @@ const Basket: React.FC = () => {
                         +
                       </button>
                     </div>
+
+                    {showMessage.type && (
+                      <div
+                        className={`toast ${showMessage.type === 'success' ? 'show' : ''}`}
+                      >
+                        {showMessage.text}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
