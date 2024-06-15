@@ -1,5 +1,5 @@
-import { Cart } from "@commercetools/platform-sdk";
-import { apiRoot } from "./BuildClient";
+import { Cart } from '@commercetools/platform-sdk';
+import { apiRoot } from './BuildClient';
 
 export const getDiscountAPI = async (promoCode: string, cartData: Cart) => {
   try {
@@ -14,7 +14,7 @@ export const getDiscountAPI = async (promoCode: string, cartData: Cart) => {
         },
       })
       .execute();
-    return response.body
+    return response.body;
   } catch (error) {
     console.error(`discount ${promoCode} not founded`, error);
     return [];

@@ -7,15 +7,19 @@ import { fetchGetCartData } from '../utils/api/getLastCart';
 import { addProduct } from '../utils/api/addProduct';
 import { removeCartData } from '../utils/api/removeCartData';
 import ClearCartButton from '../common/ClearCartButton';
-// import { getDiscountAPI } from '../utils/api/getDiscountApi';
+import { getDiscountAPI } from '../utils/api/getDiscountApi';
 import { removeProductFromCart } from '../utils/api/removeProductFromCart';
+import { Button } from 'react-bootstrap';
 
 const Basket: React.FC = () => {
   const [cartItems, setCartItems] = useState<Cart | null>(null);
   //const [cartId, setCartId] = useState<string>();
   const { token } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [successPromo, setSuccessPromo] = useState(false);
   const [promoCode, setPromoCode] = useState('');
+  const [promoErrMessage, setPromoErrMessage] = useState('');
+  //const [originalPrice, setOriginalPrice] = useState('');
 
   const fetchCartFromApi = async () => {
     console.log('fetchCartFromApi');
@@ -97,12 +101,28 @@ const Basket: React.FC = () => {
   //   }
   // }
 
-   //здесь мне нужно будет для теста уже созданную Cart из реализации пункта 02
-  //const [cartData, setCartData] = useState<Cart | null>(null);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const applyPromoCode = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // getDiscountAPI(promoCode, cartData);
+    if (promoCode && cartItems) {
+      try {
+        await getDiscountAPI(promoCode, cartItems);
+        await fetchUpdatedCartData();
+        setSuccessPromo(true);
+        setTimeout(() => {
+          setSuccessPromo(false);
+        }, 2000);
+      } catch (e) {
+        if (e instanceof Error) {
+          setPromoErrMessage(e.message);
+        } else {
+          setPromoErrMessage('An unknown error occurred.');
+          setSuccessPromo(false);
+        }
+        setTimeout(() => {
+          setPromoErrMessage('');
+        }, 2000);
+      }
+    }
   };
 
   const clearCart = async () => {
@@ -188,26 +208,30 @@ const Basket: React.FC = () => {
           <div className="total-price">
             Total Price: ${(item.totalPrice?.centAmount / 100).toFixed(2)}
           </div>
-          <h2>Promo is: QLED-TV</h2>
-          <form onSubmit={handleSubmit} className='bg-dark'>
-            <label htmlFor="promocode">Promocode:</label>
-            <input
-              type="text"
-              id="promocode"
-              value={promoCode}
-              onChange={(e): void => setPromoCode(e.target.value)}
-            />
-            <input type="submit" value="Apply" />
-          </form>
-          <span>Price with discount: </span>
+          <div className="discount-container">
+            <form onSubmit={applyPromoCode} className="discount-form">
+              <label htmlFor="promocode">Type your promocode:</label>
+              <input
+                type="text"
+                id="promocode"
+                className="input-promo"
+                value={promoCode}
+                onChange={(e): void => setPromoCode(e.target.value)}
+              />
+              <Button type="submit" className="bg-dark">
+                Apply
+              </Button>
+              {successPromo && (
+                <p className="promocode_success">promocode was successefully applying!</p>
+              )}
+              {promoErrMessage && <p>{promoErrMessage}</p>}
+            </form>
+            <p className="total-price">
+              Total Price with promocode: $
+              {(item.totalPrice?.centAmount / 100).toFixed(2)}
+            </p>
+          </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
         for debug !!! Delete after
         <ul>
           <li>version: {item.version} </li>

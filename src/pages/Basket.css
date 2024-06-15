@@ -112,6 +112,21 @@
   background-color: #0056b3;
 }
 
+.discount-form {
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.discount-container {
+  background-color: #5f646c;
+  padding: 10px;
+}
+
+.input-promo {
+  margin-right: 20px;
+}
+
 @media (max-width: 970px) {
   .cart-item {
     flex-direction: column;

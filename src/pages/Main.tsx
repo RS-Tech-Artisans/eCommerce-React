@@ -1,24 +1,17 @@
-import { Link } from 'react-router-dom';
-
 export const Main = () => {
   return (
     <div
       style={{
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         alignContent: 'center',
         height: '100vh',
         color: 'rgb(111 231 255)',
       }}
     >
-      <h1>Main page</h1>
-      <h2>Oops !!!</h2>
-      <h3>Content is not ready at this moment...</h3>
-      <p>
-        follow to<Link to="/catalog"> Catalog</Link>
-      </p>
+      <h2 style={{marginTop: '20px'}}>Use this PromoCode: RSS-2024, for getting -20% discount on all cart price</h2>
     </div>
   );
 };
