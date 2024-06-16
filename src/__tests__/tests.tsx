@@ -224,6 +224,7 @@ test('get display', () => {
     'LED',
     'QLED',
     'OLED',
+    'LCD',
   ]);
 });
 
