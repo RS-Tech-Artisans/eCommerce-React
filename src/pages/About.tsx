@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap';
 import { FaGithub } from 'react-icons/fa';
 import { FaLaptop } from 'react-icons/fa';
 import autor1 from '../assets/Pavel.jpeg';
+import autor2 from '../assets/Veronika.jpeg';
 
 interface AboutData {
   name: string;
@@ -34,16 +35,16 @@ const dataAboutUs: AboutData[] = [
     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&s',
     about:
       'I am self-taught programmer from scratch, before i had beginning for my learning, i had working like self-employer in textile-workshop field, early i had worked in a bank in the department "quality manager of customer"',
-    contribution: 'actively participated in the site development process, worked with the products detail page,worked on the navigation bar and page routing, participated in installing the package for this project',
+    contribution: 'actively participated in the site development process, worked with the products detail page,worked on the navigation bar and page routing, searching products bar, applying promocode for total price, participated in installing the package for this project',
   },
   {
     name: 'Veronika',
     gitName: 'ranika23',
     linkToGit: 'https://github.com/ranika23',
     role: 'team-member',
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTugu0kegXOT1Gh1sgDVHvYjkGW29w19Hl9gQ&s',
+    img: autor2,
     about:
-      'Lorem......................',
+      'Main current area: technical support and support for clients in the banking sector in terms of resolving situations related to the unsuccessful completion of client transactions using bank payment cards. I am currently actively mastering web development, because I see this direction as very interesting for myself.',
     contribution: 'actively participated in the site development process,made a great contribution to the implementation login page and registration page, writed and covered code tests on Jest',
   },
 ];
@@ -64,7 +65,7 @@ export default function About() {
             }}
           >
             <div>
-              <img src={el.img} alt="foto" />
+              <img src={el.img} alt="foto" width={'300px'} height={'300px'} />
             </div>
             <div className="p-3">
               <div className="d-flex">
