@@ -208,13 +208,13 @@ test('street validation', () => {
 import { getBrandsFromAPI } from '../utils/api/getBrands';
 test('get brands', () => {
   return expect(getBrandsFromAPI()).resolves.toStrictEqual([
+    'Hisense',
     'SAMSUNG',
     'Roku',
     'VIZIO',
     'TCL',
     'Sony',
     'LG',
-    'Hisense',
   ]);
 });
 
