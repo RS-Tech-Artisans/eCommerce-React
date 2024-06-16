@@ -96,7 +96,6 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
             placeholder="Search"
             onChange={(e) => {
               setSearch(e.target.value);
-              console.log(`search is ${search.length}`);
 
               if (search.length >= 2) {
                 getSearchFromAPI(e.target.value, 0);
@@ -106,15 +105,28 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
         </InputGroup>
 
         <div>
-          <Form.Select onChange={(e) => handleSortFilter(e.target.value)}>
+          <select
+            className="custom-select"
+            onChange={(e) => handleSortFilter(e.target.value)}
+          >
             <option value={''}>Sort by</option>
-            <option value={'price asc'} defaultValue={'low'}>
+            <option
+              className="custom-select__item"
+              value={'price asc'}
+              defaultValue={'low'}
+            >
               Low price
             </option>
-            <option value={'price desc'}>High price</option>
-            <option value={'name.en-us asc'}>a-z</option>
-            <option value={'name.en-us desc'}>z-a</option>
-          </Form.Select>
+            <option className="custom-select__item" value={'price desc'}>
+              High price
+            </option>
+            <option className="custom-select__item" value={'name.en-us asc'}>
+              a-z
+            </option>
+            <option className="custom-select__item" value={'name.en-us desc'}>
+              z-a
+            </option>
+          </select>
         </div>
 
         <h3 className="filter-header">Filter by Price</h3>

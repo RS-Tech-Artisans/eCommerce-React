@@ -16,13 +16,34 @@
 .basket-link {
   position: relative;
   top: -1px;
+  padding-right: 20px;
+}
+
+.custom-dropdown button {
+  background-color: #1b9fc6;
+  border-color: #1b9fc6;
+}
+
+.custom-dropdown button:hover {
+  background-color: #1885a7;
+  border-color: #1885a7;
+}
+
+.custom-dropdown button:active {
+  background-color: #145d76;
+  border-color: #145d76;
+}
+
+.custom-dropdown button:focus {
+  background-color: #145d76;
+  border-color: #145d76;
 }
 
 .cart-count {
   position: absolute;
   top: -5px;
   right: 4px;
-  background-color: #ff0000;
+  background-color: #ec4a3a;
   color: white;
   border-radius: 50%;
   padding: 1px 7px;
@@ -31,7 +52,14 @@
 
 .menu-block {
   display: flex;
-  gap: 10px;
+  gap: 20px;
+}
+.menu-block a {
+  text-decoration: none;
+}
+.menu-block a:hover {
+  color: #1b9fc6;
+  text-decoration: none;
 }
 
 .burger {

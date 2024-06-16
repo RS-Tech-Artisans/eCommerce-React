@@ -38,7 +38,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   const [categories, setCategories] = useState<Category[]>([]);
 
   const [loadedLimitProductsCount, setLoadedProductsCount] = useState(0);
-  const COUNT_PRODUCT = 4;
+  const COUNT_PRODUCT = 8;
 
   useEffect(() => {
     const getCategories = async () => {
@@ -83,7 +83,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   }, []);
 
   const loadMoreProducts = () => {
-    setLoadedProductsCount(loadedLimitProductsCount + COUNT_PRODUCT);
+    if (loadedLimitProductsCount != COUNT_PRODUCT * 2)
+      setLoadedProductsCount(loadedLimitProductsCount + COUNT_PRODUCT); // need fixed if we have more 16 products
   };
 
   const fetchFilteredProducts = async () => {
@@ -148,7 +149,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
     const bottom =
       Math.ceil(window.innerHeight + window.scrollY) >=
       document.documentElement.scrollHeight;
-    if (bottom && filteredProducts.length > loadedLimitProductsCount) {
+    if (bottom && filteredProducts.length + 50 > loadedLimitProductsCount) {
       loadMoreProducts();
     }
   });

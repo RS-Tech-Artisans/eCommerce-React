@@ -128,7 +128,10 @@ export default function Login() {
           </button>
           <div>
             <p>
-              Don&apos;t have an account? <Link to="/register">Register</Link>
+              Don&apos;t have an account?{' '}
+              <Link className="register-link" to="/register">
+                Register
+              </Link>
             </p>
 
             <div style={{ color: 'green' }}>

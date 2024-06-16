@@ -208,11 +208,12 @@ test('street validation', () => {
 import { getBrandsFromAPI } from '../utils/api/getBrands';
 test('get brands', () => {
   return expect(getBrandsFromAPI()).resolves.toStrictEqual([
+    'Hisense',
+    'Sony',
     'SAMSUNG',
     'Roku',
     'VIZIO',
     'TCL',
-    'Sony',
     'LG',
   ]);
 });
@@ -223,17 +224,18 @@ test('get display', () => {
     'LED',
     'QLED',
     'OLED',
+    'LCD',
   ]);
 });
 
 import { getSizesFromAPI } from '../utils/api/getSizes';
 test('get sizes', () => {
   return expect(getSizesFromAPI()).resolves.toStrictEqual([
+    '50-inch',
+    '40-inch',
     '75-inch',
     '65-inch',
-    '50-inch',
     '55-inch',
-    '40-inch',
   ]);
 });
 
