@@ -209,11 +209,11 @@ import { getBrandsFromAPI } from '../utils/api/getBrands';
 test('get brands', () => {
   return expect(getBrandsFromAPI()).resolves.toStrictEqual([
     'Hisense',
+    'Sony',
     'SAMSUNG',
     'Roku',
     'VIZIO',
     'TCL',
-    'Sony',
     'LG',
   ]);
 });
