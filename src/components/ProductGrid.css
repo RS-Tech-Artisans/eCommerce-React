@@ -54,7 +54,7 @@
   .filters {
     flex-direction: row;
     justify-content: space-between;
-    background-color: #2a2938;
+    background-color: #212529;
     flex-wrap: wrap;
     height: 220px;
     padding: 10px;
