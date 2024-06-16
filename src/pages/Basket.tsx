@@ -315,7 +315,7 @@ const Basket: React.FC = () => {
               </Button>
               {showMessage.type && (
                 <div
-                  className={`toast ${showMessage.type === 'success' ? 'show' : ''}`}
+                  className={`toast ${showMessage.type === 'success' || showMessage.type === 'error' ? 'show' : ''}`}
                 >
                   {showMessage.text}
                 </div>
