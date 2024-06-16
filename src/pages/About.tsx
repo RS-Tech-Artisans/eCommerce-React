@@ -65,15 +65,15 @@ export default function About() {
         </h2>
         {dataAboutUs.map((el) => (
           <div
-            className="d-flex shadow-lg m-5 p-2 rounded"
+            className="container-autor"
             key={el.name}
             style={{
               background: 'linear-gradient(0.25turn, #181b35, #b9f3ff)',
               color: '#000',
             }}
           >
-            <div>
-              <img src={el.img} alt="foto" width={'300px'} height={'300px'} />
+            <div className='img-container'>
+              <img src={el.img} alt="foto" className='img-autors'/>
             </div>
             <div className="p-3">
               <div className="d-flex">
