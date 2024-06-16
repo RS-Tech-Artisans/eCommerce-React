@@ -50,16 +50,28 @@ function NavBar() {
           <Link className="about-us" to="/about">
             About Us
           </Link>
-          <Link to="/"> Main </Link>
-          <Link to="/catalog"> Catalog </Link>
+          <Link to="/" className="main">
+            {' '}
+            Main{' '}
+          </Link>
+          <Link to="/catalog" className="catalog">
+            {' '}
+            Catalog{' '}
+          </Link>
           {!token && (
             <>
-              <Link to="/login"> Login </Link>
-              <Link to="/register"> Registration </Link>
+              <Link to="/login" className="login">
+                {' '}
+                Login{' '}
+              </Link>
+              <Link to="/register" className="registration">
+                {' '}
+                Registration{' '}
+              </Link>
             </>
           )}
           {token && (
-            <Link to="/profile">
+            <Link to="/profile" className="profile">
               <CgProfile />
             </Link>
           )}

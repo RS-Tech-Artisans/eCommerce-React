@@ -1,5 +1,5 @@
 .btn-danger {
-  background-color: #ff4d4d;
+  background-color: #e24139;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -8,5 +8,5 @@
 }
 
 .btn-danger:hover {
-  background-color: #ff3333;
+  background-color: #df362d;
 }
