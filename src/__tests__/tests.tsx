@@ -231,11 +231,11 @@ test('get display', () => {
 import { getSizesFromAPI } from '../utils/api/getSizes';
 test('get sizes', () => {
   return expect(getSizesFromAPI()).resolves.toStrictEqual([
+    '50-inch',
+    '40-inch',
     '75-inch',
     '65-inch',
-    '50-inch',
     '55-inch',
-    '40-inch',
   ]);
 });
 
