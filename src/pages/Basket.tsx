@@ -22,12 +22,10 @@ const Basket: React.FC = () => {
       console.log('get response fetchGetCartData', response);
       console.log('response.lineItems.length', response.lineItems.length);
       //setCartId(response.id);
-      
+
       if (response) {
         if (response.lineItems.length === 0) {
-          
           // we need to be carefull if we clear all product we autocreate new items all time
-
           /*
           await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -71,7 +69,6 @@ const Basket: React.FC = () => {
       console.error('Error fetching updated cart data:', error);
     }
   };
-
 
   useEffect(() => {
     // const savedCart = JSON.parse(localStorage.getItem('cartitems') || '{}');

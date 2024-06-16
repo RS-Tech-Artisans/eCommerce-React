@@ -44,7 +44,6 @@ const ProductDetail: React.FC = () => {
         }
 
         localStorage.setItem('cartitems', JSON.stringify(response));
-
       } catch (error) {
         console.error('Error fetching cart data:', error);
       }
@@ -89,23 +88,16 @@ const ProductDetail: React.FC = () => {
   }, [id]);
 
   const addToCart = async () => {
-
- 
     console.log(JSON.parse(localStorage.getItem('cartitems') || '[]'));
-    console.log('product', product)
+    console.log('product', product);
 
     try {
       if (cartItems && product) {
-        await addProduct(
-          cartItems.id,
-          cartItems.version,
-          product.id
-        );
+        await addProduct(cartItems.id, cartItems.version, product.id);
         console.log(JSON.parse(localStorage.getItem('cartitems') || '[]'));
         localStorage.setItem('cartitems', JSON.stringify(cartItems));
       }
-
-    } catch (error) { 
+    } catch (error) {
       console.error('Error fetching cart data:', error);
     }
 
@@ -119,8 +111,6 @@ const ProductDetail: React.FC = () => {
       setIsInCart(true);
       setCart(updatedCart);
       */
-
- 
   };
 
   const formatPrice = (
