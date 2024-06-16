@@ -214,6 +214,7 @@ test('get brands', () => {
     'TCL',
     'Sony',
     'LG',
+    'Hisense'
   ]);
 });
 
