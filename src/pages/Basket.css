@@ -119,7 +119,18 @@
   background-color: #1885a7;
 }
 
-.view-details-basket {
+.discount-form {
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.discount-container {
+  padding: 10px;
+}
+
+.input-promo {
+  margin-right: 20px;
 }
 
 .item-count {
@@ -181,6 +192,11 @@
     fadeOut 2.5s forwards;
 }
 
+.label-promocode {
+  font-weight: 600;
+  font-size: 25px;
+}
+
 @keyframes slideIn {
   from {
     transform: translateX(100%);
@@ -210,6 +226,14 @@
   .cart {
     padding: 15px;
     margin: 0px 15%;
+  }
+}
+
+@media (max-width: 800px) {
+  .discount-form {
+    flex-direction: column;
+    height: 150px;
+    justify-content: space-between;
   }
 }
 

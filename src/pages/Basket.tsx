@@ -7,18 +7,24 @@ import { fetchGetCartData } from '../utils/api/getLastCart';
 import { addProduct } from '../utils/api/addProduct';
 import { removeCartData } from '../utils/api/removeCartData';
 import ClearCartButton from '../common/ClearCartButton';
+import { getDiscountAPI } from '../utils/api/getDiscountApi';
 import { removeProductFromCart } from '../utils/api/removeProductFromCart';
+import { Button } from 'react-bootstrap';
 import { updateQuantityItem } from '../utils/api/updateQuantityItem';
+import { usePromoCodes } from '../utils/api/getPromoCodes';
 
 const Basket: React.FC = () => {
   const [cartItems, setCartItems] = useState<Cart | null>(null);
   //const [cartId, setCartId] = useState<string>();
   const { token } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [promoCode, setPromoCode] = useState('');
   const [showMessage, setShowMessage] = useState<{
     type: 'success' | 'error' | null;
     text: string | null;
   }>({ type: null, text: null });
+  const [isApplyPromo, setIsApplyPromo] = useState<boolean>(false);
+  const promoCodesList = usePromoCodes();
 
   const fetchCartFromApi = async () => {
     console.log('fetchCartFromApi');
@@ -101,6 +107,54 @@ const Basket: React.FC = () => {
   //     console.log("cartData.id", cartData.id);
   //   }
   // }
+
+  const applyPromoCode = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!promoCode) {
+      setShowMessage({
+        type: 'error',
+        text: 'Please enter a promotional code.',
+      });
+      setTimeout(() => {
+        setShowMessage({ type: null, text: null });
+      }, 2000);
+      return;
+    }
+
+    if (promoCode && cartItems) {
+      if (promoCodesList.includes(promoCode)) {
+        try {
+          await getDiscountAPI(promoCode, cartItems);
+          setShowMessage({
+            type: 'success',
+            text: 'Your promocode was successfully applied',
+          });
+          setIsApplyPromo(true);
+          setTimeout(async () => {
+            await fetchUpdatedCartData();
+            setShowMessage({ type: null, text: null });
+          }, 2000);
+        } catch (error) {
+          setShowMessage({
+            type: 'error',
+            text: `The promotional code ${promoCode} is not valid.`,
+          });
+          setTimeout(() => {
+            setShowMessage({ type: null, text: null });
+          }, 2000);
+        }
+      } else {
+        setIsApplyPromo(false);
+        setShowMessage({
+          type: 'error',
+          text: `The promotional code ${promoCode} is not valid.`,
+        });
+        setTimeout(() => {
+          setShowMessage({ type: null, text: null });
+        }, 2000);
+      }
+    }
+  };
 
   const clearCart = async () => {
     try {
@@ -243,17 +297,40 @@ const Basket: React.FC = () => {
               </div>
             ))}
           </div>
-          <div className="total-price">
+          <div className="shopping-cart">
+            {<ClearCartButton onClearCart={clearCart} />}
+          </div>
+          {/* <div className="total-price">
             Total Price: ${(item.totalPrice?.centAmount / 100).toFixed(2)}
+          </div> */}
+          <div className="discount-container">
+            <form onSubmit={applyPromoCode} className="discount-form">
+              <label htmlFor="promocode" className="label-promocode">
+                PROMOCODE:
+              </label>
+              <input
+                type="text"
+                id="promocode"
+                className="input-promo"
+                value={promoCode}
+                onChange={(e): void => setPromoCode(e.target.value)}
+              />
+              <Button type="submit" className="bg-dark" disabled={isApplyPromo}>
+                Apply
+              </Button>
+              {showMessage.type && (
+                <div
+                  className={`toast ${showMessage.type === 'success' || showMessage.type === 'error' ? 'show' : ''}`}
+                >
+                  {showMessage.text}
+                </div>
+              )}
+            </form>
+            <p className="total-price">
+              Total Price: ${(item.totalPrice?.centAmount / 100).toFixed(2)}
+            </p>
           </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
         for debug !!! Delete after
         <ul>
           <li>version: {item.version} </li>
@@ -286,13 +363,10 @@ const Basket: React.FC = () => {
           </p>
         </div>
       ) : (
-        <>
+        <div>
           <h1>Basket</h1>
           <div>{renderCartItem(cartItems)}</div>
-          <div className="shopping-cart">
-            {<ClearCartButton onClearCart={clearCart} />}
-          </div>
-        </>
+        </div>
       )}
     </div>
   );
