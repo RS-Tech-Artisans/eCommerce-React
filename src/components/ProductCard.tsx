@@ -15,6 +15,8 @@ export const formatPrice = (price: number, currency: string) => {
   }).format(price / 100);
 };
 
+const SIZE_DESCRIPTION = 250;
+
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
   name,
@@ -91,10 +93,42 @@ const ProductCard: React.FC<ProductCardProps> = ({
     }
   };
 
+  const truncateDescription = (text: string, maxLength: number) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.substr(0, maxLength) + '...';
+  };
+
   return (
     <div className="product-card">
       <div className="product-image-wrapper">
         <img src={imageUrl} alt={name} className="product-image" />
+      </div>
+
+      <div className="product-content">
+        <div className="product-details">
+          <h3 className="product-title">{name}</h3>
+
+          <div className="price-wrapper">
+            {discountedPrice ? (
+              <div className="prices">
+                <span className="original-price">
+                  {formatPrice(originalPrice, currency)}
+                </span>
+                <span className="discounted-price">
+                  {formatPrice(discountedPrice, currency)}
+                </span>
+              </div>
+            ) : (
+              <div className="prices">
+                <span>{formatPrice(originalPrice, currency)}</span>
+              </div>
+            )}
+          </div>
+
+          <p>{truncateDescription(description, SIZE_DESCRIPTION)}</p>
+        </div>
       </div>
       <div className="buttons-card">
         <Link to={`/catalog/product/${id}`} className="view-details-button">
@@ -107,29 +141,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
         >
           {isInCart ? 'In Cart' : 'Add to Cart'} 🛒
         </button>
-      </div>
-
-      <div className="product-content">
-        <div className="product-details">
-          <h3>{name}</h3>
-          <p>{description}</p>
-        </div>
-        <div className="price-wrapper">
-          {discountedPrice ? (
-            <div className="prices">
-              <span className="original-price">
-                {formatPrice(originalPrice, currency)}
-              </span>
-              <span className="discounted-price">
-                {formatPrice(discountedPrice, currency)}
-              </span>
-            </div>
-          ) : (
-            <div className="prices">
-              <span>{formatPrice(originalPrice, currency)}</span>
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );

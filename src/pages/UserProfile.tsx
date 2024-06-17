@@ -160,12 +160,9 @@ export default function UserProfile() {
           );
 
           if (sectionInformation && sectionDefault && sectionSaved) {
-            sectionInformation.style.background =
-              'linear-gradient(0.25turn, rgb(174 174 174 / 48%), rgb(10 8 7 / 78%))';
-            sectionDefault.style.background =
-              'linear-gradient(0.25turn, rgb(174 174 174 / 48%), rgb(10 8 7 / 78%))';
-            sectionSaved.style.background =
-              'linear-gradient(0.25turn, rgb(174 174 174 / 48%), rgb(10 8 7 / 78%))';
+            sectionInformation.style.background = 'rgba(10, 8, 7, 0.2)';
+            sectionDefault.style.background = 'rgba(10, 8, 7, 0.2)';
+            sectionSaved.style.background = 'rgba(10, 8, 7, 0.2)';
           }
         }}
         disabled={flagEditData && true}

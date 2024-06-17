@@ -1,7 +1,7 @@
 .view-details-button,
 .add-to-cart-button {
   display: block;
-  background-color: #007bff;
+  background-color: #1b9fc6;
   color: #fff;
   text-align: center;
   padding: 8px 16px;
@@ -9,12 +9,12 @@
   border: none;
   border-radius: 4px;
   transition: background-color 0.3s ease;
-  margin: 20px;
+  margin: 10px;
   cursor: pointer;
 }
 
 .view-details-button:hover {
-  background-color: #0056b3;
+  background-color: #1885a7;
 }
 
 .add-to-cart-button:hover {
@@ -22,7 +22,7 @@
 }
 
 .add-to-cart-button {
-  background-color: #ffcc00;
+  background-color: #e4ac03;
   margin-left: 10px;
 }
 
@@ -35,13 +35,15 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
-  width: 35vw;
-  margin: 10px;
-  padding-top: 30px;
+  width: 320px;
+  max-height: 530px;
+  margin: 20px;
+  padding: 10px;
   text-align: center;
   background: #fff;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -59,17 +61,14 @@
 .product-image-wrapper {
   display: flex;
   justify-content: center;
-  width: 100%;
 }
 
 .product-image {
-  width: 100%;
-  height: auto;
-  max-width: 250px;
+  max-height: 160px;
+  width: 200px;
 }
 
 .product-content {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,18 +76,22 @@
 }
 
 .product-details {
+  background-color: #fff;
+  width: 270px;
   padding: 16px;
-  flex-grow: 1;
   transition:
     background-color 0.3s ease,
     transform 0.3s ease,
     box-shadow 0.3s ease;
 }
 
+.product-title {
+  padding: 10px;
+  font-size: 1em;
+}
+
 .product-card:hover .product-details {
-  background-color: #cff1fc;
   transform: translateY(-1px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .prices {
@@ -98,6 +101,7 @@
   width: 100%;
   text-align: center;
   margin-top: auto;
+  font-weight: 600;
 }
 
 .original-price {
@@ -113,12 +117,11 @@
 
 .buttons-card {
   display: flex;
-  gap: 10px;
+  align-items: center;
 }
 
 @media (max-width: 1250px) {
   .product-card {
-    width: 60vw;
     padding-top: 20px;
   }
 }

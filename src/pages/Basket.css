@@ -8,13 +8,14 @@
   font-family: Arial, sans-serif;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .cart-items {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  background-color: #fff;
 }
 
 .cart-item {
@@ -22,6 +23,8 @@
   margin-bottom: 20px;
   border-bottom: 1px solid #ccc;
   padding-bottom: 20px;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .product-image {
@@ -32,10 +35,14 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+  width: 320px;
+}
+
+.product-name h3 {
+  font-size: 1.1em;
 }
 
 .product-name {
-  font-size: 1.4em;
   color: #333;
 }
 
@@ -100,7 +107,7 @@
 
 .empty-cart-message a {
   display: inline-block;
-  background-color: #007bff;
+  background-color: #1b9fc6;
   color: #ffffff;
   padding: 10px 20px;
   text-decoration: none;
@@ -109,10 +116,103 @@
 }
 
 .empty-cart-message a:hover {
-  background-color: #0056b3;
+  background-color: #1885a7;
 }
 
-.view-details-basket {
+.discount-form {
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.discount-container {
+  padding: 10px;
+}
+
+.input-promo {
+  margin-right: 20px;
+}
+
+.item-count {
+  display: flex;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  color: #333;
+}
+
+.item-count input {
+  padding: 5px 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 60px;
+  text-align: center;
+  background-color: #fff;
+  color: #000;
+  transition: border-color 0.3s;
+}
+
+.item-count input:focus {
+  border-color: #1b9fc6;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.control-buttons {
+  display: flex;
+  align-items: center;
+}
+.cart-buttons {
+  display: flex;
+  padding-left: 20px;
+}
+
+.cart-button {
+  background-color: transparent;
+  border: none;
+  padding: 5px 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+  margin: 0 5px;
+  color: #212529;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  font-size: 2.5em;
+  right: 20px;
+  background-color: #1b9fc6;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 4px;
+  animation:
+    slideIn 0.5s forwards,
+    fadeOut 2.5s forwards;
+}
+
+.label-promocode {
+  font-weight: 600;
+  font-size: 25px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @media (max-width: 970px) {
@@ -126,6 +226,14 @@
   .cart {
     padding: 15px;
     margin: 0px 15%;
+  }
+}
+
+@media (max-width: 800px) {
+  .discount-form {
+    flex-direction: column;
+    height: 150px;
+    justify-content: space-between;
   }
 }
 
