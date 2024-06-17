@@ -129,7 +129,7 @@ const Basket: React.FC = () => {
             type: 'success',
             text: 'Your promocode was successfully applied',
           });
-          setIsApplyPromo(true)
+          setIsApplyPromo(true);
           setTimeout(async () => {
             await fetchUpdatedCartData();
             setShowMessage({ type: null, text: null });
@@ -144,7 +144,7 @@ const Basket: React.FC = () => {
           }, 2000);
         }
       } else {
-        setIsApplyPromo(false)
+        setIsApplyPromo(false);
         setShowMessage({
           type: 'error',
           text: `The promotional code ${promoCode} is not valid.`,
@@ -315,10 +315,7 @@ const Basket: React.FC = () => {
                 value={promoCode}
                 onChange={(e): void => setPromoCode(e.target.value)}
               />
-              <Button
-                type="submit"
-                className="bg-dark"
-                disabled={isApplyPromo}>
+              <Button type="submit" className="bg-dark" disabled={isApplyPromo}>
                 Apply
               </Button>
               {showMessage.type && (
@@ -330,8 +327,7 @@ const Basket: React.FC = () => {
               )}
             </form>
             <p className="total-price">
-              Total Price: $
-              {(item.totalPrice?.centAmount / 100).toFixed(2)}
+              Total Price: ${(item.totalPrice?.centAmount / 100).toFixed(2)}
             </p>
           </div>
         </div>
