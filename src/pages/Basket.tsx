@@ -294,9 +294,12 @@ const Basket: React.FC = () => {
               </div>
             ))}
           </div>
-          <div className="total-price">
-            Total Price: ${(item.totalPrice?.centAmount / 100).toFixed(2)}
+          <div className="shopping-cart">
+            {<ClearCartButton onClearCart={clearCart} />}
           </div>
+          {/* <div className="total-price">
+            Total Price: ${(item.totalPrice?.centAmount / 100).toFixed(2)}
+          </div> */}
           <div className="discount-container">
             <form onSubmit={applyPromoCode} className="discount-form">
               <label htmlFor="promocode" className="label-promocode">
@@ -321,7 +324,7 @@ const Basket: React.FC = () => {
               )}
             </form>
             <p className="total-price">
-              Total Price with promocode: $
+              Total Price: $
               {(item.totalPrice?.centAmount / 100).toFixed(2)}
             </p>
           </div>
@@ -361,9 +364,6 @@ const Basket: React.FC = () => {
         <div>
           <h1>Basket</h1>
           <div>{renderCartItem(cartItems)}</div>
-          <div className="shopping-cart">
-            {<ClearCartButton onClearCart={clearCart} />}
-          </div>
         </div>
       )}
     </div>
