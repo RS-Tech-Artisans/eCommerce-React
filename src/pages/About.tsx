@@ -73,29 +73,23 @@ const dataAboutUs: AboutData[] = [
 export default function About() {
   return (
     <>
-      <h1>About Us</h1>
+      <h1 className="about-title">About Us</h1>
       <Container>
-        <h2>
-          This team consists of people who are seriously pursuing their goal and
-          are ready to go to the end. Excellent teamwork and the concept that
-          everyone is responsible for the result are key to refining the
-          creation of this site.
-        </h2>
         {dataAboutUs.map((el) => (
           <div
-            className="container-autor"
+            className="container-author"
             key={el.name}
             style={{
-              background: 'linear-gradient(0.25turn, #181b35, #b9f3ff)',
+              background: '#FFF',
               color: '#000',
             }}
           >
             <div className="img-container">
-              <img src={el.img} alt="foto" className="img-autors" />
+              <img src={el.img} alt="foto" className="img-authors" />
             </div>
             <div className="p-3">
               <div className="d-flex">
-                <h2 className="mr-5">{el.name}</h2>
+                <h2 className="name-title">{el.name}</h2>
                 <div>
                   <a
                     href={el.linkToGit}
@@ -118,6 +112,14 @@ export default function About() {
             </div>
           </div>
         ))}
+
+        <h2>
+          This team consists of people who are seriously pursuing their goal and
+          are ready to go to the end. Excellent teamwork and the concept that
+          everyone is responsible for the result are key to refining the
+          creation of this site.
+        </h2>
+
         <a
           href="https://rs.school/courses/javascript-ru"
           target="_blank"
