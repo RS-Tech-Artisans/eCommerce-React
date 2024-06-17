@@ -13,12 +13,12 @@ import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import React from 'react';
 import './ProductDetail.css';
-//import { useCart } from '../utils/CartContext';
 import { useSession } from '../utils/SessionContext';
 import { removeProductFromCart } from '../utils/api/removeProductFromCart';
 import { Cart } from '@commercetools/platform-sdk';
 import { fetchGetCartData } from '../utils/api/getLastCart';
 import { addProduct } from '../utils/api/addProduct';
+import { useCart } from '../utils/CartContext';
 
 const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
@@ -26,7 +26,7 @@ const ProductDetail: React.FC = () => {
   const [attributes, setAttributes] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
   const [isInCart, setIsInCart] = useState(false);
-  //const { setCart } = useCart();
+  const { setCartData } = useCart();
   const { token } = useSession();
   const [IdRecord, setIdRecord] = useState<string>('');
   const [cartItems, setCartItems] = useState<Cart | null>(null);
@@ -35,11 +35,10 @@ const ProductDetail: React.FC = () => {
     console.log('fetchCartFromApi');
     try {
       const response: Cart = await fetchGetCartData(token);
-      console.log('get response fetchGetCartData', response);
-      console.log('response.lineItems.length', response.lineItems.length);
 
       if (response) {
         setCartItems(response);
+        setCartData(response);
       }
 
       localStorage.setItem('cartitems', JSON.stringify(response));
