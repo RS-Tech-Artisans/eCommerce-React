@@ -209,7 +209,6 @@ const Basket: React.FC = () => {
                 {itemProduct.variant?.images?.[0]?.url && (
                   <img
                     src={itemProduct.variant.images[0].url}
-                    width="200px"
                     alt={itemProduct.name['en-US']}
                     className="product-image"
                   />
