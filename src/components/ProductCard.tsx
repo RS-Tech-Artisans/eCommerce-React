@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './ProductCard.css';
 import { ProductCardProps } from '../utils/Interfaces';
 import { Link } from 'react-router-dom';
-//import { useCart } from '../utils/CartContext';
 import { Cart } from '@commercetools/platform-sdk';
 //import { fetchGetCartData } from '../utils/api/getLastCart';
 //import { useSession } from '../utils/SessionContext';
@@ -26,15 +25,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const discountedPrice = price.discounted?.value.centAmount;
   const currency = price.value.currencyCode;
   const [isInCart, setIsInCart] = useState<boolean>(false);
-  //const { setCart } = useCart();
-  //const [cartItems, setCartItems] = useState<Cart | null>(null);
   //const { token } = useSession();
   //const [product, setProduct] = useState<ProductCardProps | null>(null);
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     setIsInCart(cart.some((item: { id: string }) => item.id === id));
-
   }, [id]);
   /*
     useEffect(() => {
@@ -59,17 +55,21 @@ const ProductCard: React.FC<ProductCardProps> = ({
   */
   const addToCart = async () => {
     console.log(JSON.parse(localStorage.getItem('cartitems') || '[]'));
-    const CartItems: Cart = JSON.parse(localStorage.getItem('cartitems') || '[]')
+    const CartItems: Cart = JSON.parse(
+      localStorage.getItem('cartitems') || '[]'
+    );
 
-    console.log('cartItems', CartItems)
-    console.log('cartItems.id', CartItems.id)
-    console.log('cartItems.version', CartItems.version)
-    console.log('id', id)
+    console.log('cartItems', CartItems);
+    console.log('cartItems.id', CartItems.id);
+    console.log('cartItems.version', CartItems.version);
+    console.log('id', id);
     try {
       if (CartItems) {
         await addProduct(CartItems.id, CartItems.version, id);
-        console.log(JSON.parse(localStorage.getItem('cartitems') || '[]'));
         localStorage.setItem('cartitems', JSON.stringify(CartItems));
+        //const updatedCart = [...cart, { id, name, price }];
+        setIsInCart(true);
+        //setCart(updatedCart);
       }
     } catch (error) {
       console.error('Error fetching cart data:', error);

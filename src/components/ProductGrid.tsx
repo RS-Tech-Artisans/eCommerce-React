@@ -12,7 +12,9 @@ import { getBrandsFromAPI } from '../utils/api/getBrands';
 import { getSizesFromAPI } from '../utils/api/getSizes';
 import { getDisplaysFromAPI } from '../utils/api/getDisplays';
 import { getCategoriesFromAPI } from '../utils/api/getCategories';
-import { Category } from '@commercetools/platform-sdk';
+import { Cart, Category } from '@commercetools/platform-sdk';
+import { useSession } from '../utils/SessionContext';
+import { fetchGetCartData } from '../utils/api/getLastCart';
 
 const ProductGrid: React.FC<ProductGridProps> = ({
   products,
@@ -38,49 +40,69 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   const [categories, setCategories] = useState<Category[]>([]);
 
   const [loadedLimitProductsCount, setLoadedProductsCount] = useState(0);
+
   const COUNT_PRODUCT = 4;
+  const { token } = useSession();
+
+  const getCategories = async () => {
+    try {
+      const fetchedCategories = await getCategoriesFromAPI();
+      setCategories(fetchedCategories.results);
+    } catch (error) {
+      console.error('Error fetching Categories:', error);
+    }
+  };
+
+  const fetchBrands = async () => {
+    try {
+      const fetchedBrands = await getBrandsFromAPI();
+      setBrands(fetchedBrands);
+    } catch (error) {
+      console.error('Error fetching brands:', error);
+    }
+  };
+
+  const fetchSizes = async () => {
+    try {
+      const fetchedSizes = await getSizesFromAPI();
+      setSizes(fetchedSizes);
+    } catch (error) {
+      console.error('Error fetching sizes:', error);
+    }
+  };
+
+  const fetchDisplays = async () => {
+    try {
+      const fetchedDisplays = await getDisplaysFromAPI();
+      setDisplays(fetchedDisplays);
+    } catch (error) {
+      console.error('Error fetching Displays:', error);
+    }
+  };
+
+  const fetchCartFromApi = async () => {
+    console.log('fetchCartFromApi');
+    try {
+      const response: Cart = await fetchGetCartData(token);
+      if (response) {
+        setCartItems(response);
+      }
+      localStorage.setItem('cartitems', JSON.stringify(response));
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
 
   useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const fetchedCategories = await getCategoriesFromAPI();
-        setCategories(fetchedCategories.results);
-      } catch (error) {
-        console.error('Error fetching Categories:', error);
-      }
-    };
     getCategories();
-
-    const fetchBrands = async () => {
-      try {
-        const fetchedBrands = await getBrandsFromAPI();
-        setBrands(fetchedBrands);
-      } catch (error) {
-        console.error('Error fetching brands:', error);
-      }
-    };
     fetchBrands();
-
-    const fetchSizes = async () => {
-      try {
-        const fetchedSizes = await getSizesFromAPI();
-        setSizes(fetchedSizes);
-      } catch (error) {
-        console.error('Error fetching sizes:', error);
-      }
-    };
     fetchSizes();
-
-    const fetchDisplays = async () => {
-      try {
-        const fetchedDisplays = await getDisplaysFromAPI();
-        setDisplays(fetchedDisplays);
-      } catch (error) {
-        console.error('Error fetching Displays:', error);
-      }
-    };
     fetchDisplays();
   }, []);
+
+  useEffect(() => {
+    fetchCartFromApi();
+  }, [token]);
 
   const loadMoreProducts = () => {
     setLoadedProductsCount(loadedLimitProductsCount + COUNT_PRODUCT);

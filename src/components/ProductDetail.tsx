@@ -28,74 +28,79 @@ const ProductDetail: React.FC = () => {
   const [isInCart, setIsInCart] = useState(false);
   //const { setCart } = useCart();
   const { token } = useSession();
-  const [IdCart, setIdCart] = useState<string>('');
+  const [IdRecord, setIdRecord] = useState<string>('');
   const [cartItems, setCartItems] = useState<Cart | null>(null);
 
-  useEffect(() => {
-    const fetchCartFromApi = async () => {
-      console.log('fetchCartFromApi');
+  const fetchCartFromApi = async () => {
+    console.log('fetchCartFromApi');
+    try {
+      const response: Cart = await fetchGetCartData(token);
+      console.log('get response fetchGetCartData', response);
+      console.log('response.lineItems.length', response.lineItems.length);
+
+      if (response) {
+        setCartItems(response);
+      }
+
+      localStorage.setItem('cartitems', JSON.stringify(response));
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+
+  const checkProductState = () => {
+    const cartData = JSON.parse(localStorage.getItem('cartitems') || '{}');
+    const lineItems = cartData.lineItems || [];
+    const foundItem = lineItems.find(
+      (item: { productId: string }) => item.productId === id
+    );
+
+    if (foundItem) {
+      setIdRecord(foundItem.id);
+      setIsInCart(true);
+    } else {
+      setIsInCart(false);
+    }
+  };
+
+  const getProductData = async () => {
+    if (id) {
       try {
-        const response: Cart = await fetchGetCartData(token);
-        console.log('get response fetchGetCartData', response);
-        console.log('response.lineItems.length', response.lineItems.length);
+        const fetchProducts = await getProductDetailById(id);
+        const productDetail = mapProducts([fetchProducts]);
+        const images1 = fetchProducts?.masterVariant?.images?.map(
+          (image: ProductImages) => image.url
+        );
+        const atributesArray = fetchProducts?.masterVariant?.attributes?.map(
+          (brand: ProductAttributes) => brand.value
+        );
 
-        if (response) {
-          setCartItems(response);
-        }
-
-        localStorage.setItem('cartitems', JSON.stringify(response));
+        setAttributes(atributesArray || []);
+        setProduct(productDetail[0]);
+        setImages(images1 || []);
       } catch (error) {
-        console.error('Error fetching cart data:', error);
+        console.error('Error fetching product details:', error);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
     fetchCartFromApi();
-    const getProductData = async () => {
-      if (id) {
-        try {
-          const fetchProducts = await getProductDetailById(id);
-          const productDetail = mapProducts([fetchProducts]);
-          const images1 = fetchProducts?.masterVariant?.images?.map(
-            (image: ProductImages) => image.url
-          );
-          const atributesArray = fetchProducts?.masterVariant?.attributes?.map(
-            (brand: ProductAttributes) => brand.value
-          );
-
-          setAttributes(atributesArray || []);
-          setProduct(productDetail[0]);
-          setImages(images1 || []);
-
-          const cartData = JSON.parse(
-            localStorage.getItem('cartitems') || '{}'
-          );
-          const lineItems = cartData.lineItems || [];
-          const foundItem = lineItems.find(
-            (item: { productId: string }) => item.productId === id
-          );
-          if (foundItem) {
-            console.log(foundItem.id, '         foundItem.id');
-            setIdCart(foundItem.id);
-            setIsInCart(true);
-          } else {
-            setIsInCart(false);
-          }
-        } catch (error) {
-          console.error('Error fetching product details:', error);
-        }
-      }
-    };
     getProductData();
+    checkProductState();
   }, [id]);
 
   const addToCart = async () => {
-    console.log(JSON.parse(localStorage.getItem('cartitems') || '[]'));
-    console.log('product', product);
+    console.log('addToCart product Detail', product);
 
     try {
       if (cartItems && product) {
         await addProduct(cartItems.id, cartItems.version, product.id);
-        console.log(JSON.parse(localStorage.getItem('cartitems') || '[]'));
-        localStorage.setItem('cartitems', JSON.stringify(cartItems));
+        await fetchCartFromApi();
+        setIsInCart(true);
+        checkProductState();
+        // console.log(JSON.parse(localStorage.getItem('cartitems') || '[]'));
+        // localStorage.setItem('cartitems', JSON.stringify(cartItems));
       }
     } catch (error) {
       console.error('Error fetching cart data:', error);
@@ -129,14 +134,17 @@ const ProductDetail: React.FC = () => {
   const discountedPrice = product?.price?.discounted?.value.centAmount;
   const typeAttribute: string[] = ['Brand: ', 'Size: ', 'Display: '];
 
-  const removeProduct = async (idProduct: string) => {
+  const removeProduct = async (record: string) => {
     try {
-      await removeProductFromCart(token, idProduct);
+      await removeProductFromCart(token, record);
+      await fetchCartFromApi();
+      setIsInCart(false);
+      checkProductState();
+
       //await fetchUpdatedCartData();
       //cart update
-      const updatedCart: Cart = await fetchGetCartData(token);
-      localStorage.setItem('cartitems', JSON.stringify(updatedCart));
-      setIsInCart(false);
+      // const updatedCart: Cart = await fetchGetCartData(token);
+      // localStorage.setItem('cartitems', JSON.stringify(updatedCart));
     } catch (error) {
       console.error('Error removing item from cart:', error);
     }
@@ -216,7 +224,7 @@ const ProductDetail: React.FC = () => {
                   {isInCart && (
                     <button
                       className="remove-from-cart"
-                      onClick={() => removeProduct(IdCart!)}
+                      onClick={() => removeProduct(IdRecord!)}
                     >
                       Remove from Cart
                     </button>

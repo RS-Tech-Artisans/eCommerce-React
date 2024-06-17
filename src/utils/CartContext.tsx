@@ -27,7 +27,7 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
+    const savedCart = localStorage.getItem('cartitems');
     if (savedCart) {
       setCart(JSON.parse(savedCart));
     }
