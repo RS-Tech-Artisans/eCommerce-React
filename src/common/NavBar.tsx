@@ -10,14 +10,14 @@ import { useEffect, useState } from 'react';
 
 function NavBar() {
   const { token } = useSession();
-  const { cart } = useCart();
+  const { itemIds } = useCart();
   const [cartCount, setCartCount] = useState<number>(0);
 
   useEffect(() => {
-    if (cart) {
-      setCartCount(cart.length);
+    if (itemIds) {
+      setCartCount(itemIds.length);
     }
-  }, [cart]);
+  }, [itemIds]);
 
   return (
     <div>

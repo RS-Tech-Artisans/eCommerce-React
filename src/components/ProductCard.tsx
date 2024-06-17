@@ -3,9 +3,9 @@ import './ProductCard.css';
 import { ProductCardProps } from '../utils/Interfaces';
 import { Link } from 'react-router-dom';
 import { Cart } from '@commercetools/platform-sdk';
-//import { fetchGetCartData } from '../utils/api/getLastCart';
-//import { useSession } from '../utils/SessionContext';
 import { addProduct } from '../utils/api/addProduct';
+import { fetchGetCartData } from '../utils/api/getLastCart';
+import { useSession } from '../utils/SessionContext';
 
 export const formatPrice = (price: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
@@ -25,62 +25,70 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const discountedPrice = price.discounted?.value.centAmount;
   const currency = price.value.currencyCode;
   const [isInCart, setIsInCart] = useState<boolean>(false);
-  //const { token } = useSession();
-  //const [product, setProduct] = useState<ProductCardProps | null>(null);
+  const { token } = useSession();
+  const [cartItems, setCartItems] = useState<Cart | null>(null);
+
+  // const checkCart = () => {
+  //   const getSavedCart = localStorage.getItem('cartitems');
+  //   if (getSavedCart) {
+  //     const cart: Cart = JSON.parse(getSavedCart);
+  //     const isItemInCart = cart.lineItems.some((item) => id === item.productId);
+  //     setIsInCart(isItemInCart);
+  //   }
+  // }
+
+  const checkProductState = () => {
+    const cartData = JSON.parse(localStorage.getItem('cartitems') || '{}');
+    const lineItems = cartData.lineItems || [];
+    const foundItem = lineItems.find(
+      (item: { productId: string }) => item.productId === id
+    );
+
+    if (foundItem) {
+      setIsInCart(true);
+    } else {
+      setIsInCart(false);
+    }
+  };
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    setIsInCart(cart.some((item: { id: string }) => item.id === id));
+    //checkCart();
+    checkProductState();
   }, [id]);
-  /*
-    useEffect(() => {
-      const fetchCartFromApi = async () => {
-        console.log('fetchCartFromApi');
-        try {
-          const response: Cart = await fetchGetCartData(token);
-          console.log('get response fetchGetCartData', response);
-          console.log('response.lineItems.length', response.lineItems.length);
-  
-          if (response) {
-            setCartItems(response);
-          }
-  
-          localStorage.setItem('cartitems', JSON.stringify(response));
-        } catch (error) {
-          console.error('Error fetching cart data:', error);
-        }
-      };
-      fetchCartFromApi();
-    });
-  */
+
+  const fetchCartFromApi = async () => {
+    console.log('fetchCartFromApi');
+    try {
+      const response: Cart = await fetchGetCartData(token);
+      console.log('get response fetchGetCartData', response);
+      console.log('response.lineItems.length', response.lineItems.length);
+
+      if (response) {
+        setCartItems(response);
+        console.log('add info about cartItems', cartItems);
+      }
+
+      localStorage.setItem('cartitems', JSON.stringify(response));
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+
   const addToCart = async () => {
-    console.log(JSON.parse(localStorage.getItem('cartitems') || '[]'));
     const CartItems: Cart = JSON.parse(
       localStorage.getItem('cartitems') || '[]'
     );
 
-    console.log('cartItems', CartItems);
-    console.log('cartItems.id', CartItems.id);
-    console.log('cartItems.version', CartItems.version);
-    console.log('id', id);
     try {
       if (CartItems) {
         await addProduct(CartItems.id, CartItems.version, id);
-        localStorage.setItem('cartitems', JSON.stringify(CartItems));
-        //const updatedCart = [...cart, { id, name, price }];
+        await fetchCartFromApi();
         setIsInCart(true);
-        //setCart(updatedCart);
+        checkProductState();
       }
     } catch (error) {
       console.error('Error fetching cart data:', error);
     }
-    /*
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const updatedCart = [...cart, { id, name, price }];
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-    setIsInCart(true);
-    setCart(updatedCart);
-    */
   };
 
   return (
