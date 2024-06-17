@@ -14,9 +14,8 @@ function NavBar() {
   const [cartCount, setCartCount] = useState<number>(0);
 
   useEffect(() => {
-    if (itemIds) {
-      setCartCount(itemIds.length);
-    }
+    console.log('!!!!!!!!!!!', itemIds);
+    setCartCount(itemIds);
   }, [itemIds]);
 
   return (
@@ -36,7 +35,7 @@ function NavBar() {
         )}
         <Link to="/basket" className="basket-link">
           <SlBasket />
-          {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+          {cartCount > 0 ? <span className="cart-count">{cartCount}</span> : ''}
         </Link>
         {token && <LogoutButton />}
       </Navbar>

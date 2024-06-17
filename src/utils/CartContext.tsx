@@ -10,29 +10,29 @@ import {
 
 type CartContextType = {
   cartId: string | null;
-  itemIds: string[];
+  itemIds: number;
   setCartData: (cartData: Cart | null) => void;
 };
 
 export const CartContext = createContext<CartContextType>({
   cartId: null,
-  itemIds: [],
+  itemIds: 0,
   setCartData: () => {},
 });
 
 export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   const [cartId, setCartId] = useState<string | null>(null);
-  const [itemIds, setItemIds] = useState<string[]>([]);
+  const [itemIds, setItemIds] = useState<number>(0);
 
   const setCartData = (cartData: Cart | null) => {
     if (cartData) {
       const { id, lineItems } = cartData;
       setCartId(id);
       const ids = lineItems.map((item) => item.id);
-      setItemIds(ids);
+      setItemIds(ids.length);
     } else {
       setCartId(null);
-      setItemIds([]);
+      setItemIds(0);
     }
   };
 
@@ -43,13 +43,6 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
       setCartData(parsedCart);
     }
   }, []);
-
-  useEffect(() => {
-    if (cartId) {
-      const cartData = { id: cartId, lineItems: itemIds.map((id) => ({ id })) };
-      localStorage.setItem('cartitems', JSON.stringify(cartData));
-    }
-  }, [cartId, itemIds]);
 
   return (
     <CartContext.Provider value={{ cartId, itemIds, setCartData }}>

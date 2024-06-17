@@ -6,6 +6,7 @@ import { Cart } from '@commercetools/platform-sdk';
 import { addProduct } from '../utils/api/addProduct';
 import { fetchGetCartData } from '../utils/api/getLastCart';
 import { useSession } from '../utils/SessionContext';
+import { useCart } from '../utils/CartContext';
 
 export const formatPrice = (price: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
@@ -26,7 +27,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const currency = price.value.currencyCode;
   const [isInCart, setIsInCart] = useState<boolean>(false);
   const { token } = useSession();
-  const [cartItems, setCartItems] = useState<Cart | null>(null);
+  const { setCartData } = useCart();
 
   // const checkCart = () => {
   //   const getSavedCart = localStorage.getItem('cartitems');
@@ -64,8 +65,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       console.log('response.lineItems.length', response.lineItems.length);
 
       if (response) {
-        setCartItems(response);
-        console.log('add info about cartItems', cartItems);
+        setCartData(response);
       }
 
       localStorage.setItem('cartitems', JSON.stringify(response));
