@@ -21,34 +21,52 @@ const dataAboutUs: AboutData[] = [
     name: 'Pavel',
     gitName: 'guz86',
     linkToGit: 'https://github.com/guz86',
-    role: 'Team lead, scratch master and just developer',
+    role: 'Team lead, scratch master and just developer.',
     img: autor1,
     about:
-      'He began his career as a bank programmer, then transitioned into game development and website creation. Along the way, he worked on search engine optimization (SEO). Currently, he is a student learning frontend development.',
+      'He began his career as a bank programmer, then transitioned into game ' +
+      'development and website creation. Along the way, he worked on search ' +
+      'engine optimization (SEO). Currently, he is a student learning frontend ' +
+      'development.',
     contribution:
-      'He organized the teams workflow, assisted with complex issues, maintained repository cleanliness, and addressed problems and questions during cross-check reviews. He handled integration with commercetools, project setup, catalog management, issue fixing post cross-checks, proposed implementation solutions for the team, and aimed to provide an understanding of real-world project work',
+      'He organized the teams workflow, assisted with complex issues, maintained ' +
+      'repository cleanliness, and addressed problems and questions during ' +
+      'cross-check reviews. He handled integration with commercetools, project ' +
+      'setup, catalog management, issue fixing post cross-checks, proposed ' +
+      'implementation solutions for the team, and aimed to provide an understanding ' +
+      'of real-world project work.',
   },
   {
     name: 'Vladyslava',
     gitName: 'vlaru',
     linkToGit: 'https://github.com/vlaru',
-    role: 'team-member',
+    role: 'Team-member.',
     img: autor2,
     about:
-      'I am self-taught programmer from scratch, before i had beginning for my learning, i had working like self-employer in textile-workshop field, early i had worked in a bank in the department "quality manager of customer"',
+      'I am a self-taught programmer from scratch. Before I began my learning, ' +
+      'I worked as a self-employed in the textile workshop field. Earlier, I ' +
+      'had worked in a bank in the department "quality manager of customer".',
     contribution:
-      'actively participated in the site development process, worked with the products detail page,worked on the navigation bar and page routing, searching products bar, applying promocode for total price, project setup',
+      'Actively participated in the site development process, worked with the ' +
+      'products detail page, worked on the navigation bar and page routing, ' +
+      'searching products bar, applying promocode for total price, project setup.',
   },
   {
     name: 'Veronika',
     gitName: 'ranika23',
     linkToGit: 'https://github.com/ranika23',
-    role: 'team-member',
+    role: 'Team-member.',
     img: autor3,
     about:
-      'Main current area: technical support and support for clients in the banking sector in terms of resolving situations related to the unsuccessful completion of client transactions using bank payment cards. I am currently actively mastering web development, because I see this direction as very interesting for myself.',
+      'Main current area: technical support and support for clients in the banking ' +
+      'sector in terms of resolving situations related to the unsuccessful completion ' +
+      'of client transactions using bank payment cards. I am currently actively ' +
+      'mastering web development, because I see this direction as very interesting ' +
+      'for myself.',
     contribution:
-      'actively participated in the site development process,made a great contribution to the implementation login page and registration page, writed and covered code tests on Jest',
+      'Actively participated in the site development process, made a great ' +
+      'contribution to the implementation of the login page and registration page, ' +
+      'wrote and covered code tests on Jest.',
   },
 ];
 
