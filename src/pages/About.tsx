@@ -37,7 +37,7 @@ const dataAboutUs: AboutData[] = [
     about:
       'I am self-taught programmer from scratch, before i had beginning for my learning, i had working like self-employer in textile-workshop field, early i had worked in a bank in the department "quality manager of customer"',
     contribution:
-      'actively participated in the site development process, worked with the products detail page,worked on the navigation bar and page routing, searching products bar, applying promocode for total price, participated in installing the package for this project',
+      'actively participated in the site development process, worked with the products detail page,worked on the navigation bar and page routing, searching products bar, applying promocode for total price, project setup',
   },
   {
     name: 'Veronika',
@@ -58,10 +58,10 @@ export default function About() {
       <h1>About Us</h1>
       <Container>
         <h2>
-          This team consists of people who are seriously pursuing their goal,
-          and ready to go to the end. Excellent teamwork, the concept that
-          everyone is responsible for the result of this work, refining the
-          creation of this site
+          This team consists of people who are seriously pursuing their goal and
+          are ready to go to the end. Excellent teamwork and the concept that
+          everyone is responsible for the result are key to refining the
+          creation of this site.
         </h2>
         {dataAboutUs.map((el) => (
           <div
@@ -72,8 +72,8 @@ export default function About() {
               color: '#000',
             }}
           >
-            <div className='img-container'>
-              <img src={el.img} alt="foto" className='img-autors'/>
+            <div className="img-container">
+              <img src={el.img} alt="foto" className="img-autors" />
             </div>
             <div className="p-3">
               <div className="d-flex">

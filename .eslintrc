@@ -23,7 +23,7 @@
     "no-plusplus": "off",
     "import/extensions": ["error", "never"],
     "no-console": "warn",
-    "max-len": ["warn", { "code": 1520 }],
+    "max-len": ["warn", { "code": 1500 }],
     "import/no-extraneous-dependencies": [
       "error",
       {
