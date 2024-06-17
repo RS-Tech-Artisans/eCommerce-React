@@ -10,14 +10,12 @@ import { useEffect, useState } from 'react';
 
 function NavBar() {
   const { token } = useSession();
-  const { cart } = useCart();
+  const { itemIds } = useCart();
   const [cartCount, setCartCount] = useState<number>(0);
 
   useEffect(() => {
-    if (cart) {
-      setCartCount(cart.length);
-    }
-  }, [cart]);
+    setCartCount(itemIds);
+  }, [itemIds]);
 
   useEffect(() => {
     const burger = document.querySelector('.burger');
@@ -77,7 +75,11 @@ function NavBar() {
           )}
           <Link to="/basket" className="basket-link">
             <SlBasket />
-            {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+            {cartCount > 0 ? (
+              <span className="cart-count">{cartCount}</span>
+            ) : (
+              ''
+            )}
           </Link>
           {token && <LogoutButton />}
         </div>

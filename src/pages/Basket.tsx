@@ -4,19 +4,20 @@ import './Basket.css';
 import { useSession } from '../utils/SessionContext';
 import { Cart } from '@commercetools/platform-sdk';
 import { fetchGetCartData } from '../utils/api/getLastCart';
-import { addProduct } from '../utils/api/addProduct';
 import { removeCartData } from '../utils/api/removeCartData';
 import ClearCartButton from '../common/ClearCartButton';
 import { getDiscountAPI } from '../utils/api/getDiscountApi';
 import { removeProductFromCart } from '../utils/api/removeProductFromCart';
+
+import { useCart } from '../utils/CartContext';
 import { Button } from 'react-bootstrap';
 import { updateQuantityItem } from '../utils/api/updateQuantityItem';
 import { usePromoCodes } from '../utils/api/getPromoCodes';
 
 const Basket: React.FC = () => {
   const [cartItems, setCartItems] = useState<Cart | null>(null);
-  //const [cartId, setCartId] = useState<string>();
   const { token } = useSession();
+  const { setCartData } = useCart();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [promoCode, setPromoCode] = useState('');
   const [showMessage, setShowMessage] = useState<{
@@ -32,37 +33,11 @@ const Basket: React.FC = () => {
       const response: Cart = await fetchGetCartData(token);
       console.log('get response fetchGetCartData', response);
       console.log('response.lineItems.length', response.lineItems.length);
-      //setCartId(response.id);
+
       if (response) {
-        if (response.lineItems.length === 0) {
-          // we need to be carefull if we clear all product we autocreate new items all time
-          await addProduct(
-            response.id,
-            response.version,
-            '02a7b7d0-8e7b-4841-9171-986d1ff8df93'
-          );
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-
-          await addProduct(
-            response.id,
-            response.version + 3, // we change verion our cart
-            '6ebeb15e-2bc9-4343-aef7-56cfc57c8470'
-          );
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          await addProduct(
-            response.id,
-            response.version + 6,
-            'd92c62c2-deef-439b-8cf8-940511c02bcb'
-          );
-        }
+        localStorage.setItem('cartitems', JSON.stringify(response));
+        setCartItems(response);
       }
-
-      const response2: Cart = await fetchGetCartData(token);
-      localStorage.setItem('cartitems', JSON.stringify(response2));
-
-      // const savedCart = JSON.parse(localStorage.getItem('cartitems') || '{}');
-      // setCartItems(savedCart);
-      setCartItems(response2);
 
       setIsLoading(false);
     } catch (error) {
@@ -76,6 +51,7 @@ const Basket: React.FC = () => {
       const updatedCart: Cart = await fetchGetCartData(token);
       localStorage.setItem('cartitems', JSON.stringify(updatedCart));
       setCartItems(updatedCart);
+      setCartData(updatedCart);
 
       if (updatedCart.lineItems.length === 0) setCartItems(null);
     } catch (error) {
@@ -84,17 +60,6 @@ const Basket: React.FC = () => {
   };
 
   useEffect(() => {
-    // const savedCart = JSON.parse(localStorage.getItem('cartitems') || '{}');
-    // console.log('savedCart: ', savedCart, typeof savedCart);
-    // if (savedCart && Object.keys(savedCart).length > 0) {
-    //   setCartItems(savedCart);
-    //   setIsLoading(false);
-    // } else {
-    //   fetchCartFromApi();
-    // }
-    //setCartExists(savedCart.length > 0);
-    // loadCardId();
-
     localStorage.removeItem('cartitems'); // clear because we every time made new anonym user
     fetchCartFromApi();
   }, [token]);

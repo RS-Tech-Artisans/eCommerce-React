@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './ProductCard.css';
 import { ProductCardProps } from '../utils/Interfaces';
 import { Link } from 'react-router-dom';
+import { Cart } from '@commercetools/platform-sdk';
+import { addProduct } from '../utils/api/addProduct';
+import { fetchGetCartData } from '../utils/api/getLastCart';
+import { useSession } from '../utils/SessionContext';
 import { useCart } from '../utils/CartContext';
 
 export const formatPrice = (price: number, currency: string) => {
@@ -24,19 +28,69 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const discountedPrice = price.discounted?.value.centAmount;
   const currency = price.value.currencyCode;
   const [isInCart, setIsInCart] = useState<boolean>(false);
-  const { setCart } = useCart();
+  const { token } = useSession();
+  const { setCartData } = useCart();
+
+  // const checkCart = () => {
+  //   const getSavedCart = localStorage.getItem('cartitems');
+  //   if (getSavedCart) {
+  //     const cart: Cart = JSON.parse(getSavedCart);
+  //     const isItemInCart = cart.lineItems.some((item) => id === item.productId);
+  //     setIsInCart(isItemInCart);
+  //   }
+  // }
+
+  const checkProductState = () => {
+    const cartData = JSON.parse(localStorage.getItem('cartitems') || '{}');
+    const lineItems = cartData.lineItems || [];
+    const foundItem = lineItems.find(
+      (item: { productId: string }) => item.productId === id
+    );
+
+    if (foundItem) {
+      setIsInCart(true);
+    } else {
+      setIsInCart(false);
+    }
+  };
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    setIsInCart(cart.some((item: { id: string }) => item.id === id));
+    //checkCart();
+    checkProductState();
   }, [id]);
 
-  const addToCart = () => {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const updatedCart = [...cart, { id, name, price }];
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-    setIsInCart(true);
-    setCart(updatedCart);
+  const fetchCartFromApi = async () => {
+    console.log('fetchCartFromApi');
+    try {
+      const response: Cart = await fetchGetCartData(token);
+      console.log('get response fetchGetCartData', response);
+      console.log('response.lineItems.length', response.lineItems.length);
+
+      if (response) {
+        setCartData(response);
+      }
+
+      localStorage.setItem('cartitems', JSON.stringify(response));
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+
+  const addToCart = async () => {
+    const CartItems: Cart = JSON.parse(
+      localStorage.getItem('cartitems') || '[]'
+    );
+
+    try {
+      if (CartItems) {
+        await addProduct(CartItems.id, CartItems.version, id);
+        await fetchCartFromApi();
+        setIsInCart(true);
+        checkProductState();
+      }
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
   };
 
   const truncateDescription = (text: string, maxLength: number) => {
