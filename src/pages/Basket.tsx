@@ -23,6 +23,7 @@ const Basket: React.FC = () => {
     type: 'success' | 'error' | null;
     text: string | null;
   }>({ type: null, text: null });
+  const [isApplyPromo, setIsApplyPromo] = useState<boolean>(false);
   const promoCodesList = usePromoCodes();
 
   const fetchCartFromApi = async () => {
@@ -128,6 +129,7 @@ const Basket: React.FC = () => {
             type: 'success',
             text: 'Your promocode was successfully applied',
           });
+          setIsApplyPromo(true)
           setTimeout(async () => {
             await fetchUpdatedCartData();
             setShowMessage({ type: null, text: null });
@@ -142,6 +144,7 @@ const Basket: React.FC = () => {
           }, 2000);
         }
       } else {
+        setIsApplyPromo(false)
         setShowMessage({
           type: 'error',
           text: `The promotional code ${promoCode} is not valid.`,
@@ -312,7 +315,10 @@ const Basket: React.FC = () => {
                 value={promoCode}
                 onChange={(e): void => setPromoCode(e.target.value)}
               />
-              <Button type="submit" className="bg-dark">
+              <Button
+                type="submit"
+                className="bg-dark"
+                disabled={isApplyPromo}>
                 Apply
               </Button>
               {showMessage.type && (
