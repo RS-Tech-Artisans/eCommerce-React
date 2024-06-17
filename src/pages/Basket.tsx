@@ -61,9 +61,19 @@ const Basket: React.FC = () => {
     }
   };
 
+  const disResponse = async () => {
+    try {
+      const discountResponse = await getDiscount(token);
+      if (discountResponse) setDiscounted(discountResponse);
+    } catch (error) {
+      console.error('Error to add discount:', error);
+    }
+  };
+
   useEffect(() => {
     localStorage.removeItem('cartitems'); // clear because we every time made new anonym user
     fetchCartFromApi();
+    disResponse();
   }, [token]);
 
   // const loadCardId = () => {
