@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './ProductCard.css';
 import { ProductCardProps } from '../utils/Interfaces';
 import { Link } from 'react-router-dom';
-import { useCart } from '../utils/CartContext';
+//import { useCart } from '../utils/CartContext';
+import { Cart } from '@commercetools/platform-sdk';
+//import { fetchGetCartData } from '../utils/api/getLastCart';
+//import { useSession } from '../utils/SessionContext';
+import { addProduct } from '../utils/api/addProduct';
 
 export const formatPrice = (price: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
@@ -22,19 +26,61 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const discountedPrice = price.discounted?.value.centAmount;
   const currency = price.value.currencyCode;
   const [isInCart, setIsInCart] = useState<boolean>(false);
-  const { setCart } = useCart();
+  //const { setCart } = useCart();
+  //const [cartItems, setCartItems] = useState<Cart | null>(null);
+  //const { token } = useSession();
+  //const [product, setProduct] = useState<ProductCardProps | null>(null);
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     setIsInCart(cart.some((item: { id: string }) => item.id === id));
-  }, [id]);
 
-  const addToCart = () => {
+  }, [id]);
+  /*
+    useEffect(() => {
+      const fetchCartFromApi = async () => {
+        console.log('fetchCartFromApi');
+        try {
+          const response: Cart = await fetchGetCartData(token);
+          console.log('get response fetchGetCartData', response);
+          console.log('response.lineItems.length', response.lineItems.length);
+  
+          if (response) {
+            setCartItems(response);
+          }
+  
+          localStorage.setItem('cartitems', JSON.stringify(response));
+        } catch (error) {
+          console.error('Error fetching cart data:', error);
+        }
+      };
+      fetchCartFromApi();
+    });
+  */
+  const addToCart = async () => {
+    console.log(JSON.parse(localStorage.getItem('cartitems') || '[]'));
+    const CartItems: Cart = JSON.parse(localStorage.getItem('cartitems') || '[]')
+
+    console.log('cartItems', CartItems)
+    console.log('cartItems.id', CartItems.id)
+    console.log('cartItems.version', CartItems.version)
+    console.log('id', id)
+    try {
+      if (CartItems) {
+        await addProduct(CartItems.id, CartItems.version, id);
+        console.log(JSON.parse(localStorage.getItem('cartitems') || '[]'));
+        localStorage.setItem('cartitems', JSON.stringify(CartItems));
+      }
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+    /*
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const updatedCart = [...cart, { id, name, price }];
     localStorage.setItem('cart', JSON.stringify(updatedCart));
     setIsInCart(true);
     setCart(updatedCart);
+    */
   };
 
   return (
