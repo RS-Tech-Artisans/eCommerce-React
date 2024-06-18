@@ -1,5 +1,6 @@
 .basket-container {
   padding: 20px;
+  margin: 100px auto;
 }
 
 .cart {
@@ -208,6 +209,11 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+.shopping-cart {
+  text-align: center;
+  color: #ec4a3a;
 }
 
 @keyframes slideIn {
