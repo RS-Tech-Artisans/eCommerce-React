@@ -77,7 +77,6 @@
 
 .total-price {
   margin-top: 20px;
-  font-size: 1.3em;
   font-weight: bold;
   text-align: right;
   color: #333;
@@ -86,7 +85,6 @@
 .total-price-with-discount {
   margin-top: 20px;
   margin-left: 20px;
-  font-size: 1.3em;
   font-weight: bold;
   text-align: right;
   color: gray;
