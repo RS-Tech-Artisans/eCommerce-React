@@ -7,6 +7,7 @@ import { addProduct } from '../utils/api/addProduct';
 import { fetchGetCartData } from '../utils/api/getLastCart';
 import { useSession } from '../utils/SessionContext';
 import { useCart } from '../utils/CartContext';
+import { setTimeout } from 'timers';
 
 export const formatPrice = (price: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
@@ -28,6 +29,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const discountedPrice = price.discounted?.value.centAmount;
   const currency = price.value.currencyCode;
   const [isInCart, setIsInCart] = useState<boolean>(false);
+  const [loaderCart, setLoaderCart] = useState<boolean>(false);
   const { token } = useSession();
   const { setCartData } = useCart();
 
@@ -65,18 +67,20 @@ const ProductCard: React.FC<ProductCardProps> = ({
       const response: Cart = await fetchGetCartData(token);
       console.log('get response fetchGetCartData', response);
       console.log('response.lineItems.length', response.lineItems.length);
-
+      setLoaderCart(false);
       if (response) {
         setCartData(response);
       }
 
       localStorage.setItem('cartitems', JSON.stringify(response));
+     
     } catch (error) {
       console.error('Error fetching cart data:', error);
     }
   };
 
   const addToCart = async () => {
+    setLoaderCart(true);
     const CartItems: Cart = JSON.parse(
       localStorage.getItem('cartitems') || '[]'
     );
@@ -101,7 +105,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
+    <>
+    {loaderCart && <div className="loader"></div>}
     <div className="product-card">
+      
       <div className="product-image-wrapper">
         <img src={imageUrl} alt={name} className="product-image" />
       </div>
@@ -131,6 +138,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
       </div>
       <div className="buttons-card">
+
         <Link to={`/catalog/product/${id}`} className="view-details-button">
           View Details
         </Link>
@@ -139,10 +147,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
           className="add-to-cart-button"
           disabled={isInCart}
         >
+         
           {isInCart ? 'In Cart' : 'Add to Cart'} 🛒
         </button>
       </div>
     </div>
+    </>
   );
 };
 
