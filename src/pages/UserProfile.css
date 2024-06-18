@@ -288,6 +288,10 @@ label {
   right: 15px;
 }
 
+.button-change_wrapper{
+  margin: 40px;
+}
+
 @media (max-width: 900px) {
   .user-profile_information,
   .user-profile_default-addresses,

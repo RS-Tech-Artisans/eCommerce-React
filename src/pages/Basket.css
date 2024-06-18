@@ -39,6 +39,7 @@
 }
 
 .product-name h3 {
+  margin-top: 20px;
   font-size: 1.1em;
 }
 
@@ -133,10 +134,6 @@
   height: 100px;
   display: flex;
   align-items: center;
-}
-
-.discount-container {
-  padding: 10px;
 }
 
 .input-promo {
@@ -245,11 +242,17 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 840px) {
   .discount-form {
     flex-direction: column;
     height: 150px;
     justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .prices {
+    padding: 0;
+    font-size: 20px;
   }
 }
 
@@ -257,5 +260,16 @@
   .cart {
     padding: 10px;
     margin: 0px 10%;
+  }
+
+  .prices {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 450px) {
+
+  .cart {
+    margin: 0px 5px;
   }
 }
