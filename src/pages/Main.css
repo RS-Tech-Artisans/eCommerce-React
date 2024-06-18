@@ -1,5 +1,165 @@
 .container-main_promo {
   margin-top: 20px;
-  background-color: #f3e4e4;
+  margin-left: 220px;
   text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.description-store {
+  font-size: 1.2em;
+}
+
+.header-main {
+  font-size: 1.4em;
+}
+
+.coupon-category {
+  background-color: #ffffff;
+  margin: 0 0 20px;
+  border-radius: 10px;
+  display: flex;
+  transition: 0.1s;
+  position: relative;
+  min-height: 150px;
+  gap: 50px;
+  padding: 10px;
+  max-width: 800px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.coupon-category::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-top: 30px solid #1b9fc6;
+  border-right: 30px solid transparent;
+  border-radius: 10px 0 0 0;
+}
+
+.image-coupon {
+  width: 200px;
+  height: 128px;
+}
+
+.promo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.code {
+  font-size: 1.4em;
+  color: #ec4a3a;
+  font-weight: 650;
+}
+
+.rectangle {
+  margin: 20px;
+  width: 300px;
+  height: 150px;
+  border: 3px solid #1b9fc6;
+  border-radius: 15px;
+  position: relative;
+}
+
+.rectangle-text {
+  font-size: 2em;
+
+  color: #1b9fc6;
+}
+
+.rectangle-text:hover {
+  background-color: #1b9fc6;
+  color: white;
+  border-color: transparent;
+}
+
+.rectangle-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.rectangle {
+  margin: 20px;
+  width: 300px;
+  height: 150px;
+  border: 3px solid #1b9fc6;
+  border-radius: 15px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rectangle:before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 10px;
+  position: absolute;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+  top: -4px;
+  right: 5px;
+}
+
+.rectangle:after {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 10px;
+  position: absolute;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+  left: 5px;
+  bottom: -4px;
+}
+
+.rectangle-text {
+  font-size: 2em;
+  color: #1b9fc6;
+  text-decoration: none;
+}
+
+.rectangle:hover {
+  background-color: #1b9fc6;
+  color: white;
+  border-color: transparent;
+}
+
+.rectangle:hover:before,
+.rectangle:hover:after {
+  display: none;
+}
+
+.rectangle:hover .rectangle-text {
+  color: white;
+}
+
+@media (max-width: 1100px) {
+  .container-main_promo {
+    margin-top: 20px;
+    margin-left: 20px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 550px) {
+  .image-coupon {
+    display: none;
+  }
 }
