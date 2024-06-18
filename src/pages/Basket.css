@@ -272,8 +272,11 @@
 }
 
 @media (max-width: 450px) {
-
   .cart {
     margin: 0px 5px;
+  }
+
+  .basket-container {
+    margin-top: 40px;
   }
 }
