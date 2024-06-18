@@ -3,12 +3,13 @@
 }
 
 .about-logo {
-  background-color: #1b9fbd;
   width: 200px;
   height: 75px;
   display: block;
   margin: 0 auto;
   background-image: url('../assets/rs-school-logo.svg');
+  filter: invert(44%) sepia(63%) saturate(2881%) hue-rotate(168deg)
+    brightness(96%) contrast(101%);
 }
 
 .container-author {
