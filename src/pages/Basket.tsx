@@ -332,7 +332,7 @@ const Basket: React.FC = () => {
     <div className="basket-container">
       {!cartItems || cartItems.lineItems.length === 0 ? (
         <div className="empty-cart-message">
-          <p>Your shopping cart is empty. Start shopping now!</p>
+          <h2>Your shopping cart is empty. Start shopping now!</h2>
           <p>
             Go to{' '}
             <Link to="/catalog" className="btn btn-primary">
