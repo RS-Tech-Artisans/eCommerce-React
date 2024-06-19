@@ -240,7 +240,7 @@ test('get sizes', () => {
 });
 
 import { getCategoriesFromAPI } from '../utils/api/getCategories';
-test('get sizes', () => {
+test('get Categories', () => {
   return expect(getCategoriesFromAPI()).resolves.toStrictEqual({
     count: 4,
     limit: 500,
@@ -257,16 +257,16 @@ test('get sizes', () => {
         description: { 'en-GB': 'Televisions' },
         id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836',
         lastMessageSequenceNumber: 1,
-        lastModifiedAt: '2024-05-31T04:52:11.339Z',
+        lastModifiedAt: '2024-06-19T08:07:21.040Z',
         lastModifiedBy: {
           isPlatformClient: true,
           user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
         },
         name: { 'en-GB': 'Televisions', 'en-US': 'Televisions' },
-        orderHint: '0.05',
+        orderHint: '0.07',
         slug: { 'en-GB': 'televisions' },
-        version: 2,
-        versionModifiedAt: '2024-05-31T04:52:11.339Z',
+        version: 3,
+        versionModifiedAt: '2024-06-19T08:07:21.040Z',
       },
       {
         ancestors: [
@@ -282,21 +282,21 @@ test('get sizes', () => {
         id: 'e1e60148-a824-49dc-a3ba-f69ba66c8609',
         key: 'LEDLCD',
         lastMessageSequenceNumber: 1,
-        lastModifiedAt: '2024-05-31T04:55:20.773Z',
+        lastModifiedAt: '2024-06-19T08:06:09.636Z',
         lastModifiedBy: {
           isPlatformClient: true,
           user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
         },
         metaTitle: { 'en-US': 'led-lcd' },
         name: { 'en-US': 'LED & LCD TVs' },
-        orderHint: '0.05',
+        orderHint: '0.07',
         parent: {
           id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836',
           typeId: 'category',
         },
         slug: { 'en-US': 'led-lcd' },
-        version: 1,
-        versionModifiedAt: '2024-05-31T04:55:20.773Z',
+        version: 4,
+        versionModifiedAt: '2024-06-19T08:06:09.636Z',
       },
       {
         ancestors: [
@@ -311,20 +311,20 @@ test('get sizes', () => {
         description: { 'en-US': 'OLED TVs' },
         id: 'be9dbd44-1e90-4f09-a198-ee5478eaa088',
         lastMessageSequenceNumber: 1,
-        lastModifiedAt: '2024-06-02T18:00:22.926Z',
+        lastModifiedAt: '2024-06-19T08:06:17.280Z',
         lastModifiedBy: {
           isPlatformClient: true,
           user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
         },
         name: { 'en-US': 'OLED TVs' },
-        orderHint: '0.05',
+        orderHint: '0.07',
         parent: {
           id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836',
           typeId: 'category',
         },
         slug: { 'en-US': 'oled-tvs' },
-        version: 1,
-        versionModifiedAt: '2024-06-02T18:00:22.926Z',
+        version: 2,
+        versionModifiedAt: '2024-06-19T08:06:17.280Z',
       },
       {
         ancestors: [
@@ -338,20 +338,20 @@ test('get sizes', () => {
         },
         id: '0fd5260d-11a8-490b-b543-6da919547c61',
         lastMessageSequenceNumber: 1,
-        lastModifiedAt: '2024-06-02T19:21:02.652Z',
+        lastModifiedAt: '2024-06-19T07:44:58.502Z',
         lastModifiedBy: {
           isPlatformClient: true,
           user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
         },
         name: { 'en-US': 'QLED TVs' },
-        orderHint: '0.05',
+        orderHint: '0.07',
         parent: {
           id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836',
           typeId: 'category',
         },
         slug: { 'en-US': 'qled-tvs' },
-        version: 1,
-        versionModifiedAt: '2024-06-02T19:21:02.652Z',
+        version: 2,
+        versionModifiedAt: '2024-06-19T07:44:58.502Z',
       },
     ],
     total: 4,
