@@ -7,12 +7,14 @@ import { useSession } from './SessionContext';
 import { MyApiError } from './Interfaces';
 import { createApiPasswordRoot } from './api/apiPasswordRoot';
 import { apiRoot, updateClient } from './api/BuildClient';
+import { useCart } from './CartContext';
 
 export const useLogin = () => {
   const { setToken } = useSession();
   const [loginResult, setLoginResult] =
     useState<ClientResponse<CustomerSignInResult> | null>(null);
   const [error, setError] = useState<MyApiError | null>(null);
+  const { setCartData } = useCart();
 
   const navigate = useNavigate();
 
@@ -49,6 +51,8 @@ export const useLogin = () => {
     setToken(null);
     clearTokenCache();
     localStorage.removeItem('cartitems'); // clear we can get data from user
+    setCartData(null);
+    updateClient();
     navigate('/login');
   };
 
