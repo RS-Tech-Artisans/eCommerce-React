@@ -211,20 +211,29 @@ const Basket: React.FC = () => {
                       <>
                         <span className="original-price">
                           $
-                          {(itemProduct.price.value.centAmount / 100).toFixed(
-                            2
-                          )}
+                          {(
+                            (itemProduct.quantity *
+                              itemProduct.price.value.centAmount) /
+                            100
+                          ).toFixed(2)}
                         </span>
                         <span className="discounted-price">
                           $
                           {(
-                            itemProduct.price.discounted.value.centAmount / 100
+                            (itemProduct.quantity *
+                              itemProduct.price.discounted.value.centAmount) /
+                            100
                           ).toFixed(2)}
                         </span>
                       </>
                     ) : (
                       <span>
-                        ${(itemProduct.price.value.centAmount / 100).toFixed(2)}
+                        $
+                        {(
+                          (itemProduct.quantity *
+                            itemProduct.price.value.centAmount) /
+                          100
+                        ).toFixed(2)}
                       </span>
                     )}
                   </div>
