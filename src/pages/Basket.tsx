@@ -33,7 +33,7 @@ const Basket: React.FC = () => {
     console.log('fetchCartFromApi');
     try {
       const response: Cart = await fetchGetCartData(token);
-      
+
       setCartData(response);
       console.log('get response fetchGetCartData', response);
       console.log('response.lineItems.length', response.lineItems.length);
@@ -73,7 +73,7 @@ const Basket: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log("useEffectuseEffectuseEffectuseEffect")
+    console.log('useEffectuseEffectuseEffectuseEffect');
     localStorage.removeItem('cartitems'); // clear because we every time made new anonym user
     fetchCartFromApi();
     disResponse();
