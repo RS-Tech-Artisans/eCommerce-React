@@ -214,6 +214,11 @@
   color: #ec4a3a;
 }
 
+.cost-for-one {
+  font-size: 0.6em;
+  color: #999999;
+}
+
 @keyframes slideIn {
   from {
     transform: translateX(100%);

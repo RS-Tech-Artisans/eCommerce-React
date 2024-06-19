@@ -225,16 +225,36 @@ const Basket: React.FC = () => {
                             100
                           ).toFixed(2)}
                         </span>
+                        <div className="cost-for-one">
+                          {' '}
+                          {' ('}
+                          {(
+                            (itemProduct.quantity *
+                              itemProduct.price.discounted.value.centAmount) /
+                            100
+                          ).toFixed(2)}
+                          {' per piece)'}
+                        </div>
                       </>
                     ) : (
-                      <span>
-                        $
-                        {(
-                          (itemProduct.quantity *
-                            itemProduct.price.value.centAmount) /
-                          100
-                        ).toFixed(2)}
-                      </span>
+                      <>
+                        <span>
+                          $
+                          {(
+                            (itemProduct.quantity *
+                              itemProduct.price.value.centAmount) /
+                            100
+                          ).toFixed(2)}
+                        </span>
+                        <span className="cost-for-one">
+                          {' '}
+                          {' ('}
+                          {(itemProduct.price.value.centAmount / 100).toFixed(
+                            2
+                          )}
+                          {' per piece)'}
+                        </span>
+                      </>
                     )}
                   </div>
                   <div className="control-buttons">
