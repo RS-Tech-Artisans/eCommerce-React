@@ -31,6 +31,10 @@ const ProductDetail: React.FC = () => {
   const [IdRecord, setIdRecord] = useState<string>('');
   const [cartItems, setCartItems] = useState<Cart | null>(null);
   const [loaderCart, setLoaderCart] = useState<boolean>(false);
+  const [showMessage, setShowMessage] = useState<{
+    type: 'success' | 'error' | null;
+    text: string | null;
+  }>({ type: null, text: null });
 
   const fetchCartFromApi = async () => {
     console.log('fetchCartFromApi');
@@ -138,6 +142,10 @@ const ProductDetail: React.FC = () => {
   const removeProduct = async (record: string) => {
     try {
       await removeProductFromCart(token, record);
+      setShowMessage({ type: 'success', text: 'Successfully deleted!' });
+      setTimeout(async () => {
+        setShowMessage({ type: null, text: null });
+      }, 1000);
       await fetchCartFromApi();
       setIsInCart(false);
       checkProductState();
@@ -147,6 +155,8 @@ const ProductDetail: React.FC = () => {
       // const updatedCart: Cart = await fetchGetCartData(token);
       // localStorage.setItem('cartitems', JSON.stringify(updatedCart));
     } catch (error) {
+      setShowMessage({ type: 'error', text: 'Failed to remove item.' });
+      setTimeout(() => setShowMessage({ type: null, text: null }), 3000);
       console.error('Error removing item from cart:', error);
     }
   };
@@ -232,6 +242,13 @@ const ProductDetail: React.FC = () => {
                     </button>
                   )}
                 </div>
+                {showMessage.type && (
+                  <div
+                    className={`toast ${showMessage.type === 'success' ? 'show' : ''}`}
+                  >
+                    {showMessage.text}
+                  </div>
+                )}
               </div>
             </div>
             <div>
@@ -241,6 +258,13 @@ const ProductDetail: React.FC = () => {
           </Container>
         ) : (
           <p>Loading product details...</p>
+        )}
+        {showMessage.type && (
+          <div
+            className={`toast ${showMessage.type === 'success' || showMessage.type === 'error' ? 'show' : ''}`}
+          >
+            {showMessage.text}
+          </div>
         )}
       </Container>
     </>

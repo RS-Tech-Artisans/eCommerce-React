@@ -127,7 +127,6 @@
 }
 
 .loader {
-
   width: 100px;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -141,7 +140,7 @@
 }
 .loader:before,
 .loader:after {
-  content: "";
+  content: '';
   position: absolute;
   inset: -8px;
   border-radius: 50%;
@@ -153,5 +152,7 @@
   animation-duration: 4s;
 }
 @keyframes l24 {
-  100% {transform: rotate(1turn)}
+  100% {
+    transform: rotate(1turn);
+  }
 }

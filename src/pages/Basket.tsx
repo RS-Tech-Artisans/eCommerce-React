@@ -13,6 +13,7 @@ import { useCart } from '../utils/CartContext';
 import { Button } from 'react-bootstrap';
 import { updateQuantityItem } from '../utils/api/updateQuantityItem';
 import { usePromoCodes } from '../utils/api/getPromoCodes';
+import { getDiscount } from '../utils/api/getDiscountAmount';
 
 const Basket: React.FC = () => {
   const [cartItems, setCartItems] = useState<Cart | null>(null);
@@ -26,6 +27,7 @@ const Basket: React.FC = () => {
   }>({ type: null, text: null });
   const [isApplyPromo, setIsApplyPromo] = useState<boolean>(false);
   const promoCodesList = usePromoCodes();
+  const [discounted, setDiscounted] = useState<number | null>(null);
 
   const fetchCartFromApi = async () => {
     console.log('fetchCartFromApi');
@@ -59,9 +61,19 @@ const Basket: React.FC = () => {
     }
   };
 
+  const disResponse = async () => {
+    try {
+      const discountResponse = await getDiscount(token);
+      if (discountResponse) setDiscounted(discountResponse);
+    } catch (error) {
+      console.error('Error to add discount:', error);
+    }
+  };
+
   useEffect(() => {
     localStorage.removeItem('cartitems'); // clear because we every time made new anonym user
     fetchCartFromApi();
+    disResponse();
   }, [token]);
 
   // const loadCardId = () => {
@@ -98,6 +110,8 @@ const Basket: React.FC = () => {
           setTimeout(async () => {
             await fetchUpdatedCartData();
             setShowMessage({ type: null, text: null });
+            const discountResponse = await getDiscount(token);
+            if (discountResponse) setDiscounted(discountResponse);
           }, 2000);
         } catch (error) {
           setShowMessage({
@@ -197,20 +211,29 @@ const Basket: React.FC = () => {
                       <>
                         <span className="original-price">
                           $
-                          {(itemProduct.price.value.centAmount / 100).toFixed(
-                            2
-                          )}
+                          {(
+                            (itemProduct.quantity *
+                              itemProduct.price.value.centAmount) /
+                            100
+                          ).toFixed(2)}
                         </span>
                         <span className="discounted-price">
                           $
                           {(
-                            itemProduct.price.discounted.value.centAmount / 100
+                            (itemProduct.quantity *
+                              itemProduct.price.discounted.value.centAmount) /
+                            100
                           ).toFixed(2)}
                         </span>
                       </>
                     ) : (
                       <span>
-                        ${(itemProduct.price.value.centAmount / 100).toFixed(2)}
+                        $
+                        {(
+                          (itemProduct.quantity *
+                            itemProduct.price.value.centAmount) /
+                          100
+                        ).toFixed(2)}
                       </span>
                     )}
                   </div>
@@ -265,10 +288,7 @@ const Basket: React.FC = () => {
           <div className="shopping-cart">
             {<ClearCartButton onClearCart={clearCart} />}
           </div>
-          {/* <div className="total-price">
-            Total Price: ${(item.totalPrice?.centAmount / 100).toFixed(2)}
-          </div> */}
-          <div className="discount-container">
+          <div>
             <form onSubmit={applyPromoCode} className="discount-form">
               <label htmlFor="promocode" className="label-promocode">
                 PROMOCODE:
@@ -291,22 +311,21 @@ const Basket: React.FC = () => {
                 </div>
               )}
             </form>
-            <p className="total-price">
-              Total Price: ${(item.totalPrice?.centAmount / 100).toFixed(2)}
-            </p>
+            <div className="prices">
+              <div className="total-price">
+                Total Price: ${(item.totalPrice?.centAmount / 100).toFixed(2)}
+              </div>
+              {discounted !== null && (
+                <div className="total-price-with-discount">
+                  $
+                  {((discounted + item.totalPrice?.centAmount) / 100).toFixed(
+                    2
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-        for debug !!! Delete after
-        <ul>
-          <li>version: {item.version} </li>
-          <li> anonymousId: {item.anonymousId} </li>
-          <li> customerId: {item.customerId} </li>
-          <li> id: {item.id}</li>
-          <li>
-            {item.totalPrice?.currencyCode} {item.cartState}{' '}
-          </li>
-          {<li> lineItems.length: {item.lineItems.length}</li>}
-        </ul>
       </>
     );
   };
@@ -317,9 +336,9 @@ const Basket: React.FC = () => {
 
   return (
     <div className="basket-container">
-      {!cartItems ? (
+      {!cartItems || cartItems.lineItems.length === 0 ? (
         <div className="empty-cart-message">
-          <p>Your shopping cart is empty. Start shopping now!</p>
+          <h2>Your shopping cart is empty. Start shopping now!</h2>
           <p>
             Go to{' '}
             <Link to="/catalog" className="btn btn-primary">

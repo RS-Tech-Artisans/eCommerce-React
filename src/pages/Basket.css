@@ -1,5 +1,6 @@
 .basket-container {
   padding: 20px;
+  margin: 100px auto;
 }
 
 .cart {
@@ -39,6 +40,7 @@
 }
 
 .product-name h3 {
+  margin-top: 20px;
   font-size: 1.1em;
 }
 
@@ -75,10 +77,18 @@
 
 .total-price {
   margin-top: 20px;
-  font-size: 1.5em;
   font-weight: bold;
   text-align: right;
   color: #333;
+}
+
+.total-price-with-discount {
+  margin-top: 20px;
+  margin-left: 20px;
+  font-weight: bold;
+  text-align: right;
+  color: gray;
+  text-decoration: line-through;
 }
 
 .remove-from-cart-button {
@@ -123,10 +133,6 @@
   height: 100px;
   display: flex;
   align-items: center;
-}
-
-.discount-container {
-  padding: 10px;
 }
 
 .input-promo {
@@ -197,6 +203,17 @@
   font-size: 25px;
 }
 
+.prices {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.shopping-cart {
+  text-align: center;
+  color: #ec4a3a;
+}
+
 @keyframes slideIn {
   from {
     transform: translateX(100%);
@@ -229,11 +246,17 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 840px) {
   .discount-form {
     flex-direction: column;
     height: 150px;
     justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .prices {
+    padding: 0;
+    font-size: 20px;
   }
 }
 
@@ -241,5 +264,19 @@
   .cart {
     padding: 10px;
     margin: 0px 10%;
+  }
+
+  .prices {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 450px) {
+  .cart {
+    margin: 0px 5px;
+  }
+
+  .basket-container {
+    margin-top: 40px;
   }
 }

@@ -7,7 +7,6 @@ import { addProduct } from '../utils/api/addProduct';
 import { fetchGetCartData } from '../utils/api/getLastCart';
 import { useSession } from '../utils/SessionContext';
 import { useCart } from '../utils/CartContext';
-import { setTimeout } from 'timers';
 
 export const formatPrice = (price: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
@@ -73,7 +72,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
       }
 
       localStorage.setItem('cartitems', JSON.stringify(response));
-     
     } catch (error) {
       console.error('Error fetching cart data:', error);
     }
@@ -106,52 +104,49 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <>
-    {loaderCart && <div className="loader"></div>}
-    <div className="product-card">
-      
-      <div className="product-image-wrapper">
-        <img src={imageUrl} alt={name} className="product-image" />
-      </div>
+      {loaderCart && <div className="loader"></div>}
+      <div className="product-card">
+        <div className="product-image-wrapper">
+          <img src={imageUrl} alt={name} className="product-image" />
+        </div>
 
-      <div className="product-content">
-        <div className="product-details">
-          <h3 className="product-title">{name}</h3>
+        <div className="product-content">
+          <div className="product-details">
+            <h3 className="product-title">{name}</h3>
 
-          <div className="price-wrapper">
-            {discountedPrice ? (
-              <div className="prices">
-                <span className="original-price">
-                  {formatPrice(originalPrice, currency)}
-                </span>
-                <span className="discounted-price">
-                  {formatPrice(discountedPrice, currency)}
-                </span>
-              </div>
-            ) : (
-              <div className="prices">
-                <span>{formatPrice(originalPrice, currency)}</span>
-              </div>
-            )}
+            <div className="price-wrapper">
+              {discountedPrice ? (
+                <div className="prices">
+                  <span className="original-price">
+                    {formatPrice(originalPrice, currency)}
+                  </span>
+                  <span className="discounted-price">
+                    {formatPrice(discountedPrice, currency)}
+                  </span>
+                </div>
+              ) : (
+                <div className="prices">
+                  <span>{formatPrice(originalPrice, currency)}</span>
+                </div>
+              )}
+            </div>
+
+            <p>{truncateDescription(description, SIZE_DESCRIPTION)}</p>
           </div>
-
-          <p>{truncateDescription(description, SIZE_DESCRIPTION)}</p>
+        </div>
+        <div className="buttons-card">
+          <Link to={`/catalog/product/${id}`} className="view-details-button">
+            View Details
+          </Link>
+          <button
+            onClick={addToCart}
+            className="add-to-cart-button"
+            disabled={isInCart}
+          >
+            {isInCart ? 'In Cart' : 'Add to Cart'} 🛒
+          </button>
         </div>
       </div>
-      <div className="buttons-card">
-
-        <Link to={`/catalog/product/${id}`} className="view-details-button">
-          View Details
-        </Link>
-        <button
-          onClick={addToCart}
-          className="add-to-cart-button"
-          disabled={isInCart}
-        >
-         
-          {isInCart ? 'In Cart' : 'Add to Cart'} 🛒
-        </button>
-      </div>
-    </div>
     </>
   );
 };
