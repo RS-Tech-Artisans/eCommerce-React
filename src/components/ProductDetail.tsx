@@ -30,6 +30,7 @@ const ProductDetail: React.FC = () => {
   const { token } = useSession();
   const [IdRecord, setIdRecord] = useState<string>('');
   const [cartItems, setCartItems] = useState<Cart | null>(null);
+  const [loaderCart, setLoaderCart] = useState<boolean>(false);
   const [showMessage, setShowMessage] = useState<{
     type: 'success' | 'error' | null;
     text: string | null;
@@ -39,7 +40,7 @@ const ProductDetail: React.FC = () => {
     console.log('fetchCartFromApi');
     try {
       const response: Cart = await fetchGetCartData(token);
-
+      setLoaderCart(false);
       if (response) {
         setCartItems(response);
         setCartData(response);
@@ -94,6 +95,7 @@ const ProductDetail: React.FC = () => {
   }, [id]);
 
   const addToCart = async () => {
+    setLoaderCart(true);
     console.log('addToCart product Detail', product);
 
     try {
@@ -161,6 +163,7 @@ const ProductDetail: React.FC = () => {
 
   return (
     <>
+      {loaderCart && <div className="loader"></div>}
       <Container
         className="bg-light pt-3 rounded shadow-lg"
         style={{ marginTop: '40px' }}
