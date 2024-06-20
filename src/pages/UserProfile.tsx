@@ -70,6 +70,7 @@ export default function UserProfile() {
     setBirthdateFill,
   ];
   const [formValid, setFormValid] = useState(true);
+  const [formValidPassword, setFormValidPassword] = useState(true);
 
   const [passInputClasses, setPassInputClasses] =
     useState('pass-input-passive');
@@ -189,19 +190,27 @@ export default function UserProfile() {
               className={passInputClasses}
               onInput={(e) => {
                 if (e.target instanceof HTMLInputElement) {
-                  //const currentPassword: HTMLInputElement | null =
-                  //document.querySelector('#information-password');
-                  //const newPassword: HTMLInputElement | null =
-                  //document.querySelector('#new-password');
-                  // if (
-                  //   currentPassword !== null &&
-                  //   newPassword !== null
-                  // )
-                  // UpdatePassword(
-                  //   userData.version,
-                  //   currentPassword.value,
-                  //   newPassword.value
-                  // );
+                  const currentPassword = document.querySelector<HTMLInputElement>(
+                    '#information-password'
+                  )?.value;
+                  const newPassword = document.querySelector<HTMLInputElement>('#new-password')?.value
+                  const confirmNewPassword = document.querySelector<HTMLInputElement>('#confirm-new-password')?.value
+                  
+                  if (userData &&
+                  currentPassword &&
+                  newPassword && confirmNewPassword
+                  ) {
+                    UpdatePassword(
+                      userData?.version,
+                      currentPassword,
+                      newPassword
+                    );
+                  }
+                  if (currentPassword &&
+                    newPassword && confirmNewPassword
+                  ) {
+                    setFormValidPassword(false);
+                  }
                 }
               }}
               id="information-password"
@@ -239,6 +248,17 @@ export default function UserProfile() {
                     setPassword,
                     setNewPasswordErr
                   );
+                }
+                const currentPassword = document.querySelector<HTMLInputElement>(
+                  '#information-password'
+                )?.value;
+                const newPassword = document.querySelector<HTMLInputElement>('#new-password')?.value
+                const confirmNewPassword = document.querySelector<HTMLInputElement>('#confirm-new-password')?.value
+
+                if (currentPassword &&
+                  newPassword && confirmNewPassword
+                ) {
+                  setFormValidPassword(false);
                 }
               }}
               onBlur={(e) => {
@@ -280,6 +300,17 @@ export default function UserProfile() {
                     document.querySelector('#new-password');
                   setPasswordСonfirmFill(valuePass?.value !== e.target.value);
                 }
+                const currentPassword = document.querySelector<HTMLInputElement>(
+                  '#information-password'
+                )?.value;
+                const newPassword = document.querySelector<HTMLInputElement>('#new-password')?.value
+                const confirmNewPassword = document.querySelector<HTMLInputElement>('#confirm-new-password')?.value
+
+                if (currentPassword &&
+                  newPassword && confirmNewPassword
+                ) {
+                  setFormValidPassword(false);
+                }
               }}
               onBlur={(e) => {
                 if (e.target instanceof HTMLInputElement && !e.target.value) {
@@ -317,7 +348,9 @@ export default function UserProfile() {
               <div style={{ color: 'red' }}>{passwordСonfirmErr}</div>
             )}
           </div>
-          <button type="button" onClick={handleUpdatePassword}>
+          <button type="button" 
+            disabled = {formValidPassword}
+            onClick={handleUpdatePassword}>
             Save
           </button>
           <button
