@@ -107,7 +107,6 @@ export default function UserProfile() {
       const getCustomerData = async () => {
         try {
           const data = await fetchCustomerData();
-          console.log('Customer data:', data);
           setData(data);
         } catch (error) {
           console.error('Error fetching customer data:', error);
@@ -190,15 +189,24 @@ export default function UserProfile() {
               className={passInputClasses}
               onInput={(e) => {
                 if (e.target instanceof HTMLInputElement) {
-                  const currentPassword = document.querySelector<HTMLInputElement>(
-                    '#information-password'
-                  )?.value;
-                  const newPassword = document.querySelector<HTMLInputElement>('#new-password')?.value
-                  const confirmNewPassword = document.querySelector<HTMLInputElement>('#confirm-new-password')?.value
-                  
-                  if (userData &&
-                  currentPassword &&
-                  newPassword && confirmNewPassword
+                  const currentPassword =
+                    document.querySelector<HTMLInputElement>(
+                      '#information-password'
+                    )?.value;
+                  const newPassword =
+                    document.querySelector<HTMLInputElement>(
+                      '#new-password'
+                    )?.value;
+                  const confirmNewPassword =
+                    document.querySelector<HTMLInputElement>(
+                      '#confirm-new-password'
+                    )?.value;
+
+                  if (
+                    userData &&
+                    currentPassword &&
+                    newPassword &&
+                    confirmNewPassword
                   ) {
                     UpdatePassword(
                       userData?.version,
@@ -206,9 +214,7 @@ export default function UserProfile() {
                       newPassword
                     );
                   }
-                  if (currentPassword &&
-                    newPassword && confirmNewPassword
-                  ) {
+                  if (currentPassword && newPassword && confirmNewPassword) {
                     setFormValidPassword(false);
                   }
                 }
@@ -249,15 +255,20 @@ export default function UserProfile() {
                     setNewPasswordErr
                   );
                 }
-                const currentPassword = document.querySelector<HTMLInputElement>(
-                  '#information-password'
-                )?.value;
-                const newPassword = document.querySelector<HTMLInputElement>('#new-password')?.value
-                const confirmNewPassword = document.querySelector<HTMLInputElement>('#confirm-new-password')?.value
+                const currentPassword =
+                  document.querySelector<HTMLInputElement>(
+                    '#information-password'
+                  )?.value;
+                const newPassword =
+                  document.querySelector<HTMLInputElement>(
+                    '#new-password'
+                  )?.value;
+                const confirmNewPassword =
+                  document.querySelector<HTMLInputElement>(
+                    '#confirm-new-password'
+                  )?.value;
 
-                if (currentPassword &&
-                  newPassword && confirmNewPassword
-                ) {
+                if (currentPassword && newPassword && confirmNewPassword) {
                   setFormValidPassword(false);
                 }
               }}
@@ -300,15 +311,20 @@ export default function UserProfile() {
                     document.querySelector('#new-password');
                   setPasswordСonfirmFill(valuePass?.value !== e.target.value);
                 }
-                const currentPassword = document.querySelector<HTMLInputElement>(
-                  '#information-password'
-                )?.value;
-                const newPassword = document.querySelector<HTMLInputElement>('#new-password')?.value
-                const confirmNewPassword = document.querySelector<HTMLInputElement>('#confirm-new-password')?.value
+                const currentPassword =
+                  document.querySelector<HTMLInputElement>(
+                    '#information-password'
+                  )?.value;
+                const newPassword =
+                  document.querySelector<HTMLInputElement>(
+                    '#new-password'
+                  )?.value;
+                const confirmNewPassword =
+                  document.querySelector<HTMLInputElement>(
+                    '#confirm-new-password'
+                  )?.value;
 
-                if (currentPassword &&
-                  newPassword && confirmNewPassword
-                ) {
+                if (currentPassword && newPassword && confirmNewPassword) {
                   setFormValidPassword(false);
                 }
               }}
@@ -348,9 +364,11 @@ export default function UserProfile() {
               <div style={{ color: 'red' }}>{passwordСonfirmErr}</div>
             )}
           </div>
-          <button type="button" 
-            disabled = {formValidPassword}
-            onClick={handleUpdatePassword}>
+          <button
+            type="button"
+            disabled={formValidPassword}
+            onClick={handleUpdatePassword}
+          >
             Save
           </button>
           <button

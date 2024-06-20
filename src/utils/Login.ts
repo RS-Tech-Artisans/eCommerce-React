@@ -19,7 +19,6 @@ export const useLogin = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (email: string, password: string) => {
-    console.log(email, password);
     try {
       const result: ClientResponse<CustomerSignInResult> = await apiRoot
         .me()

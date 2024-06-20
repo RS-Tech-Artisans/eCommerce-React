@@ -37,7 +37,6 @@ const ProductDetail: React.FC = () => {
   }>({ type: null, text: null });
 
   const fetchCartFromApi = async () => {
-    console.log('fetchCartFromApi');
     try {
       const response: Cart = await fetchGetCartData(token);
       setLoaderCart(false);
@@ -96,7 +95,6 @@ const ProductDetail: React.FC = () => {
 
   const addToCart = async () => {
     setLoaderCart(true);
-    console.log('addToCart product Detail', product);
 
     try {
       if (cartItems && product) {
@@ -104,7 +102,6 @@ const ProductDetail: React.FC = () => {
         await fetchCartFromApi();
         setIsInCart(true);
         checkProductState();
-        // console.log(JSON.parse(localStorage.getItem('cartitems') || '[]'));
         // localStorage.setItem('cartitems', JSON.stringify(cartItems));
       }
     } catch (error) {

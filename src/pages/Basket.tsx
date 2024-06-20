@@ -30,13 +30,10 @@ const Basket: React.FC = () => {
   const [discounted, setDiscounted] = useState<number | null>(null);
 
   const fetchCartFromApi = async () => {
-    console.log('fetchCartFromApi');
     try {
       const response: Cart = await fetchGetCartData(token);
 
       setCartData(response);
-      console.log('get response fetchGetCartData', response);
-      console.log('response.lineItems.length', response.lineItems.length);
 
       if (response) {
         localStorage.setItem('cartitems', JSON.stringify(response));
@@ -73,20 +70,10 @@ const Basket: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log('useEffectuseEffectuseEffectuseEffect');
     localStorage.removeItem('cartitems'); // clear because we every time made new anonym user
     fetchCartFromApi();
     disResponse();
   }, [token]);
-
-  // const loadCardId = () => {
-  //   const cartDataString: string | null = localStorage.getItem('cartitems');
-  //   if (cartDataString) {
-  //     const cartData = JSON.parse(cartDataString);
-  //     if (cartData) setCartId(cartData.id);
-  //     console.log("cartData.id", cartData.id);
-  //   }
-  // }
 
   const applyPromoCode = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

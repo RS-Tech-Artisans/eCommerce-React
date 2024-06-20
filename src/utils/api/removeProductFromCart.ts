@@ -10,7 +10,6 @@ export const removeProductFromCart = async (
   itemId: string
 ) => {
   if (!token) {
-    console.log('removeProductFromCart !token');
     try {
       const cartResponse = await apiRoot.me().carts().get().execute();
 
@@ -37,7 +36,6 @@ export const removeProductFromCart = async (
       throw error;
     }
   } else {
-    console.log('removeProductFromCart with token', token);
     try {
       const responseWithToken: ClientResponse<Cart> = await apiRoot
         .me()

@@ -61,13 +61,11 @@ export const useRegistration = () => {
         })
         .execute();
       setRegistrationResult(result);
-      console.log(result);
       setError(null);
       setTimeout(() => {
         navigate('/');
       }, 3000);
     } catch (caughtError) {
-      console.log(caughtError);
       setError(caughtError as MyApiError);
     }
   };

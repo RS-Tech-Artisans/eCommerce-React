@@ -61,11 +61,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   }, [id]);
 
   const fetchCartFromApi = async () => {
-    console.log('fetchCartFromApi');
     try {
       const response: Cart = await fetchGetCartData(token);
-      console.log('get response fetchGetCartData', response);
-      console.log('response.lineItems.length', response.lineItems.length);
       setLoaderCart(false);
       if (response) {
         setCartData(response);

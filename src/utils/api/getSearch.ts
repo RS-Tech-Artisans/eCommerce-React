@@ -5,7 +5,7 @@ export const getSearchFromAPI = async (
   fuzzyLevelValue: number = 0
 ) => {
   try {
-    const response = await apiRoot
+    await apiRoot
       .productProjections()
       .search()
       .get({
@@ -18,7 +18,6 @@ export const getSearchFromAPI = async (
         },
       })
       .execute();
-    console.log(response);
   } catch (error) {
     console.error('Error fetching displaytechnology:', error);
     return [];

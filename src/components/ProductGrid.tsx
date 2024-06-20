@@ -82,11 +82,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   };
 
   const fetchCartFromApi = async () => {
-    console.log('fetchCartFromApi');
     try {
       const response: Cart = await fetchGetCartData(token);
       if (response) {
-        console.log('!!!!!!!!!! fetchCartFromApi fetchGetCartData ');
         localStorage.setItem('cartitems', JSON.stringify(response));
         //  setCartItems(response);
       }
