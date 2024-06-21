@@ -239,6 +239,11 @@ test('get sizes', () => {
   ]);
 });
 
+import { getPromocodes } from '../utils/api/getPromoCodes';
+test('get getPromocodes', () => {
+  return expect(getPromocodes()).resolves.toStrictEqual(['RSS-2024', 'QLED']);
+});
+
 import { getCategoriesFromAPI } from '../utils/api/getCategories';
 test('get Categories', () => {
   return expect(getCategoriesFromAPI()).resolves.toStrictEqual({
