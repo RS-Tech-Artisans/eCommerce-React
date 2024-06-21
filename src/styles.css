@@ -2,15 +2,8 @@ a:link,
 a:visited,
 a:active {
   text-decoration: none;
-  /* padding-right: 20px;
-  font-weight: 400; */
 }
 
-a:link:hover,
-a:visited:hover,
-a:active:hover {
-  /* text-decoration: underline; */
-}
 html body {
   background-color: #fcfcfc;
 }
