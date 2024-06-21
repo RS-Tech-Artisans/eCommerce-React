@@ -470,3 +470,16 @@ describe('addCart', () => {
     }
   });
 });
+
+import { fetchGetCartData } from '../utils/api/getLastCart';
+
+describe('getDiscount', () => {
+  test('handles error when fetching cart data fails', async () => {
+    try {
+      await fetchGetCartData(null);
+      fail('fetchGetCartData did not throw an error for failed request');
+    } catch (error) {
+      expect(error).toBeDefined();
+    }
+  });
+});
