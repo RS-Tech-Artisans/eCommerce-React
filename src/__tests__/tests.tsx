@@ -362,3 +362,65 @@ test('get Categories', () => {
     total: 4,
   });
 });
+
+import BlurHandlerUser from '../utils/validation/BlurHandlerUser';
+const mockSetState = jest.fn();
+describe('BlurHandlerUser', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should set setNameUserFill to true when name is "information-first-name"', () => {
+    const setNameUserFillMock = jest.fn();
+
+    const result = BlurHandlerUser(
+      'information-first-name',
+      setNameUserFillMock,
+      jest.fn(),
+      jest.fn()
+    );
+
+    expect(result).toBe(true);
+    expect(setNameUserFillMock).toHaveBeenCalledWith(true);
+  });
+
+  it('should set setLastNameUserFill to true when name is "information-last-name"', () => {
+    const setLastNameUserFillMock = jest.fn();
+
+    const result = BlurHandlerUser(
+      'information-last-name',
+      jest.fn(),
+      setLastNameUserFillMock,
+      jest.fn()
+    );
+
+    expect(result).toBe(true);
+    expect(setLastNameUserFillMock).toHaveBeenCalledWith(true);
+  });
+
+  it('should set setBirthdateFill to true when name is "information-birth"', () => {
+    const setBirthdateFillMock = jest.fn();
+
+    const result = BlurHandlerUser(
+      'information-birth',
+      jest.fn(),
+      jest.fn(),
+      setBirthdateFillMock
+    );
+
+    expect(result).toBe(true);
+    expect(setBirthdateFillMock).toHaveBeenCalledWith(true);
+  });
+
+  it('should return false and not set state when name does not match', () => {
+    const result = BlurHandlerUser(
+      'unknown-field',
+      mockSetState,
+      mockSetState,
+      mockSetState
+    );
+
+    expect(result).toBe(false);
+    expect(mockSetState).not.toHaveBeenCalled();
+  });
+});
