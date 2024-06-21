@@ -442,3 +442,15 @@ describe('createApiPasswordRoot', () => {
     expect(apiRoot).toBeDefined();
   });
 });
+
+import { getAllCarts } from '../utils/api/getAllCarts';
+
+describe('getAllCarts', () => {
+  test('fetches all carts successfully', async () => {
+    const result = await getAllCarts();
+
+    expect(result).toBeDefined();
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBeGreaterThan(0);
+  });
+});
