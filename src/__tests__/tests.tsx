@@ -495,3 +495,15 @@ describe('getDiscount', () => {
     }
   });
 });
+
+import { removeCartData } from '../utils/api/removeCartData';
+describe('removeCartData', () => {
+  test('handles error when removeCartData data fails', async () => {
+    try {
+      await removeCartData(null);
+      fail('removeCartData did not throw an error for failed request');
+    } catch (error) {
+      expect(error).toBeDefined();
+    }
+  });
+});
