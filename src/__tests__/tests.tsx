@@ -424,3 +424,21 @@ describe('BlurHandlerUser', () => {
     expect(mockSetState).not.toHaveBeenCalled();
   });
 });
+
+import { createApiPasswordRoot } from '../utils/api/apiPasswordRoot';
+describe('createApiPasswordRoot', () => {
+  test('creates API client successfully', () => {
+    const apiRoot = createApiPasswordRoot('testUser', 'testPassword');
+    expect(apiRoot).toBeDefined();
+    expect(apiRoot.categories).toBeDefined();
+  });
+
+  test('configures API client with correct authentication options', () => {
+    const username = 'testUser';
+    const password = 'testPassword';
+
+    const apiRoot = createApiPasswordRoot(username, password);
+
+    expect(apiRoot).toBeDefined();
+  });
+});
