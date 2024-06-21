@@ -507,3 +507,45 @@ describe('removeCartData', () => {
     }
   });
 });
+
+import { ProductInfo } from '../utils/Interfaces';
+import { filterProducts } from '../components/PriceFilter';
+
+describe('filterProducts', () => {
+  const products: ProductInfo[] = [
+    {
+      name: 'Product A',
+      price: { value: { centAmount: 1500, currencyCode: 'USD' } },
+      id: '',
+      imageUrl: '',
+      description: '',
+      discountedPrice: 0,
+    },
+    {
+      name: 'Product B',
+      price: { value: { centAmount: 2500, currencyCode: 'USD' } },
+      id: '',
+      imageUrl: '',
+      description: '',
+      discountedPrice: 0,
+    },
+    {
+      name: 'Product C',
+      price: { value: { centAmount: 3500, currencyCode: 'USD' } },
+      id: '',
+      imageUrl: '',
+      description: '',
+      discountedPrice: 0,
+    },
+  ];
+
+  test('filters products with no price range', () => {
+    const filteredProducts = filterProducts(products, 'product', '', '');
+    expect(filteredProducts).toHaveLength(3); // All products should match the search term
+    expect(filteredProducts.map((p) => p.name)).toEqual([
+      'Product A',
+      'Product B',
+      'Product C',
+    ]);
+  });
+});
