@@ -473,11 +473,23 @@ describe('addCart', () => {
 
 import { fetchGetCartData } from '../utils/api/getLastCart';
 
-describe('getDiscount', () => {
+describe('fetchGetCartData', () => {
   test('handles error when fetching cart data fails', async () => {
     try {
       await fetchGetCartData(null);
       fail('fetchGetCartData did not throw an error for failed request');
+    } catch (error) {
+      expect(error).toBeDefined();
+    }
+  });
+});
+
+import { getDiscount } from '../utils/api/getDiscountAmount';
+describe('getDiscount', () => {
+  test('handles error when fetching cart data fails', async () => {
+    try {
+      await getDiscount(null);
+      fail('getDiscount did not throw an error for failed request');
     } catch (error) {
       expect(error).toBeDefined();
     }
