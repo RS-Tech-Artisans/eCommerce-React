@@ -454,3 +454,19 @@ describe('getAllCarts', () => {
     expect(result.length).toBeGreaterThan(0);
   });
 });
+
+import { addCart } from '../utils/api/addCartForAnonim';
+
+describe('addCart', () => {
+  test('adds a cart successfully for anonymous user', async () => {
+    try {
+      const response = await addCart();
+      expect(response).toBeDefined();
+
+      expect(response.id).toBeDefined();
+    } catch (error) {
+      console.error('addCart error:', error);
+      fail('addCart threw an error');
+    }
+  });
+});
