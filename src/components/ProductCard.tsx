@@ -8,6 +8,7 @@ import { fetchGetCartData } from '../utils/api/getLastCart';
 import { useSession } from '../utils/SessionContext';
 import { useCart } from '../utils/CartContext';
 import { checkProductState } from '../utils/checkProductState';
+import { truncateDescription } from '../utils/truncateDescription';
 
 export const formatPrice = (price: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
@@ -68,13 +69,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
     } catch (error) {
       console.error('Error fetching cart data:', error);
     }
-  };
-
-  const truncateDescription = (text: string, maxLength: number) => {
-    if (text.length <= maxLength) {
-      return text;
-    }
-    return text.substr(0, maxLength) + '...';
   };
 
   return (

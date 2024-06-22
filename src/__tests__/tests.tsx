@@ -605,3 +605,31 @@ describe('checkProductState', () => {
     expect(checkProductState('123')).toBe(false);
   });
 });
+
+import { truncateDescription } from '../utils/truncateDescription';
+
+describe('truncateDescription', () => {
+  test('returns the full text if it is shorter than or equal to maxLength', () => {
+    const text = 'Short text';
+    const maxLength = 20;
+    expect(truncateDescription(text, maxLength)).toBe(text);
+  });
+
+  test('returns empty string if the input text is empty', () => {
+    const text = '';
+    const maxLength = 10;
+    expect(truncateDescription(text, maxLength)).toBe('');
+  });
+
+  test('returns "..." if maxLength is 0', () => {
+    const text = 'Any text';
+    const maxLength = 0;
+    expect(truncateDescription(text, maxLength)).toBe('...');
+  });
+
+  test('handles maxLength being exactly the length of the text', () => {
+    const text = 'Exact length';
+    const maxLength = text.length;
+    expect(truncateDescription(text, maxLength)).toBe(text);
+  });
+});
