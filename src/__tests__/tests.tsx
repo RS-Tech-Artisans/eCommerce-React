@@ -510,6 +510,7 @@ describe('removeCartData', () => {
 
 import { ProductInfo } from '../utils/Interfaces';
 import { filterProducts } from '../components/PriceFilter';
+import { checkProductState } from '../utils/checkProductState';
 
 describe('filterProducts', () => {
   const products: ProductInfo[] = [
@@ -541,11 +542,66 @@ describe('filterProducts', () => {
 
   test('filters products with no price range', () => {
     const filteredProducts = filterProducts(products, 'product', '', '');
-    expect(filteredProducts).toHaveLength(3); // All products should match the search term
+    expect(filteredProducts).toHaveLength(3);
     expect(filteredProducts.map((p) => p.name)).toEqual([
       'Product A',
       'Product B',
       'Product C',
     ]);
+  });
+});
+
+const localStorageMock = (() => {
+  let store: { [key: string]: string } = {};
+
+  return {
+    getItem: (key: string) => store[key] || null,
+    setItem: (key: string, value: string) => {
+      store[key] = value;
+    },
+    clear: () => {
+      store = {};
+    },
+  };
+})();
+
+Object.defineProperty(global, 'localStorage', {
+  value: localStorageMock,
+});
+
+describe('checkProductState', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  test('returns true if product is in cart', () => {
+    const cartData = {
+      lineItems: [{ productId: '123' }, { productId: '456' }],
+    };
+    localStorage.setItem('cartitems', JSON.stringify(cartData));
+
+    expect(checkProductState('123')).toBe(true);
+  });
+
+  test('returns false if product is not in cart', () => {
+    const cartData = {
+      lineItems: [{ productId: '123' }, { productId: '456' }],
+    };
+    localStorage.setItem('cartitems', JSON.stringify(cartData));
+
+    expect(checkProductState('789')).toBe(false);
+  });
+
+  test('returns false if cart is empty', () => {
+    const cartData = {
+      lineItems: [],
+    };
+    localStorage.setItem('cartitems', JSON.stringify(cartData));
+
+    expect(checkProductState('123')).toBe(false);
+  });
+
+  test('returns false if cart data is not set', () => {
+    expect(checkProductState('123')).toBe(false);
   });
 });

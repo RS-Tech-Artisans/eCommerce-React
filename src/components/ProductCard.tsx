@@ -7,6 +7,7 @@ import { addProduct } from '../utils/api/addProduct';
 import { fetchGetCartData } from '../utils/api/getLastCart';
 import { useSession } from '../utils/SessionContext';
 import { useCart } from '../utils/CartContext';
+import { checkProductState } from '../utils/checkProductState';
 
 export const formatPrice = (price: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
@@ -32,32 +33,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const { token } = useSession();
   const { setCartData } = useCart();
 
-  // const checkCart = () => {
-  //   const getSavedCart = localStorage.getItem('cartitems');
-  //   if (getSavedCart) {
-  //     const cart: Cart = JSON.parse(getSavedCart);
-  //     const isItemInCart = cart.lineItems.some((item) => id === item.productId);
-  //     setIsInCart(isItemInCart);
-  //   }
-  // }
-
-  const checkProductState = () => {
-    const cartData = JSON.parse(localStorage.getItem('cartitems') || '{}');
-    const lineItems = cartData.lineItems || [];
-    const foundItem = lineItems.find(
-      (item: { productId: string }) => item.productId === id
-    );
-
-    if (foundItem) {
-      setIsInCart(true);
-    } else {
-      setIsInCart(false);
-    }
-  };
-
   useEffect(() => {
     //checkCart();
-    checkProductState();
+    setIsInCart(checkProductState(id));
   }, [id]);
 
   const fetchCartFromApi = async () => {
@@ -85,7 +63,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         await addProduct(CartItems.id, CartItems.version, id);
         await fetchCartFromApi();
         setIsInCart(true);
-        checkProductState();
+        setIsInCart(checkProductState(id));
       }
     } catch (error) {
       console.error('Error fetching cart data:', error);
