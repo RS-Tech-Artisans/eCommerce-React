@@ -83,3 +83,13 @@ export interface SidebarFiltersProps {
 export interface ClearCartButtonProps {
   onClearCart: () => void;
 }
+
+export interface AuthorCardProps {
+  name: string;
+  gitName: string;
+  linkToGit: string;
+  role: string;
+  img: string;
+  about: string;
+  contribution: string;
+}

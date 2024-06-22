@@ -1,7 +1,6 @@
 import './About.css';
 import { Container } from 'react-bootstrap';
-import { FaGithub } from 'react-icons/fa';
-import { FaLaptop } from 'react-icons/fa';
+import AuthorCard from '../components/AuthorCard'; // Импортируем новый компонент
 import autor1 from '../assets/Pavel.jpeg';
 import autor2 from '../assets/Vlada.jpg';
 import autor3 from '../assets/Veronika.jpeg';
@@ -76,50 +75,23 @@ export default function About() {
       <h1 className="about-title">About Us</h1>
       <Container>
         {dataAboutUs.map((el) => (
-          <div
-            className="container-author"
+          <AuthorCard
             key={el.name}
-            style={{
-              background: '#FFF',
-              color: '#000',
-            }}
-          >
-            <div className="img-container">
-              <img src={el.img} alt="foto" className="img-authors" />
-            </div>
-            <div className="p-3">
-              <div className="d-flex">
-                <h2 className="name-title">{el.name}</h2>
-                <div>
-                  <a
-                    href={el.linkToGit}
-                    style={{ fontSize: '25px', color: 'black' }}
-                  >
-                    <FaGithub />
-                    <span>{el.gitName}</span>
-                  </a>
-                </div>
-              </div>
-              <h3>
-                <span className="fw-bold">Role:</span> {el.role} <FaLaptop />
-              </h3>
-              <p>
-                <span className="fw-bold">About:</span> {el.about}
-              </p>
-              <p>
-                <span className="fw-bold">Contribution:</span> {el.contribution}
-              </p>
-            </div>
-          </div>
+            name={el.name}
+            gitName={el.gitName}
+            linkToGit={el.linkToGit}
+            role={el.role}
+            img={el.img}
+            about={el.about}
+            contribution={el.contribution}
+          />
         ))}
-
         <h2>
           This team consists of people who are seriously pursuing their goal and
           are ready to go to the end. Excellent teamwork and the concept that
           everyone is responsible for the result are key to refining the
           creation of this site.
         </h2>
-
         <a
           href="https://rs.school/courses/javascript-ru"
           target="_blank"
