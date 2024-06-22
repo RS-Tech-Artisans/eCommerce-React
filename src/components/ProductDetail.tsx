@@ -1,24 +1,28 @@
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+import ImageGallery from 'react-image-gallery';
+import { MdArrowBackIos } from 'react-icons/md';
+import 'react-image-gallery/styles/css/image-gallery.css';
+
 import { getProductDetailById } from '../utils/api/getProductsDetail';
+import { removeProductFromCart } from '../utils/api/removeProductFromCart';
+import { fetchGetCartData } from '../utils/api/getLastCart';
+import { addProduct } from '../utils/api/addProduct';
+
+import { useCart } from '../utils/CartContext';
+import { useSession } from '../utils/SessionContext';
+
+import { mapProducts } from '../utils/productMapper';
 import {
   ProductAttributes,
   ProductCardProps,
   ProductImages,
 } from '../utils/Interfaces';
-import { Container } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
-import { mapProducts } from '../utils/productMapper';
-import { MdArrowBackIos } from 'react-icons/md';
-import ImageGallery from 'react-image-gallery';
-import 'react-image-gallery/styles/css/image-gallery.css';
-import React from 'react';
+
 import './ProductDetail.css';
-import { useSession } from '../utils/SessionContext';
-import { removeProductFromCart } from '../utils/api/removeProductFromCart';
 import { Cart } from '@commercetools/platform-sdk';
-import { fetchGetCartData } from '../utils/api/getLastCart';
-import { addProduct } from '../utils/api/addProduct';
-import { useCart } from '../utils/CartContext';
+import ToastMessage from '../common/ToastMessage';
 
 const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
@@ -239,13 +243,7 @@ const ProductDetail: React.FC = () => {
                     </button>
                   )}
                 </div>
-                {showMessage.type && (
-                  <div
-                    className={`toast ${showMessage.type === 'success' ? 'show' : ''}`}
-                  >
-                    {showMessage.text}
-                  </div>
-                )}
+                <ToastMessage type={showMessage.type} text={showMessage.text} />
               </div>
             </div>
             <div>
@@ -256,13 +254,7 @@ const ProductDetail: React.FC = () => {
         ) : (
           <p>Loading product details...</p>
         )}
-        {showMessage.type && (
-          <div
-            className={`toast ${showMessage.type === 'success' || showMessage.type === 'error' ? 'show' : ''}`}
-          >
-            {showMessage.text}
-          </div>
-        )}
+        <ToastMessage type={showMessage.type} text={showMessage.text} />
       </Container>
     </>
   );
