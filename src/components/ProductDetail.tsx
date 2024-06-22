@@ -106,22 +106,10 @@ const ProductDetail: React.FC = () => {
         await fetchCartFromApi();
         setIsInCart(true);
         checkProductState();
-        // localStorage.setItem('cartitems', JSON.stringify(cartItems));
       }
     } catch (error) {
       console.error('Error fetching cart data:', error);
     }
-
-    /*
-      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      const updatedCart = [
-        ...cart,
-        { id: product.id, name: product.name, price: product.price },
-      ];
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-      setIsInCart(true);
-      setCart(updatedCart);
-      */
   };
 
   const formatPrice = (
@@ -150,11 +138,6 @@ const ProductDetail: React.FC = () => {
       await fetchCartFromApi();
       setIsInCart(false);
       checkProductState();
-
-      //await fetchUpdatedCartData();
-      //cart update
-      // const updatedCart: Cart = await fetchGetCartData(token);
-      // localStorage.setItem('cartitems', JSON.stringify(updatedCart));
     } catch (error) {
       setShowMessage({ type: 'error', text: 'Failed to remove item.' });
       setTimeout(() => setShowMessage({ type: null, text: null }), 3000);

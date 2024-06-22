@@ -1,11 +1,4 @@
-import { Customer } from '@commercetools/platform-sdk';
-
-export const UsersProfileAdresses = (
-  userData: Customer | undefined,
-  ind: number,
-  flagEditData: boolean,
-  id: string
-) => {
+export const EmptyUsersProfileAdresses = (id: string) => {
   return (
     <>
       <div>
@@ -15,8 +8,7 @@ export const UsersProfileAdresses = (
           name="default-street"
           type="text"
           autoComplete="off"
-          defaultValue={userData?.addresses[ind]?.streetName}
-          disabled={!flagEditData && true}
+          required
         />
       </div>
       <div>
@@ -26,19 +18,17 @@ export const UsersProfileAdresses = (
           name="default-city"
           type="text"
           autoComplete="off"
-          defaultValue={userData?.addresses[ind]?.city}
-          disabled={!flagEditData && true}
+          required
         />
       </div>
       <div>
-        <label htmlFor={id + 'postalCode'}>Postal code: </label>
+        <label htmlFor={id + 'Postal'}>Postal code: </label>
         <input
-          id={id + 'postalCode'}
+          id={id + 'Postal'}
           name="default-postal-code"
           type="text"
           autoComplete="off"
-          defaultValue={userData?.addresses[ind]?.postalCode}
-          disabled={!flagEditData && true}
+          required
         />
       </div>
       <div>
@@ -48,8 +38,7 @@ export const UsersProfileAdresses = (
           name="default-country"
           type="text"
           autoComplete="off"
-          value={userData?.addresses[ind]?.country + 'A'}
-          disabled={!flagEditData && true}
+          required
         />
       </div>
     </>

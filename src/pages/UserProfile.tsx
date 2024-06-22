@@ -9,7 +9,7 @@ import NameValidation from '../utils/validation/NameValidation';
 import BirthdateValidation from '../utils/validation/BirthdateValidation';
 import { FaLock, FaUnlock } from 'react-icons/fa';
 import { UsersProfileAdresses } from '../components/UsersProfileAdresses';
-import { EmptyUsersProfileAdresses } from '../components/UsersProfileAdresses';
+import { EmptyUsersProfileAdresses } from '../components/EmptyUsersProfileAdresses';
 import { fetchCustomerData } from '../utils/api/getCustomer';
 import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
