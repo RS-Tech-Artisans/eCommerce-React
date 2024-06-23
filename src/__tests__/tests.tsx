@@ -633,3 +633,24 @@ describe('truncateDescription', () => {
     expect(truncateDescription(text, maxLength)).toBe(text);
   });
 });
+
+import renderer from 'react-test-renderer';
+import AuthorCard from '../components/AuthorCard';
+
+const mockProps = {
+  name: 'John Doe',
+  gitName: 'johndoe',
+  linkToGit: 'https://github.com/johndoe',
+  role: 'Developer',
+  img: 'path/to/image.jpg',
+  about: 'A passionate developer.',
+  contribution: 'Worked on the main feature.',
+};
+
+describe('AuthorCard Component', () => {
+  test('renders correctly with given props', () => {
+    const component = renderer.create(<AuthorCard {...mockProps} />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
