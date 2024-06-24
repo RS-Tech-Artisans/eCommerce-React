@@ -9,13 +9,7 @@ import { useSession } from '../utils/SessionContext';
 import { useCart } from '../utils/CartContext';
 import { checkProductState } from '../utils/checkProductState';
 import { truncateDescription } from '../utils/truncateDescription';
-
-export const formatPrice = (price: number, currency: string) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency,
-  }).format(price / 100);
-};
+import { formatPrice } from '../utils/formatPrice';
 
 const SIZE_DESCRIPTION = 250;
 

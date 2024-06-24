@@ -834,3 +834,28 @@ describe('CategoryLinks Component', () => {
     expect(tree).toMatchSnapshot();
   });
 });
+
+import { formatPrice } from '../utils/formatPrice';
+
+describe('formatPrice function', () => {
+  test('formats price correctly in USD', () => {
+    const price = 999; // cents
+    const currency = 'USD';
+    const formattedPrice = formatPrice(price, currency);
+    expect(formattedPrice).toBe('$9.99'); // assuming the format is correct
+  });
+
+  test('handles zero price', () => {
+    const price = 0;
+    const currency = 'USD';
+    const formattedPrice = formatPrice(price, currency);
+    expect(formattedPrice).toBe('$0.00'); // assuming the format is correct
+  });
+
+  test('handles negative price', () => {
+    const price = -999; // cents
+    const currency = 'USD';
+    const formattedPrice = formatPrice(price, currency);
+    expect(formattedPrice).toBe('-$9.99'); // assuming the format is correct
+  });
+});
