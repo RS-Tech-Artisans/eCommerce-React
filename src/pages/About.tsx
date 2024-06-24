@@ -1,19 +1,10 @@
 import './About.css';
 import { Container } from 'react-bootstrap';
-import AuthorCard from '../components/AuthorCard'; // Импортируем новый компонент
+import AuthorCard from '../components/AuthorCard';
 import autor1 from '../assets/Pavel.jpeg';
 import autor2 from '../assets/Vlada.jpg';
 import autor3 from '../assets/Veronika.jpeg';
-
-interface AboutData {
-  name: string;
-  gitName: string;
-  linkToGit: string;
-  role: string;
-  img: string;
-  about: string;
-  contribution: string;
-}
+import { AboutData } from '../utils/Interfaces';
 
 const dataAboutUs: AboutData[] = [
   {

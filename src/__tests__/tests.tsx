@@ -637,7 +637,7 @@ describe('truncateDescription', () => {
 import renderer from 'react-test-renderer';
 import AuthorCard from '../components/AuthorCard';
 
-const mockProps = {
+const mockCardProps = {
   name: 'John Doe',
   gitName: 'johndoe',
   linkToGit: 'https://github.com/johndoe',
@@ -649,7 +649,55 @@ const mockProps = {
 
 describe('AuthorCard Component', () => {
   test('renders correctly with given props', () => {
-    const component = renderer.create(<AuthorCard {...mockProps} />);
+    const component = renderer.create(<AuthorCard {...mockCardProps} />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+import EmailInput from '../components/EmailInput';
+import { EmailInputProps } from '../utils/Interfaces';
+
+describe('EmailInput Component', () => {
+  const mockSetEmail = jest.fn();
+  const mockSetEmailErr = jest.fn();
+  const mockSetFormValid = jest.fn();
+
+  const mockEmailProps: EmailInputProps = {
+    email: '',
+    setEmail: mockSetEmail,
+    emailErr: '',
+    setEmailErr: mockSetEmailErr,
+    setFormValid: mockSetFormValid,
+    passwordErr: '',
+  };
+
+  test('renders correctly with initial state', () => {
+    const component = renderer.create(<EmailInput {...mockEmailProps} />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+import PasswordInput from '../components/PasswordInput';
+import { PasswordInputProps } from '../utils/Interfaces';
+
+describe('PasswordInput Component', () => {
+  const mockSetPassword = jest.fn();
+  const mockSetPasswordErr = jest.fn();
+  const mockSetFormValid = jest.fn();
+
+  const mockPasswordProps: PasswordInputProps = {
+    password: '',
+    setPassword: mockSetPassword,
+    passwordErr: '',
+    setPasswordErr: mockSetPasswordErr,
+    setFormValid: mockSetFormValid,
+    emailErr: '',
+  };
+
+  test('renders correctly with initial state', () => {
+    const component = renderer.create(<PasswordInput {...mockPasswordProps} />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });

@@ -1,9 +1,5 @@
 import React from 'react';
-
-export interface ToastMessageProps {
-  type: 'success' | 'error' | null;
-  text: string | null;
-}
+import { ToastMessageProps } from '../utils/Interfaces';
 
 const ToastMessage: React.FC<ToastMessageProps> = ({ type, text }) => {
   if (!type || !text) return null;
