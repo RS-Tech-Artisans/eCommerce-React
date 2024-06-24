@@ -702,3 +702,24 @@ describe('PasswordInput Component', () => {
     expect(tree).toMatchSnapshot();
   });
 });
+
+import { ClearCartButtonProps } from '../utils/Interfaces';
+import ClearCartButton from '../common/ClearCartButton';
+
+jest.mock('../common/ClearCartButton.css', () => ({
+  button: 'mock-button-class',
+}));
+
+describe('ClearCartButton Component', () => {
+  const mockOnClearCart = jest.fn();
+
+  const mockProps: ClearCartButtonProps = {
+    onClearCart: mockOnClearCart,
+  };
+
+  test('renders correctly', () => {
+    const component = renderer.create(<ClearCartButton {...mockProps} />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
