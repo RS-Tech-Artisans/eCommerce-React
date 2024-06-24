@@ -126,3 +126,9 @@ export interface PasswordInputProps {
   setFormValid: React.Dispatch<React.SetStateAction<boolean>>;
   emailErr: string;
 }
+
+export interface CouponCategoryProps {
+  imageSrc: string;
+  promoCode: string;
+  description: string;
+}

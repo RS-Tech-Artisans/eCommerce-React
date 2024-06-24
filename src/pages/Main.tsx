@@ -1,7 +1,9 @@
-import './Main.css';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import './Main.css';
+import CouponCategory from '../components/CouponCategory';
 
-export const Main = () => {
+export const Main: React.FC = () => {
   return (
     <div className="container">
       <div className="main-content">
@@ -45,37 +47,16 @@ export const Main = () => {
         </div>
 
         <div className="container-main_promo">
-          <div className="coupon-category">
-            <img
-              className="image-coupon"
-              src="https://rs.school/assets/RsBanner-DN9JLJVH.svg"
-              alt="Promo Banner"
-            />
-            <div className="promo">
-              <div className="header-main">
-                Use this PromoCode: <span className="code">RSS-2024</span>
-              </div>
-              <div className="description-store">
-                for getting -20% discount on all cart price
-              </div>
-            </div>
-          </div>
-          <div className="coupon-category">
-            <img
-              className="image-coupon"
-              src="https://rs.school/assets/RsBanner-DN9JLJVH.svg"
-              alt="Promo Banner"
-            />
-            <div className="promo">
-              <div className="header-main">
-                Use promoCode: <span className="code">QLED</span>
-              </div>
-              <div className="description-store">
-                for getting -5% to all cart if total amount cart greating than
-                5000 USD
-              </div>
-            </div>
-          </div>
+          <CouponCategory
+            imageSrc="https://rs.school/assets/RsBanner-DN9JLJVH.svg"
+            promoCode="RSS-2024"
+            description="for getting -20% discount on all cart price"
+          />
+          <CouponCategory
+            imageSrc="https://rs.school/assets/RsBanner-DN9JLJVH.svg"
+            promoCode="QLED"
+            description="for getting -5% to all cart if total amount cart greater than 5000 USD"
+          />
           <h6>*you can use only one promo for your cart</h6>
         </div>
       </div>

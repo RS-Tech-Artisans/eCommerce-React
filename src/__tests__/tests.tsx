@@ -783,3 +783,30 @@ describe('ToastMessage Component', () => {
     expect(tree).toBeNull();
   });
 });
+
+import CouponCategory from '../components/CouponCategory';
+import { CouponCategoryProps } from '../utils/Interfaces';
+
+describe('CouponCategory Component', () => {
+  const mockProps: CouponCategoryProps = {
+    imageSrc: 'https://example.com/image.png',
+    promoCode: 'RSS-2024',
+    description: 'Promotional description',
+  };
+
+  test('renders correctly with RSS promoCode', () => {
+    const component = renderer.create(<CouponCategory {...mockProps} />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  test('renders correctly with non-RSS promoCode', () => {
+    const modifiedProps = {
+      ...mockProps,
+      promoCode: 'QLED',
+    };
+    const component = renderer.create(<CouponCategory {...modifiedProps} />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
