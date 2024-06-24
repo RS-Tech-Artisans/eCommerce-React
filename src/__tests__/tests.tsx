@@ -888,3 +888,36 @@ describe('NotFound Component', () => {
     expect(tree).toMatchSnapshot();
   });
 });
+
+import About from '../pages/About';
+jest.mock('../pages/About.css', () => ({}));
+jest.mock('../assets/Pavel.jpeg', () => 'fake-pavel-image');
+jest.mock('../assets/Vlada.jpg', () => 'fake-vlada-image');
+jest.mock('../assets/Veronika.jpeg', () => 'fake-veronika-image');
+
+describe('About Component', () => {
+  test('renders correctly', () => {
+    const component = renderer.create(<About />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  test('renders about title correctly', () => {
+    const component = renderer.create(<About />);
+    const instance = component.root;
+
+    const aboutTitle = instance.findByProps({ className: 'about-title' });
+    expect(aboutTitle.children).toContain('About Us');
+  });
+
+  test('renders all author cards with correct information', () => {
+    const component = renderer.create(<About />);
+    const instance = component.root;
+
+    const authorNames = ['Pavel', 'Vladyslava', 'Veronika'];
+    authorNames.forEach((authorName) => {
+      const authorTitle = instance.findByProps({ children: authorName });
+      expect(authorTitle).toBeTruthy();
+    });
+  });
+});
