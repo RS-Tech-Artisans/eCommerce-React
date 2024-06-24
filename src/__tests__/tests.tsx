@@ -753,3 +753,33 @@ describe('LogoutButton Component', () => {
     expect(mockHandleLogout).toHaveBeenCalled();
   });
 });
+
+import ToastMessage from '../common/ToastMessage';
+import { ToastMessageProps } from '../utils/Interfaces';
+
+describe('ToastMessage Component', () => {
+  const mockToastProps: ToastMessageProps = {
+    type: 'success',
+    text: 'Success message',
+  };
+
+  test('renders correctly with type="success" and text', () => {
+    const component = renderer.create(<ToastMessage {...mockToastProps} />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  test('renders correctly with type="error" and text', () => {
+    const component = renderer.create(
+      <ToastMessage type="error" text="Error message" />
+    );
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  test('does not render when type or text is missing', () => {
+    const component = renderer.create(<ToastMessage type={null} text={null} />);
+    const tree = component.toJSON();
+    expect(tree).toBeNull();
+  });
+});
