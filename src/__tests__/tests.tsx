@@ -810,3 +810,27 @@ describe('CouponCategory Component', () => {
     expect(tree).toMatchSnapshot();
   });
 });
+
+import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
+import CategoryLinks from '../components/CategoryLinks';
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  Link: ({ to, children }: { to: string; children: React.ReactNode }) => (
+    <a href={to}>{children}</a>
+  ),
+}));
+
+describe('CategoryLinks Component', () => {
+  test('renders correct links', () => {
+    const component = renderer.create(
+      <MemoryRouter>
+        <CategoryLinks />
+      </MemoryRouter>
+    );
+
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
