@@ -861,6 +861,7 @@ describe('formatPrice function', () => {
 });
 
 import { EmptyUsersProfileAdresses } from '../components/EmptyUsersProfileAdresses';
+import NotFound from '../pages/NotFound';
 
 describe('EmptyUsersProfileAdresses Component', () => {
   test('renders address fields correctly', () => {
@@ -870,6 +871,20 @@ describe('EmptyUsersProfileAdresses Component', () => {
     const tree = component.toJSON();
 
     expect(tree).toBeTruthy();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+jest.mock('../pages/NotFound.css', () => ({}));
+
+describe('NotFound Component', () => {
+  test('renders correctly', () => {
+    const component = renderer.create(
+      <MemoryRouter>
+        <NotFound />
+      </MemoryRouter>
+    );
+    const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
