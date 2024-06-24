@@ -859,3 +859,17 @@ describe('formatPrice function', () => {
     expect(formattedPrice).toBe('-$9.99'); // assuming the format is correct
   });
 });
+
+import { EmptyUsersProfileAdresses } from '../components/EmptyUsersProfileAdresses';
+
+describe('EmptyUsersProfileAdresses Component', () => {
+  test('renders address fields correctly', () => {
+    const id = 'testId';
+
+    const component = renderer.create(EmptyUsersProfileAdresses(id));
+    const tree = component.toJSON();
+
+    expect(tree).toBeTruthy();
+    expect(tree).toMatchSnapshot();
+  });
+});
