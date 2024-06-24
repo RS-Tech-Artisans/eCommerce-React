@@ -723,3 +723,33 @@ describe('ClearCartButton Component', () => {
     expect(tree).toMatchSnapshot();
   });
 });
+
+import { useLogin } from '../utils/Login';
+import LogoutButton from '../common/LogoutButton';
+
+jest.mock('../utils/Login');
+jest.mock('../common/LogoutButton.css', () => ({
+  button: 'mock-button-class',
+}));
+
+describe('LogoutButton Component', () => {
+  const mockHandleLogout = jest.fn();
+
+  (useLogin as jest.Mock).mockReturnValue({
+    handleLogout: mockHandleLogout,
+  });
+
+  test('renders correctly', () => {
+    const component = renderer.create(<LogoutButton />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  test('clicking the button calls handleLogout', () => {
+    const component = renderer.create(<LogoutButton />);
+    const instance = component.root;
+    const button = instance.findByType('button');
+    button.props.onClick();
+    expect(mockHandleLogout).toHaveBeenCalled();
+  });
+});
