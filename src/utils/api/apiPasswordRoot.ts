@@ -4,7 +4,13 @@ import {
 } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { myTokenCache } from '../tokenStore';
-import { AUTH_HOST, CLIENT_ID, CLIENT_SECRET, PROJECT_KEY, SCOPES } from '../Constants';
+import {
+  AUTH_HOST,
+  CLIENT_ID,
+  CLIENT_SECRET,
+  PROJECT_KEY,
+  SCOPES,
+} from '../Constants';
 
 const createApiPasswordRoot = (username: string, password: string) => {
   if (!AUTH_HOST || !CLIENT_ID || !CLIENT_SECRET || !PROJECT_KEY) {
