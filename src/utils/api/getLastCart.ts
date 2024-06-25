@@ -4,12 +4,10 @@ import { addCart } from './addCartForAnonim';
 
 export const fetchGetCartData = async (token: string | null) => {
   if (!token) {
-    console.log('fetchGetCartData we dont have token');
     try {
       const response = await apiRoot.me().carts().get().execute();
 
       if (!response.body.results[0]) {
-        console.log('cart me 0');
         const result = await addCart();
         return result;
       } else {
@@ -21,7 +19,6 @@ export const fetchGetCartData = async (token: string | null) => {
       throw error;
     }
   } else {
-    console.log('fetchGetCartData we have token', token);
     try {
       const response: ClientResponse<Cart> = await apiRoot
         .me()

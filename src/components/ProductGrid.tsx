@@ -38,7 +38,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({
     maxPrice: '',
   });
   const [categories, setCategories] = useState<Category[]>([]);
-  // const [cartItems, setCartItems] = useState<Cart | null>(null);
 
   const [loadedLimitProductsCount, setLoadedProductsCount] = useState(0);
 
@@ -82,13 +81,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   };
 
   const fetchCartFromApi = async () => {
-    console.log('fetchCartFromApi');
     try {
       const response: Cart = await fetchGetCartData(token);
       if (response) {
-        console.log('!!!!!!!!!! fetchCartFromApi fetchGetCartData ');
         localStorage.setItem('cartitems', JSON.stringify(response));
-        //  setCartItems(response);
       }
     } catch (error) {
       console.error('Error fetching cart data:', error);

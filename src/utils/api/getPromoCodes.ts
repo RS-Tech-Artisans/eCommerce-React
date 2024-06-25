@@ -7,7 +7,7 @@ export async function getPromocodes() {
     const codes = response.body.results.map((item) => item.code);
     return codes;
   } catch (error) {
-    console.log('err', error);
+    console.error('err', error);
     throw error;
   }
 }

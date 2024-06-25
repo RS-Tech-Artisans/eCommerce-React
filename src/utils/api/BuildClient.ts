@@ -16,8 +16,6 @@ const createClient = (token: string | null) => {
   let ctpClient;
 
   if (token) {
-    console.log('we have token ' + token);
-
     const options: RefreshAuthMiddlewareOptions = {
       host: 'https://auth.us-central1.gcp.commercetools.com',
       projectKey: 'my-company',
@@ -39,8 +37,6 @@ const createClient = (token: string | null) => {
       .withHttpMiddleware(httpMiddlewareOptions)
       .build();
   } else {
-    console.log('we DO NOT have token ');
-
     const authMiddlewareOptions: AuthMiddlewareOptions = {
       host: 'https://auth.us-central1.gcp.commercetools.com',
       projectKey: 'my-company',
@@ -83,7 +79,6 @@ const createClient = (token: string | null) => {
 let apiRoot = createClient(getToken());
 
 export function updateClient() {
-  console.log('updateClient');
   apiRoot = createClient(getToken());
 }
 

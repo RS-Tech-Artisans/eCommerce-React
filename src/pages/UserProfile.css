@@ -92,9 +92,6 @@ input {
   padding: 20px;
 }
 
-.shipping-default-addresses {
-}
-
 .billing-default-addresses {
   background: rgba(245, 252, 255, 0.187);
 }
@@ -211,6 +208,7 @@ label {
 
 .form-change-password_wrapper {
   z-index: 1000;
+  display: none;
 }
 
 .user-profile_information {

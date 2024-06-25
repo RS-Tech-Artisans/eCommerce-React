@@ -1,24 +1,28 @@
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+import ImageGallery from 'react-image-gallery';
+import { MdArrowBackIos } from 'react-icons/md';
+import 'react-image-gallery/styles/css/image-gallery.css';
+
 import { getProductDetailById } from '../utils/api/getProductsDetail';
+import { removeProductFromCart } from '../utils/api/removeProductFromCart';
+import { fetchGetCartData } from '../utils/api/getLastCart';
+import { addProduct } from '../utils/api/addProduct';
+
+import { useCart } from '../utils/CartContext';
+import { useSession } from '../utils/SessionContext';
+
+import { mapProducts } from '../utils/productMapper';
 import {
   ProductAttributes,
   ProductCardProps,
   ProductImages,
 } from '../utils/Interfaces';
-import { Container } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
-import { mapProducts } from '../utils/productMapper';
-import { MdArrowBackIos } from 'react-icons/md';
-import ImageGallery from 'react-image-gallery';
-import 'react-image-gallery/styles/css/image-gallery.css';
-import React from 'react';
+
 import './ProductDetail.css';
-import { useSession } from '../utils/SessionContext';
-import { removeProductFromCart } from '../utils/api/removeProductFromCart';
 import { Cart } from '@commercetools/platform-sdk';
-import { fetchGetCartData } from '../utils/api/getLastCart';
-import { addProduct } from '../utils/api/addProduct';
-import { useCart } from '../utils/CartContext';
+import ToastMessage from '../common/ToastMessage';
 
 const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<ProductCardProps | null>(null);
@@ -37,7 +41,6 @@ const ProductDetail: React.FC = () => {
   }>({ type: null, text: null });
 
   const fetchCartFromApi = async () => {
-    console.log('fetchCartFromApi');
     try {
       const response: Cart = await fetchGetCartData(token);
       setLoaderCart(false);
@@ -96,7 +99,6 @@ const ProductDetail: React.FC = () => {
 
   const addToCart = async () => {
     setLoaderCart(true);
-    console.log('addToCart product Detail', product);
 
     try {
       if (cartItems && product) {
@@ -104,23 +106,10 @@ const ProductDetail: React.FC = () => {
         await fetchCartFromApi();
         setIsInCart(true);
         checkProductState();
-        // console.log(JSON.parse(localStorage.getItem('cartitems') || '[]'));
-        // localStorage.setItem('cartitems', JSON.stringify(cartItems));
       }
     } catch (error) {
       console.error('Error fetching cart data:', error);
     }
-
-    /*
-      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      const updatedCart = [
-        ...cart,
-        { id: product.id, name: product.name, price: product.price },
-      ];
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-      setIsInCart(true);
-      setCart(updatedCart);
-      */
   };
 
   const formatPrice = (
@@ -149,11 +138,6 @@ const ProductDetail: React.FC = () => {
       await fetchCartFromApi();
       setIsInCart(false);
       checkProductState();
-
-      //await fetchUpdatedCartData();
-      //cart update
-      // const updatedCart: Cart = await fetchGetCartData(token);
-      // localStorage.setItem('cartitems', JSON.stringify(updatedCart));
     } catch (error) {
       setShowMessage({ type: 'error', text: 'Failed to remove item.' });
       setTimeout(() => setShowMessage({ type: null, text: null }), 3000);
@@ -242,13 +226,7 @@ const ProductDetail: React.FC = () => {
                     </button>
                   )}
                 </div>
-                {showMessage.type && (
-                  <div
-                    className={`toast ${showMessage.type === 'success' ? 'show' : ''}`}
-                  >
-                    {showMessage.text}
-                  </div>
-                )}
+                <ToastMessage type={showMessage.type} text={showMessage.text} />
               </div>
             </div>
             <div>
@@ -259,13 +237,7 @@ const ProductDetail: React.FC = () => {
         ) : (
           <p>Loading product details...</p>
         )}
-        {showMessage.type && (
-          <div
-            className={`toast ${showMessage.type === 'success' || showMessage.type === 'error' ? 'show' : ''}`}
-          >
-            {showMessage.text}
-          </div>
-        )}
+        <ToastMessage type={showMessage.type} text={showMessage.text} />
       </Container>
     </>
   );

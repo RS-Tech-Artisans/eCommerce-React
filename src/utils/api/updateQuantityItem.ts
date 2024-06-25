@@ -11,7 +11,6 @@ export const updateQuantityItem = async (
   count: number
 ) => {
   if (!token) {
-    console.log('updateQuantityItem !token');
     try {
       const cartResponse = await apiRoot.me().carts().get().execute();
 
@@ -39,7 +38,6 @@ export const updateQuantityItem = async (
       throw error;
     }
   } else {
-    console.log('updateQuantityItem with token', token);
     try {
       const responseWithToken: ClientResponse<Cart> = await apiRoot
         .me()

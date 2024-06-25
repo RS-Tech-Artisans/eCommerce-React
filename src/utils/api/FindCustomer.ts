@@ -12,7 +12,6 @@ const findUser = async (email: string): Promise<string> => {
       .execute();
 
     if (body.results.length === 0) {
-      console.log('This email address has not been registered.');
       return 'This email address has not been registered.';
     } else {
       return '';
@@ -37,7 +36,6 @@ const findRegisteredUser = async (email: string): Promise<string> => {
     if (body.results.length === 0) {
       return '';
     } else {
-      console.log('This email address already registered.');
       return 'This email address already registered.';
     }
   } catch (error) {

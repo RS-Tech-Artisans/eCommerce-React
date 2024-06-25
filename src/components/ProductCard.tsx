@@ -7,13 +7,9 @@ import { addProduct } from '../utils/api/addProduct';
 import { fetchGetCartData } from '../utils/api/getLastCart';
 import { useSession } from '../utils/SessionContext';
 import { useCart } from '../utils/CartContext';
-
-export const formatPrice = (price: number, currency: string) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency,
-  }).format(price / 100);
-};
+import { checkProductState } from '../utils/checkProductState';
+import { truncateDescription } from '../utils/truncateDescription';
+import { formatPrice } from '../utils/formatPrice';
 
 const SIZE_DESCRIPTION = 250;
 
@@ -32,40 +28,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const { token } = useSession();
   const { setCartData } = useCart();
 
-  // const checkCart = () => {
-  //   const getSavedCart = localStorage.getItem('cartitems');
-  //   if (getSavedCart) {
-  //     const cart: Cart = JSON.parse(getSavedCart);
-  //     const isItemInCart = cart.lineItems.some((item) => id === item.productId);
-  //     setIsInCart(isItemInCart);
-  //   }
-  // }
-
-  const checkProductState = () => {
-    const cartData = JSON.parse(localStorage.getItem('cartitems') || '{}');
-    const lineItems = cartData.lineItems || [];
-    const foundItem = lineItems.find(
-      (item: { productId: string }) => item.productId === id
-    );
-
-    if (foundItem) {
-      setIsInCart(true);
-    } else {
-      setIsInCart(false);
-    }
-  };
-
   useEffect(() => {
     //checkCart();
-    checkProductState();
+    setIsInCart(checkProductState(id));
   }, [id]);
 
   const fetchCartFromApi = async () => {
-    console.log('fetchCartFromApi');
     try {
       const response: Cart = await fetchGetCartData(token);
-      console.log('get response fetchGetCartData', response);
-      console.log('response.lineItems.length', response.lineItems.length);
       setLoaderCart(false);
       if (response) {
         setCartData(response);
@@ -88,18 +58,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         await addProduct(CartItems.id, CartItems.version, id);
         await fetchCartFromApi();
         setIsInCart(true);
-        checkProductState();
+        setIsInCart(checkProductState(id));
       }
     } catch (error) {
       console.error('Error fetching cart data:', error);
     }
-  };
-
-  const truncateDescription = (text: string, maxLength: number) => {
-    if (text.length <= maxLength) {
-      return text;
-    }
-    return text.substr(0, maxLength) + '...';
   };
 
   return (

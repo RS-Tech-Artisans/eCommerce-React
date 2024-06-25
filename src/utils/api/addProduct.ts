@@ -6,7 +6,6 @@ export const addProduct = async (
   product: string
 ) => {
   try {
-    console.log('! ADD PRODUCT');
     const response = await apiRoot
       .me()
       .carts()
