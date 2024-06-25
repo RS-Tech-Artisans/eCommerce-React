@@ -890,6 +890,7 @@ describe('NotFound Component', () => {
 });
 
 import About from '../pages/About';
+import { Main } from '../pages/Main';
 jest.mock('../pages/About.css', () => ({}));
 jest.mock('../assets/Pavel.jpeg', () => 'fake-pavel-image');
 jest.mock('../assets/Vlada.jpg', () => 'fake-vlada-image');
@@ -919,5 +920,14 @@ describe('About Component', () => {
       const authorTitle = instance.findByProps({ children: authorName });
       expect(authorTitle).toBeTruthy();
     });
+  });
+});
+
+jest.mock('../pages/Main.css', () => ({}));
+describe('Main component', () => {
+  test('renders correctly', () => {
+    const component = renderer.create(<Main />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });
