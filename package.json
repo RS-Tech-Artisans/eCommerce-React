@@ -1,7 +1,7 @@
 {
   "name": "ecommerce-react",
   "version": "1.0.0",
-  "description": "eCommerce web application using React, Redux",
+  "description": "eCommerce web application (Online Store) using React.",
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack-dev-server --mode=development --open --hot",
@@ -24,6 +24,7 @@
     "@commercetools/platform-sdk": "^7.8.0",
     "@commercetools/sdk-client-v2": "^2.5.0",
     "bootstrap": "^5.3.3",
+    "dotenv": "^16.4.5",
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.2",
