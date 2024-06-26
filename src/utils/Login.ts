@@ -6,36 +6,41 @@ import { clearTokenCache } from './tokenStore';
 import { useSession } from './SessionContext';
 import { MyApiError } from './Interfaces';
 import { createApiPasswordRoot } from './api/apiPasswordRoot';
-import { updateClient } from './api/BuildClient';
+import { apiRoot, updateClient } from './api/BuildClient';
+import { useCart } from './CartContext';
 
 export const useLogin = () => {
   const { setToken } = useSession();
   const [loginResult, setLoginResult] =
     useState<ClientResponse<CustomerSignInResult> | null>(null);
   const [error, setError] = useState<MyApiError | null>(null);
+  const { setCartData } = useCart();
 
   const navigate = useNavigate();
 
   const handleLogin = async (email: string, password: string) => {
     try {
-      const apiPasswordRoot = createApiPasswordRoot(email, password);
-      const result: ClientResponse<CustomerSignInResult> = await apiPasswordRoot
+      const result: ClientResponse<CustomerSignInResult> = await apiRoot
         .me()
         .login()
         .post({
-          body: { email, password },
+          body: {
+            email,
+            password,
+            activeCartSignInMode: 'MergeWithExistingCustomerCart',
+          },
         })
         .execute();
 
-      console.log('email ', email);
-      console.log('password ', password);
+      localStorage.removeItem('cartitems'); // clear we can get data from anonum
+      const apiPasswordRoot = createApiPasswordRoot(email, password);
 
+      await apiPasswordRoot.me().get().execute();
       setLoginResult(result);
       setError(null);
       setToken(localStorage.getItem('refresh_token'));
       updateClient();
     } catch (caughtError) {
-      console.log(caughtError);
       setError(caughtError as MyApiError);
     }
   };
@@ -44,6 +49,9 @@ export const useLogin = () => {
     setLoginResult(null);
     setToken(null);
     clearTokenCache();
+    localStorage.removeItem('cartitems'); // clear we can get data from user
+    setCartData(null);
+    updateClient();
     navigate('/login');
   };
 

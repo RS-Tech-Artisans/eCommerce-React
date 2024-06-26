@@ -1,16 +1,17 @@
 import { Customer } from '@commercetools/platform-sdk';
 
-const UsersProfileAdresses = (
+export const UsersProfileAdresses = (
   userData: Customer | undefined,
   ind: number,
-  flagEditData: boolean
+  flagEditData: boolean,
+  id: string
 ) => {
   return (
     <>
       <div>
-        <label htmlFor="default-street">Street: </label>
+        <label htmlFor={id + 'Street'}>Street: </label>
         <input
-          id="default-street"
+          id={id + 'Street'}
           name="default-street"
           type="text"
           autoComplete="off"
@@ -19,9 +20,9 @@ const UsersProfileAdresses = (
         />
       </div>
       <div>
-        <label htmlFor="default-city">City: </label>
+        <label htmlFor={id + 'City'}>City: </label>
         <input
-          id="default-city"
+          id={id + 'City'}
           name="default-city"
           type="text"
           autoComplete="off"
@@ -30,9 +31,9 @@ const UsersProfileAdresses = (
         />
       </div>
       <div>
-        <label htmlFor="default-postal-code">Postal code: </label>
+        <label htmlFor={id + 'postalCode'}>Postal code: </label>
         <input
-          id="default-postal-code"
+          id={id + 'postalCode'}
           name="default-postal-code"
           type="text"
           autoComplete="off"
@@ -41,9 +42,9 @@ const UsersProfileAdresses = (
         />
       </div>
       <div>
-        <label htmlFor="default-country">Country: </label>
+        <label htmlFor={id + 'Country'}>Country: </label>
         <input
-          id="default-country"
+          id={id + 'Country'}
           name="default-country"
           type="text"
           autoComplete="off"
@@ -54,48 +55,3 @@ const UsersProfileAdresses = (
     </>
   );
 };
-
-const EmptyUsersProfileAdresses = () => {
-  return (
-    <>
-      <div>
-        <label htmlFor="default-street">Street: </label>
-        <input
-          id="default-street"
-          name="default-street"
-          type="text"
-          autoComplete="off"
-        />
-      </div>
-      <div>
-        <label htmlFor="default-city">City: </label>
-        <input
-          id="default-city"
-          name="default-city"
-          type="text"
-          autoComplete="off"
-        />
-      </div>
-      <div>
-        <label htmlFor="default-postal-code">Postal code: </label>
-        <input
-          id="default-postal-code"
-          name="default-postal-code"
-          type="text"
-          autoComplete="off"
-        />
-      </div>
-      <div>
-        <label htmlFor="default-country">Country: </label>
-        <input
-          id="default-country"
-          name="default-country"
-          type="text"
-          autoComplete="off"
-        />
-      </div>
-    </>
-  );
-};
-
-export { UsersProfileAdresses, EmptyUsersProfileAdresses };

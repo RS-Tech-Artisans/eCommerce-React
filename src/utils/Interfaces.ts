@@ -53,6 +53,7 @@ export interface ProductAttributes {
 export interface ProductGridProps {
   products: ProductInfo[];
   setProducts: React.Dispatch<React.SetStateAction<ProductInfo[]>>;
+  catID: string | undefined;
 }
 
 export interface MyApiError {
@@ -76,4 +77,58 @@ export interface SidebarFiltersProps {
   setSortFilter: (value: string | null) => void;
   handleResetFilters: () => void;
   categories: Category[];
+  setCategoryFilter: (value: string | undefined) => void;
+}
+
+export interface ClearCartButtonProps {
+  onClearCart: () => void;
+}
+
+export interface AuthorCardProps {
+  name: string;
+  gitName: string;
+  linkToGit: string;
+  role: string;
+  img: string;
+  about: string;
+  contribution: string;
+}
+
+export interface AboutData {
+  name: string;
+  gitName: string;
+  linkToGit: string;
+  role: string;
+  img: string;
+  about: string;
+  contribution: string;
+}
+
+export interface ToastMessageProps {
+  type: 'success' | 'error' | null;
+  text: string | null;
+}
+
+export interface EmailInputProps {
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  emailErr: string;
+  setEmailErr: React.Dispatch<React.SetStateAction<string>>;
+  setFormValid: React.Dispatch<React.SetStateAction<boolean>>;
+  passwordErr: string;
+}
+
+export interface PasswordInputProps {
+  password: string;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  passwordErr: string;
+  setPasswordErr: React.Dispatch<React.SetStateAction<string>>;
+  setFormValid: React.Dispatch<React.SetStateAction<boolean>>;
+  emailErr: string;
+}
+
+export interface CouponCategoryProps {
+  imageSrc: string;
+  promoCode: string;
+  description: string;
 }

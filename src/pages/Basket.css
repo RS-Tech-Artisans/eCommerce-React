@@ -1,0 +1,287 @@
+.basket-container {
+  padding: 20px;
+  margin: 100px auto;
+}
+
+.cart {
+  padding: 20px;
+  margin: 0px 20%;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cart-items {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+}
+
+.cart-item {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.product-image {
+  margin-right: 20px;
+}
+
+.product-details {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 320px;
+}
+
+.product-name h3 {
+  margin-top: 20px;
+  font-size: 1.1em;
+}
+
+.product-name {
+  color: #333;
+}
+
+.product-name a {
+  text-decoration: none;
+  color: #333;
+}
+
+.product-name a:hover {
+  text-decoration: underline;
+}
+
+.product-price {
+  color: #333;
+  padding: 8px;
+  font-size: 24px;
+  margin-top: auto;
+}
+
+.original-price {
+  text-decoration: line-through;
+  margin-right: 10px;
+  color: #999;
+}
+
+.discounted-price {
+  color: #d9534f;
+  font-weight: bold;
+}
+
+.total-price {
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: right;
+  color: #333;
+}
+
+.total-price-with-discount {
+  margin-top: 20px;
+  margin-left: 20px;
+  font-weight: bold;
+  text-align: right;
+  color: gray;
+  text-decoration: line-through;
+}
+
+.remove-from-cart-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 4px 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+  font-size: 0.8em;
+}
+
+.remove-from-cart-button:hover {
+  background-color: #df362d;
+}
+
+.empty-cart-message {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 0px 15%;
+}
+
+.empty-cart-message a {
+  display: inline-block;
+  background-color: #1b9fc6;
+  color: #ffffff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.empty-cart-message a:hover {
+  background-color: #1885a7;
+}
+
+.discount-form {
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.input-promo {
+  margin-right: 20px;
+}
+
+.item-count {
+  display: flex;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  color: #333;
+}
+
+.item-count input {
+  padding: 5px 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 60px;
+  text-align: center;
+  background-color: #fff;
+  color: #000;
+  transition: border-color 0.3s;
+}
+
+.item-count input:focus {
+  border-color: #1b9fc6;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.control-buttons {
+  display: flex;
+  align-items: center;
+}
+.cart-buttons {
+  display: flex;
+  padding-left: 20px;
+}
+
+.cart-button {
+  background-color: transparent;
+  border: none;
+  padding: 5px 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+  margin: 0 5px;
+  color: #212529;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  font-size: 2.5em;
+  right: 20px;
+  background-color: #1b9fc6;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 4px;
+  animation:
+    slideIn 0.5s forwards,
+    fadeOut 2.5s forwards;
+}
+
+.label-promocode {
+  font-weight: 600;
+  font-size: 25px;
+}
+
+.prices {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.shopping-cart {
+  text-align: center;
+  color: #ec4a3a;
+}
+
+.cost-for-one {
+  font-size: 0.6em;
+  color: #999999;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 970px) {
+  .cart-item {
+    flex-direction: column;
+    align-items: center;
+  }
+  .product-price {
+    text-align: center;
+  }
+  .cart {
+    padding: 15px;
+    margin: 0px 15%;
+  }
+}
+
+@media (max-width: 840px) {
+  .discount-form {
+    flex-direction: column;
+    height: 150px;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .prices {
+    padding: 0;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 670px) {
+  .cart {
+    padding: 10px;
+    margin: 0px 10%;
+  }
+
+  .prices {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 450px) {
+  .cart {
+    margin: 0px 5px;
+  }
+
+  .basket-container {
+    margin-top: 40px;
+  }
+}

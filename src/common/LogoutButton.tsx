@@ -1,15 +1,15 @@
-import { Button } from 'react-bootstrap';
 import { useLogin } from '../utils/Login';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
+import './LogoutButton.css';
 
 export default function LogoutButton() {
   const { handleLogout } = useLogin();
 
   return (
     <div>
-      <Button className="btn-dark btn-lg" onClick={handleLogout}>
+      <button className="btn-dark logout-button" onClick={handleLogout}>
         <RiLogoutBoxRLine />
-      </Button>
+      </button>
     </div>
   );
 }

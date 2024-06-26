@@ -11,6 +11,7 @@ import { BsSearch } from 'react-icons/bs';
 import { SidebarFiltersProps } from '../utils/Interfaces';
 import { Category } from '@commercetools/platform-sdk';
 import { Link } from 'react-router-dom';
+import { getSearchFromAPI } from '../utils/api/getSearch';
 
 const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   search,
@@ -29,6 +30,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   handleResetFilters,
   setSortFilter,
   categories,
+  setCategoryFilter,
 }) => {
   const getCategoryPath = (category: Category) => {
     if (category.parent) {
@@ -62,6 +64,10 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
     setSortFilter(sortAttribute);
   };
 
+  const categoryFilter = (sortAttribute: string | undefined) => {
+    setCategoryFilter(sortAttribute);
+  };
+
   return (
     <div className="sidebar-filters">
       <Form className="filters">
@@ -70,7 +76,11 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
           <ul className="category-list">
             {categories.map((category: Category) => (
               <li key={category.id} className="category-item">
-                <Link to={getCategoryPath(category)} className="category-link">
+                <Link
+                  to={getCategoryPath(category)}
+                  className="category-link"
+                  onClick={() => categoryFilter(category.id)}
+                >
                   {category.name['en-US'] || 'Unnamed Category'}
                 </Link>
               </li>
@@ -84,20 +94,39 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
           <Form.Control
             value={search}
             placeholder="Search"
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+
+              if (search.length >= 2) {
+                getSearchFromAPI(e.target.value, 0);
+              }
+            }}
           />
         </InputGroup>
 
         <div>
-          <Form.Select onChange={(e) => handleSortFilter(e.target.value)}>
+          <select
+            className="custom-select"
+            onChange={(e) => handleSortFilter(e.target.value)}
+          >
             <option value={''}>Sort by</option>
-            <option value={'price asc'} defaultValue={'low'}>
+            <option
+              className="custom-select__item"
+              value={'price asc'}
+              defaultValue={'low'}
+            >
               Low price
             </option>
-            <option value={'price desc'}>High price</option>
-            <option value={'name.en-us asc'}>a-z</option>
-            <option value={'name.en-us desc'}>z-a</option>
-          </Form.Select>
+            <option className="custom-select__item" value={'price desc'}>
+              High price
+            </option>
+            <option className="custom-select__item" value={'name.en-us asc'}>
+              a-z
+            </option>
+            <option className="custom-select__item" value={'name.en-us desc'}>
+              z-a
+            </option>
+          </select>
         </div>
 
         <h3 className="filter-header">Filter by Price</h3>

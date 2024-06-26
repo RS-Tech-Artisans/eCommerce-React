@@ -1,4 +1,5 @@
 import {
+  AnonymousAuthMiddlewareOptions,
   AuthMiddlewareOptions,
   ClientBuilder,
   HttpMiddlewareOptions,
@@ -6,63 +7,83 @@ import {
 } from '@commercetools/sdk-client-v2';
 import { myTokenCache } from '../tokenStore';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import {
+  API_HOST,
+  AUTH_HOST,
+  CLIENT_ID,
+  CLIENT_SECRET,
+  PROJECT_KEY,
+  SCOPES,
+} from '../Constants';
 
 function getToken(): string | null {
   return localStorage.getItem('refresh_token');
 }
 
 const createClient = (token: string | null) => {
+  if (!AUTH_HOST || !API_HOST || !CLIENT_ID || !CLIENT_SECRET || !PROJECT_KEY) {
+    throw new Error('Missing necessary environment variables');
+  }
+
   let ctpClient;
 
   if (token) {
-    console.log('we have token ' + token);
-
-    const options: RefreshAuthMiddlewareOptions = {
-      host: 'https://auth.us-central1.gcp.commercetools.com',
-      projectKey: 'my-company',
+    const refreshAuthOptions: RefreshAuthMiddlewareOptions = {
+      host: AUTH_HOST,
+      projectKey: PROJECT_KEY,
       credentials: {
-        clientId: 'RlxVza_Z9B7Fm83frzN4ks58',
-        clientSecret: 'A1PzY6KA6kCT0VwHhKzyQhoiToAqIWDa',
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
       },
       refreshToken: token,
       tokenCache: myTokenCache,
       fetch,
     };
     const httpMiddlewareOptions: HttpMiddlewareOptions = {
-      host: 'https://api.us-central1.gcp.commercetools.com',
+      host: API_HOST,
       fetch,
     };
 
     ctpClient = new ClientBuilder()
-      .withRefreshTokenFlow(options)
+      .withRefreshTokenFlow(refreshAuthOptions)
       .withHttpMiddleware(httpMiddlewareOptions)
       .build();
   } else {
-    console.log('we DO NOT have token ');
-
     const authMiddlewareOptions: AuthMiddlewareOptions = {
-      host: 'https://auth.us-central1.gcp.commercetools.com',
-      projectKey: 'my-company',
+      host: AUTH_HOST,
+      projectKey: PROJECT_KEY,
       credentials: {
-        clientId: 'RlxVza_Z9B7Fm83frzN4ks58',
-        clientSecret: 'A1PzY6KA6kCT0VwHhKzyQhoiToAqIWDa',
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
       },
-      scopes: ['manage_project:my-company'],
+      scopes: SCOPES,
       fetch,
     };
     const httpMiddlewareOptions: HttpMiddlewareOptions = {
-      host: 'https://api.us-central1.gcp.commercetools.com',
+      host: API_HOST,
       fetch,
     };
+    const anonymousAuthMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
+      host: AUTH_HOST,
+      projectKey: PROJECT_KEY,
+      credentials: {
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+      },
+      scopes: SCOPES,
+      fetch,
+    };
+
     ctpClient = new ClientBuilder()
       .withClientCredentialsFlow(authMiddlewareOptions)
       .withHttpMiddleware(httpMiddlewareOptions)
       .withLoggerMiddleware()
+      .withAnonymousSessionFlow(anonymousAuthMiddlewareOptions)
       .build();
   }
 
   const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
-    projectKey: 'my-company',
+    projectKey: PROJECT_KEY,
   });
 
   return apiRoot;
@@ -71,7 +92,6 @@ const createClient = (token: string | null) => {
 let apiRoot = createClient(getToken());
 
 export function updateClient() {
-  console.log('updateClient');
   apiRoot = createClient(getToken());
 }
 

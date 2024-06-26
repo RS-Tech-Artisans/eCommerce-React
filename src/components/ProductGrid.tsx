@@ -12,9 +12,15 @@ import { getBrandsFromAPI } from '../utils/api/getBrands';
 import { getSizesFromAPI } from '../utils/api/getSizes';
 import { getDisplaysFromAPI } from '../utils/api/getDisplays';
 import { getCategoriesFromAPI } from '../utils/api/getCategories';
-import { Category } from '@commercetools/platform-sdk';
+import { Cart, Category } from '@commercetools/platform-sdk';
+import { useSession } from '../utils/SessionContext';
+import { fetchGetCartData } from '../utils/api/getLastCart';
 
-const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
+const ProductGrid: React.FC<ProductGridProps> = ({
+  products,
+  setProducts,
+  catID,
+}) => {
   const [search, setSearch] = useState('');
   const [brandFilter, setBrandFilter] = useState<string | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
@@ -23,6 +29,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   const [displayFilter, setDisplayFilter] = useState<string | null>(null);
   const [sizeFilter, setSizeFilter] = useState<string | null>(null);
   const [sortFilter, setSortFilter] = useState<string | null>(null);
+  const [categoryId, setCategoryFilter] = useState<string | undefined>(catID);
   const [priceFilter, setPriceFilter] = useState<{
     minPrice: string;
     maxPrice: string;
@@ -32,51 +39,73 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
   });
   const [categories, setCategories] = useState<Category[]>([]);
 
+  const [loadedLimitProductsCount, setLoadedProductsCount] = useState(0);
+
+  const COUNT_PRODUCT = 8;
+  const { token } = useSession();
+
+  const getCategories = async () => {
+    try {
+      const fetchedCategories = await getCategoriesFromAPI();
+      setCategories(fetchedCategories.results);
+    } catch (error) {
+      console.error('Error fetching Categories:', error);
+    }
+  };
+
+  const fetchBrands = async () => {
+    try {
+      const fetchedBrands = await getBrandsFromAPI();
+      setBrands(fetchedBrands);
+    } catch (error) {
+      console.error('Error fetching brands:', error);
+    }
+  };
+
+  const fetchSizes = async () => {
+    try {
+      const fetchedSizes = await getSizesFromAPI();
+      setSizes(fetchedSizes);
+    } catch (error) {
+      console.error('Error fetching sizes:', error);
+    }
+  };
+
+  const fetchDisplays = async () => {
+    try {
+      const fetchedDisplays = await getDisplaysFromAPI();
+      setDisplays(fetchedDisplays);
+    } catch (error) {
+      console.error('Error fetching Displays:', error);
+    }
+  };
+
+  const fetchCartFromApi = async () => {
+    try {
+      const response: Cart = await fetchGetCartData(token);
+      if (response) {
+        localStorage.setItem('cartitems', JSON.stringify(response));
+      }
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+
   useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const fetchedCategories = await getCategoriesFromAPI();
-        console.log('!!! fetchedCategories ', fetchedCategories);
-        setCategories(fetchedCategories.results);
-      } catch (error) {
-        console.error('Error fetching Categories:', error);
-      }
-    };
     getCategories();
-
-    const fetchBrands = async () => {
-      try {
-        const fetchedBrands = await getBrandsFromAPI();
-        setBrands(fetchedBrands);
-      } catch (error) {
-        console.error('Error fetching brands:', error);
-      }
-    };
-
     fetchBrands();
-
-    const fetchSizes = async () => {
-      try {
-        const fetchedSizes = await getSizesFromAPI();
-        setSizes(fetchedSizes);
-      } catch (error) {
-        console.error('Error fetching sizes:', error);
-      }
-    };
-
     fetchSizes();
-
-    const fetchDisplays = async () => {
-      try {
-        const fetchedDisplays = await getDisplaysFromAPI();
-        setDisplays(fetchedDisplays);
-      } catch (error) {
-        console.error('Error fetching Displays:', error);
-      }
-    };
-
     fetchDisplays();
   }, []);
+
+  useEffect(() => {
+    fetchCartFromApi();
+  }, [token]);
+
+  const loadMoreProducts = () => {
+    if (loadedLimitProductsCount != COUNT_PRODUCT * 2)
+      setLoadedProductsCount(loadedLimitProductsCount + COUNT_PRODUCT); // need fixed if we have more 16 products
+  };
 
   const fetchFilteredProducts = async () => {
     try {
@@ -88,16 +117,17 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         priceFilter.maxPrice === ''
           ? 999999 * 100
           : parseFloat(priceFilter.maxPrice) * 100;
+
       const filteredResponse = await getFiltredProductsFromAPI(
         minPriceInCents,
         maxPriceInCents,
         brandFilter || '',
         displayFilter || '',
         sizeFilter || '',
-        sortFilter || ''
+        sortFilter || '',
+        categoryId || '',
+        loadedLimitProductsCount + COUNT_PRODUCT
       );
-      console.log('sortFilter: ', sortFilter);
-      console.log('New Filtered Products:', filteredResponse.results);
       const productInfoArray = mapProducts(filteredResponse.results);
       setProducts(productInfoArray);
     } catch (error) {
@@ -107,7 +137,15 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
 
   useEffect(() => {
     fetchFilteredProducts();
-  }, [priceFilter, brandFilter, displayFilter, sizeFilter, sortFilter]);
+  }, [
+    priceFilter,
+    brandFilter,
+    displayFilter,
+    sizeFilter,
+    sortFilter,
+    categoryId,
+    loadedLimitProductsCount,
+  ]);
 
   const handleResetFilters = () => {
     setSearch('');
@@ -126,6 +164,15 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
       priceFilter.maxPrice
     );
   }, [search, products, priceFilter]);
+
+  window.addEventListener('scroll', () => {
+    const bottom =
+      Math.ceil(window.innerHeight + window.scrollY) >=
+      document.documentElement.scrollHeight;
+    if (bottom && filteredProducts.length + 50 > loadedLimitProductsCount) {
+      loadMoreProducts();
+    }
+  });
 
   return (
     <div className="product-grid-container">
@@ -146,6 +193,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, setProducts }) => {
         setSortFilter={setSortFilter}
         handleResetFilters={handleResetFilters}
         categories={categories}
+        setCategoryFilter={setCategoryFilter}
       />
       <div className="product-grid">
         {filteredProducts.length > 0 ? (

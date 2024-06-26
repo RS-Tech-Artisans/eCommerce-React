@@ -12,10 +12,6 @@ body {
   font-weight: 400;
   font-style: normal;
   min-height: 100vh;
-  background: linear-gradient(0.25turn, #b9f3ff, #181b35);
+  background-color: #fcfcfc;
   padding-bottom: 40px;
-}
-
-h1 {
-  padding: 0 20px;
 }

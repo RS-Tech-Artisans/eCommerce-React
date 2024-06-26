@@ -1,22 +1,127 @@
 .navbar {
   width: 100%;
-  height: 80px;
   font-size: 25px;
-  gap: 10px;
 }
 .navbar a {
   color: #ffffff;
   text-decoration: none;
 }
 
-@media (max-width: 580px) {
-  .navbar {
-    font-size: 16px;
-    padding: 0;
-    gap: 1px;
+.about-us {
+  position: absolute;
+  left: 0;
+  padding-left: 10px;
+}
+
+.basket-link {
+  position: relative;
+  top: -1px;
+  padding-right: 20px;
+}
+
+.custom-dropdown button {
+  background-color: #1b9fc6;
+  border-color: #1b9fc6;
+}
+
+.custom-dropdown button:hover {
+  background-color: #1885a7;
+  border-color: #1885a7;
+}
+
+.custom-dropdown button:active {
+  background-color: #145d76;
+  border-color: #145d76;
+}
+
+.custom-dropdown button:focus {
+  background-color: #145d76;
+  border-color: #145d76;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: 4px;
+  background-color: #ec4a3a;
+  color: white;
+  border-radius: 50%;
+  padding: 1px 7px;
+  font-size: 12px;
+}
+
+.menu-block {
+  display: flex;
+  gap: 20px;
+}
+.menu-block a {
+  text-decoration: none;
+}
+.menu-block a:hover {
+  color: #1b9fc6;
+  text-decoration: none;
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 25px;
+  height: 37.5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.burger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  transition: all 0.3s;
+}
+
+@media (max-width: 660px) {
+  .menu-block {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: #212529;
+    width: 100%;
+    position: absolute;
+    top: 54px;
+    left: 0;
+    padding: 1rem;
+    gap: 1rem;
   }
 
-  button.btn-dark.btn-lg.btn.btn-primary {
-    padding: 0;
+  .menu-block.open {
+    display: flex;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  .burger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(9px, 10px);
+  }
+
+  .burger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .burger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -9px);
+  }
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    height: auto;
+  }
+
+  .about-us {
+    position: relative;
+    left: 0;
   }
 }
