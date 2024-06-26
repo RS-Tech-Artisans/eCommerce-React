@@ -1,2 +1,2 @@
 # eCommerce-React
-eCommerce web application using React, Redux
+eCommerce web application (Online Store) using React.
