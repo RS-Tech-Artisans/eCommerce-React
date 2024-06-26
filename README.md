@@ -2,6 +2,8 @@
 
 eCommerce web application (Online Store) using React.
 
+Deploy: [https://667c54f205f23692c4b7a4aa--sensational-florentine-793d9d.netlify.app/](https://667c54f205f23692c4b7a4aa--sensational-florentine-793d9d.netlify.app/)
+
 ## Authors
 
 - [Pavel Gordienko](https://github.com/guz86)
