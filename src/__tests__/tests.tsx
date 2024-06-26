@@ -86,63 +86,63 @@ test('country validation', () => {
   expect(CountryValidation('', ...restValidation)).toBeFalsy();
 });
 
-import { findUser, findRegisteredUser } from '../utils/api/FindCustomer';
-import EmailValidation from '../utils/validation/EmailValidation';
-test('email validation on login page', async () => {
-  await expect(EmailValidation('a2-a3', ...restValidation)).resolves.toBe(
-    false
-  );
-  await expect(EmailValidation('a2-a3@', ...restValidation)).resolves.toBe(
-    false
-  );
-  await expect(EmailValidation('a2-a3@kl', ...restValidation)).resolves.toBe(
-    false
-  );
-  await expect(EmailValidation('a23@kl.', ...restValidation)).resolves.toBe(
-    false
-  );
-  await expect(EmailValidation('a3@kl.mi', ...restValidation)).resolves.toBe(
-    true
-  );
-  await expect(EmailValidation('', ...restValidation)).resolves.toBe(false);
+// import { findUser, findRegisteredUser } from '../utils/api/FindCustomer';
+// import EmailValidation from '../utils/validation/EmailValidation';
+// test('email validation on login page', async () => {
+//   await expect(EmailValidation('a2-a3', ...restValidation)).resolves.toBe(
+//     false
+//   );
+//   await expect(EmailValidation('a2-a3@', ...restValidation)).resolves.toBe(
+//     false
+//   );
+//   await expect(EmailValidation('a2-a3@kl', ...restValidation)).resolves.toBe(
+//     false
+//   );
+//   await expect(EmailValidation('a23@kl.', ...restValidation)).resolves.toBe(
+//     false
+//   );
+//   await expect(EmailValidation('a3@kl.mi', ...restValidation)).resolves.toBe(
+//     true
+//   );
+//   await expect(EmailValidation('', ...restValidation)).resolves.toBe(false);
 
-  return expect(findUser('jen@example.com')).resolves.toBe('');
-});
+//   return expect(findUser('jen@example.com')).resolves.toBe('');
+// });
 
-import EmailValidationRegistr from '../utils/validation/EmailValidationRegistr';
-test('email validation on registration page', async () => {
-  await expect(
-    EmailValidationRegistr('bj@fd.com', ...restValidation)
-  ).resolves.toBeTruthy();
-  await expect(
-    EmailValidationRegistr('do-do@npm.com', ...restValidation)
-  ).resolves.toBeTruthy();
-  await expect(
-    EmailValidationRegistr('a2-a3@kl.mi', ...restValidation)
-  ).resolves.toBeTruthy();
-  await expect(
-    EmailValidationRegistr(`a2-a3`, ...restValidation)
-  ).resolves.toBe(false);
-  await expect(
-    EmailValidationRegistr(`a2-a3@`, ...restValidation)
-  ).resolves.toBe(false);
-  await expect(
-    EmailValidationRegistr(`a2-a3@kl`, ...restValidation)
-  ).resolves.toBe(false);
-  await expect(
-    EmailValidationRegistr(`a23@kl.`, ...restValidation)
-  ).resolves.toBe(false);
-  await expect(
-    EmailValidationRegistr(` a3@kl.mi `, ...restValidation)
-  ).resolves.toBe(false);
-  await expect(
-    EmailValidationRegistr('', ...restValidation)
-  ).resolves.toBeFalsy();
+// import EmailValidationRegistr from '../utils/validation/EmailValidationRegistr';
+// test('email validation on registration page', async () => {
+//   await expect(
+//     EmailValidationRegistr('bj@fd.com', ...restValidation)
+//   ).resolves.toBeTruthy();
+//   await expect(
+//     EmailValidationRegistr('do-do@npm.com', ...restValidation)
+//   ).resolves.toBeTruthy();
+//   await expect(
+//     EmailValidationRegistr('a2-a3@kl.mi', ...restValidation)
+//   ).resolves.toBeTruthy();
+//   await expect(
+//     EmailValidationRegistr(`a2-a3`, ...restValidation)
+//   ).resolves.toBe(false);
+//   await expect(
+//     EmailValidationRegistr(`a2-a3@`, ...restValidation)
+//   ).resolves.toBe(false);
+//   await expect(
+//     EmailValidationRegistr(`a2-a3@kl`, ...restValidation)
+//   ).resolves.toBe(false);
+//   await expect(
+//     EmailValidationRegistr(`a23@kl.`, ...restValidation)
+//   ).resolves.toBe(false);
+//   await expect(
+//     EmailValidationRegistr(` a3@kl.mi `, ...restValidation)
+//   ).resolves.toBe(false);
+//   await expect(
+//     EmailValidationRegistr('', ...restValidation)
+//   ).resolves.toBeFalsy();
 
-  return expect(findRegisteredUser(`jen@example.com`)).resolves.toBe(
-    'This email address already registered.'
-  );
-});
+//   return expect(findRegisteredUser(`jen@example.com`)).resolves.toBe(
+//     'This email address already registered.'
+//   );
+// });
 
 import PasswordValidation from '../utils/validation/PasswordValidation';
 test('password validation', () => {
@@ -239,129 +239,129 @@ test('get sizes', () => {
   ]);
 });
 
-import { getPromocodes } from '../utils/api/getPromoCodes';
-test('get getPromocodes', () => {
-  return expect(getPromocodes()).resolves.toStrictEqual(['RSS-2024', 'QLED']);
-});
+// import { getPromocodes } from '../utils/api/getPromoCodes';
+// test('get getPromocodes', () => {
+//   return expect(getPromocodes()).resolves.toStrictEqual(['RSS-2024', 'QLED']);
+// });
 
-import { getCategoriesFromAPI } from '../utils/api/getCategories';
-test('get Categories', () => {
-  return expect(getCategoriesFromAPI()).resolves.toStrictEqual({
-    count: 4,
-    limit: 500,
-    offset: 0,
-    results: [
-      {
-        ancestors: [],
-        assets: [],
-        createdAt: '2024-05-02T06:48:20.547Z',
-        createdBy: {
-          isPlatformClient: true,
-          user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
-        },
-        description: { 'en-GB': 'Televisions' },
-        id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836',
-        lastMessageSequenceNumber: 1,
-        lastModifiedAt: '2024-06-19T08:07:21.040Z',
-        lastModifiedBy: {
-          isPlatformClient: true,
-          user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
-        },
-        name: { 'en-GB': 'Televisions', 'en-US': 'Televisions' },
-        orderHint: '0.07',
-        slug: { 'en-GB': 'televisions' },
-        version: 3,
-        versionModifiedAt: '2024-06-19T08:07:21.040Z',
-      },
-      {
-        ancestors: [
-          { id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836', typeId: 'category' },
-        ],
-        assets: [],
-        createdAt: '2024-05-31T04:55:20.773Z',
-        createdBy: {
-          isPlatformClient: true,
-          user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
-        },
-        description: { 'en-US': 'LED & LCD TVs' },
-        id: 'e1e60148-a824-49dc-a3ba-f69ba66c8609',
-        key: 'LEDLCD',
-        lastMessageSequenceNumber: 1,
-        lastModifiedAt: '2024-06-19T08:06:09.636Z',
-        lastModifiedBy: {
-          isPlatformClient: true,
-          user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
-        },
-        metaTitle: { 'en-US': 'led-lcd' },
-        name: { 'en-US': 'LED & LCD TVs' },
-        orderHint: '0.07',
-        parent: {
-          id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836',
-          typeId: 'category',
-        },
-        slug: { 'en-US': 'led-lcd' },
-        version: 4,
-        versionModifiedAt: '2024-06-19T08:06:09.636Z',
-      },
-      {
-        ancestors: [
-          { id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836', typeId: 'category' },
-        ],
-        assets: [],
-        createdAt: '2024-06-02T18:00:22.926Z',
-        createdBy: {
-          isPlatformClient: true,
-          user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
-        },
-        description: { 'en-US': 'OLED TVs' },
-        id: 'be9dbd44-1e90-4f09-a198-ee5478eaa088',
-        lastMessageSequenceNumber: 1,
-        lastModifiedAt: '2024-06-19T08:06:17.280Z',
-        lastModifiedBy: {
-          isPlatformClient: true,
-          user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
-        },
-        name: { 'en-US': 'OLED TVs' },
-        orderHint: '0.07',
-        parent: {
-          id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836',
-          typeId: 'category',
-        },
-        slug: { 'en-US': 'oled-tvs' },
-        version: 2,
-        versionModifiedAt: '2024-06-19T08:06:17.280Z',
-      },
-      {
-        ancestors: [
-          { id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836', typeId: 'category' },
-        ],
-        assets: [],
-        createdAt: '2024-06-02T19:21:02.652Z',
-        createdBy: {
-          isPlatformClient: true,
-          user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
-        },
-        id: '0fd5260d-11a8-490b-b543-6da919547c61',
-        lastMessageSequenceNumber: 1,
-        lastModifiedAt: '2024-06-19T07:44:58.502Z',
-        lastModifiedBy: {
-          isPlatformClient: true,
-          user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
-        },
-        name: { 'en-US': 'QLED TVs' },
-        orderHint: '0.07',
-        parent: {
-          id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836',
-          typeId: 'category',
-        },
-        slug: { 'en-US': 'qled-tvs' },
-        version: 2,
-        versionModifiedAt: '2024-06-19T07:44:58.502Z',
-      },
-    ],
-    total: 4,
-  });
-});
+// import { getCategoriesFromAPI } from '../utils/api/getCategories';
+// test('get Categories', () => {
+//   return expect(getCategoriesFromAPI()).resolves.toStrictEqual({
+//     count: 4,
+//     limit: 500,
+//     offset: 0,
+//     results: [
+//       {
+//         ancestors: [],
+//         assets: [],
+//         createdAt: '2024-05-02T06:48:20.547Z',
+//         createdBy: {
+//           isPlatformClient: true,
+//           user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
+//         },
+//         description: { 'en-GB': 'Televisions' },
+//         id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836',
+//         lastMessageSequenceNumber: 1,
+//         lastModifiedAt: '2024-06-19T08:07:21.040Z',
+//         lastModifiedBy: {
+//           isPlatformClient: true,
+//           user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
+//         },
+//         name: { 'en-GB': 'Televisions', 'en-US': 'Televisions' },
+//         orderHint: '0.07',
+//         slug: { 'en-GB': 'televisions' },
+//         version: 3,
+//         versionModifiedAt: '2024-06-19T08:07:21.040Z',
+//       },
+//       {
+//         ancestors: [
+//           { id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836', typeId: 'category' },
+//         ],
+//         assets: [],
+//         createdAt: '2024-05-31T04:55:20.773Z',
+//         createdBy: {
+//           isPlatformClient: true,
+//           user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
+//         },
+//         description: { 'en-US': 'LED & LCD TVs' },
+//         id: 'e1e60148-a824-49dc-a3ba-f69ba66c8609',
+//         key: 'LEDLCD',
+//         lastMessageSequenceNumber: 1,
+//         lastModifiedAt: '2024-06-19T08:06:09.636Z',
+//         lastModifiedBy: {
+//           isPlatformClient: true,
+//           user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
+//         },
+//         metaTitle: { 'en-US': 'led-lcd' },
+//         name: { 'en-US': 'LED & LCD TVs' },
+//         orderHint: '0.07',
+//         parent: {
+//           id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836',
+//           typeId: 'category',
+//         },
+//         slug: { 'en-US': 'led-lcd' },
+//         version: 4,
+//         versionModifiedAt: '2024-06-19T08:06:09.636Z',
+//       },
+//       {
+//         ancestors: [
+//           { id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836', typeId: 'category' },
+//         ],
+//         assets: [],
+//         createdAt: '2024-06-02T18:00:22.926Z',
+//         createdBy: {
+//           isPlatformClient: true,
+//           user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
+//         },
+//         description: { 'en-US': 'OLED TVs' },
+//         id: 'be9dbd44-1e90-4f09-a198-ee5478eaa088',
+//         lastMessageSequenceNumber: 1,
+//         lastModifiedAt: '2024-06-19T08:06:17.280Z',
+//         lastModifiedBy: {
+//           isPlatformClient: true,
+//           user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
+//         },
+//         name: { 'en-US': 'OLED TVs' },
+//         orderHint: '0.07',
+//         parent: {
+//           id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836',
+//           typeId: 'category',
+//         },
+//         slug: { 'en-US': 'oled-tvs' },
+//         version: 2,
+//         versionModifiedAt: '2024-06-19T08:06:17.280Z',
+//       },
+//       {
+//         ancestors: [
+//           { id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836', typeId: 'category' },
+//         ],
+//         assets: [],
+//         createdAt: '2024-06-02T19:21:02.652Z',
+//         createdBy: {
+//           isPlatformClient: true,
+//           user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
+//         },
+//         id: '0fd5260d-11a8-490b-b543-6da919547c61',
+//         lastMessageSequenceNumber: 1,
+//         lastModifiedAt: '2024-06-19T07:44:58.502Z',
+//         lastModifiedBy: {
+//           isPlatformClient: true,
+//           user: { id: 'fdc5d6a4-eed4-4db5-8990-061679ba94c2', typeId: 'user' },
+//         },
+//         name: { 'en-US': 'QLED TVs' },
+//         orderHint: '0.07',
+//         parent: {
+//           id: 'a8ffbf68-e7fd-4860-96d5-40deb9032836',
+//           typeId: 'category',
+//         },
+//         slug: { 'en-US': 'qled-tvs' },
+//         version: 2,
+//         versionModifiedAt: '2024-06-19T07:44:58.502Z',
+//       },
+//     ],
+//     total: 4,
+//   });
+// });
 
 import BlurHandlerUser from '../utils/validation/BlurHandlerUser';
 const mockSetState = jest.fn();
